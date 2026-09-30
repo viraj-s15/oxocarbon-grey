@@ -693,6 +693,21 @@
       }
     },
     {
+      "name": "Doc comments",
+      "scope": [
+        "comment.block.documentation",
+        "comment.line.documentation",
+        "comment.line.double-slash.documentation",
+        "comment.line.triple-slash",
+        "comment.block.documentation punctuation.definition.comment",
+        "comment.line.documentation punctuation.definition.comment"
+      ],
+      "settings": {
+        "foreground": "#8d9199",
+        "fontStyle": "italic"
+      }
+    },
+    {
       "name": "Doc comment tags",
       "scope": [
         "comment.block.documentation storage.type",
@@ -948,10 +963,11 @@
       "name": "Include directives",
       "scope": [
         "keyword.control.directive.include",
-        "keyword.control.directive.import"
+        "keyword.control.directive.import",
+        "entity.name.other.preprocessor.macro.predefined"
       ],
       "settings": {
-        "foreground": "#78a9ff",
+        "foreground": "#3ddbd9",
         "fontStyle": ""
       }
     },
@@ -1158,7 +1174,10 @@
         "punctuation.definition.group.assertion.regexp",
         "punctuation.definition.character-class.regexp",
         "meta.assertion.look-ahead.regexp",
-        "meta.assertion.look-behind.regexp"
+        "meta.assertion.look-behind.regexp",
+        "constant.other.set.regexp",
+        "punctuation.character.set.begin.regexp",
+        "punctuation.character.set.end.regexp"
       ],
       "settings": {
         "foreground": "#3ddbd9",
@@ -1192,7 +1211,8 @@
       "scope": [
         "support.constant",
         "constant.builtin",
-        "variable.language.ellipsis"
+        "variable.language.ellipsis",
+        "constant.other.ellipsis.python"
       ],
       "settings": {
         "foreground": "#08bdba",
@@ -1390,7 +1410,6 @@
         "meta.function-call.generic",
         "variable.function",
         "entity.name.function.call",
-        "support.function.builtin",
         "entity.name.command.shell",
         "support.function.builtin.shell"
       ],
@@ -1400,10 +1419,24 @@
       }
     },
     {
+      "name": "Built-in functions",
+      "scope": [
+        "support.function.builtin",
+        "support.function.builtin.python",
+        "support.function.console",
+        "support.function.std"
+      ],
+      "settings": {
+        "foreground": "#08bdba",
+        "fontStyle": ""
+      }
+    },
+    {
       "name": "Function declarations",
       "scope": [
         "meta.definition.function entity.name.function",
         "meta.function.python entity.name.function",
+        "meta.function.definition.rust entity.name.function.rust",
         "entity.name.function.definition",
         "entity.name.function.shell"
       ],
@@ -1514,7 +1547,6 @@
         "meta.type.annotation entity.name.type",
         "entity.name.type.rust",
         "entity.name.type.go",
-        "support.type.exception",
         "entity.name.type.cpp",
         "entity.name.scope-resolution.template-call"
       ],
@@ -1548,7 +1580,10 @@
         "support.type.sys-types",
         "support.type.stdint",
         "support.class.builtin",
-        "entity.name.type.lifetime"
+        "support.class.promise",
+        "support.class.error",
+        "support.type.exception",
+        "support.type.exception.python"
       ],
       "settings": {
         "foreground": "#33b1ff",
@@ -1556,16 +1591,51 @@
       }
     },
     {
-      "name": "Type parameters and lifetimes",
+      "name": "Type parameters",
       "scope": [
         "entity.name.type.parameter",
-        "storage.modifier.lifetime.rust",
-        "entity.name.lifetime",
-        "punctuation.definition.lifetime.rust",
-        "entity.name.type.lifetime.rust"
+        "meta.type.parameters entity.name.type",
+        "entity.name.type.template",
+        "storage.type.template.argument"
       ],
       "settings": {
         "foreground": "#33b1ff",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "C++ parameter types",
+      "scope": [
+        "entity.name.type.parameter.cpp",
+        "entity.name.type.parameter.c"
+      ],
+      "settings": {
+        "foreground": "#33b1ff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "C++ template keywords",
+      "scope": [
+        "storage.type.template.argument.typename",
+        "storage.type.template.argument.class"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Lifetimes",
+      "scope": [
+        "storage.modifier.lifetime.rust",
+        "entity.name.lifetime",
+        "punctuation.definition.lifetime.rust",
+        "entity.name.type.lifetime",
+        "entity.name.type.lifetime.rust"
+      ],
+      "settings": {
+        "foreground": "#8d9199",
         "fontStyle": "italic"
       }
     },
@@ -2228,10 +2298,9 @@
       }
     },
     {
-      "name": "Python f-string prefixes",
+      "name": "Interpolation contents",
       "scope": [
-        "storage.type.string.python",
-        "storage.type.format.python"
+        "meta.fstring.python constant.character.format.placeholder.other.python"
       ],
       "settings": {
         "foreground": "#3ddbd9",
@@ -2239,9 +2308,84 @@
       }
     },
     {
+      "name": "Property declarations and object keys",
+      "scope": [
+        "meta.object-literal.key",
+        "meta.definition.property variable.object.property",
+        "meta.field.declaration variable.object.property"
+      ],
+      "settings": {
+        "foreground": "#a6c8ff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Optional chaining",
+      "scope": [
+        "punctuation.accessor.optional"
+      ],
+      "settings": {
+        "foreground": "#a6c8ff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Case labels",
+      "scope": [
+        "punctuation.definition.section.case-statement"
+      ],
+      "settings": {
+        "foreground": "#8d9199",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Python string prefixes",
+      "scope": [
+        "storage.type.string.python"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Python format specs",
+      "scope": [
+        "storage.type.format.python",
+        "meta.fstring.python storage.type.format.python"
+      ],
+      "settings": {
+        "foreground": "#82cfff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Python docstrings",
+      "scope": [
+        "string.quoted.docstring",
+        "string.quoted.docstring punctuation.definition.string"
+      ],
+      "settings": {
+        "foreground": "#be95ff",
+        "fontStyle": "italic"
+      }
+    },
+    {
       "name": "Python magic methods",
       "scope": [
-        "support.function.magic.python"
+        "support.function.magic.python",
+        "meta.function.python support.function.magic.python"
+      ],
+      "settings": {
+        "foreground": "#08bdba",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Python method calls",
+      "scope": [
+        "meta.member.access.python meta.function-call.generic.python"
       ],
       "settings": {
         "foreground": "#08bdba",
@@ -2260,10 +2404,37 @@
       }
     },
     {
+      "name": "Decorator names",
+      "scope": [
+        "meta.decorator variable.other.readwrite",
+        "meta.decorator variable.other.readwrite.ts",
+        "meta.decorator variable.other.readwrite.tsx",
+        "meta.decorator entity.name.function.ts",
+        "meta.decorator entity.name.function.tsx"
+      ],
+      "settings": {
+        "foreground": "#42be65",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Constructor calls",
+      "scope": [
+        "new.expr entity.name.function",
+        "new.expr meta.function-call entity.name.function",
+        "new.expr entity.name.type"
+      ],
+      "settings": {
+        "foreground": "#33b1ff",
+        "fontStyle": ""
+      }
+    },
+    {
       "name": "Rust references",
       "scope": [
         "keyword.operator.borrow.rust",
-        "keyword.operator.borrow.and.rust"
+        "keyword.operator.borrow.and.rust",
+        "keyword.operator.dereference.rust"
       ],
       "settings": {
         "foreground": "#a6c8ff",
@@ -2278,14 +2449,36 @@
       ],
       "settings": {
         "foreground": "#3ddbd9",
-        "fontStyle": "italic"
+        "fontStyle": ""
       }
     },
     {
-      "name": "Rust macro bang",
+      "name": "Rust ? operator",
+      "scope": [
+        "keyword.operator.question.rust"
+      ],
+      "settings": {
+        "foreground": "#78a9ff",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Rust unsafe",
+      "scope": [
+        "keyword.other.unsafe.rust",
+        "storage.modifier.unsafe.rust"
+      ],
+      "settings": {
+        "foreground": "#ee5396",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Rust macros",
       "scope": [
         "entity.name.function.macro.rust",
-        "support.macro.rust"
+        "support.macro.rust",
+        "meta.macro.rules.rust entity.name.function.macro.rust"
       ],
       "settings": {
         "foreground": "#3ddbd9",
@@ -2293,10 +2486,88 @@
       }
     },
     {
-      "name": "Go struct field",
+      "name": "Rust macro_rules!",
       "scope": [
-        "variable.other.field.go",
-        "variable.other.property.field.go"
+        "entity.name.function.macro.rules.rust"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Rust macro metavariables",
+      "scope": [
+        "variable.other.metavariable.name.rust",
+        "keyword.operator.macro.dollar.rust"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Rust macro fragment specifiers",
+      "scope": [
+        "variable.other.metavariable.specifier.rust"
+      ],
+      "settings": {
+        "foreground": "#33b1ff",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Rust attribute contents",
+      "scope": [
+        "punctuation.brackets.attribute.rust",
+        "meta.attribute.rust entity.name.type.rust",
+        "meta.attribute.rust variable.other.rust",
+        "meta.attribute.rust keyword.operator"
+      ],
+      "settings": {
+        "foreground": "#42be65",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Rust attribute arguments",
+      "scope": [
+        "meta.attribute.rust punctuation.brackets.round.rust",
+        "meta.attribute.rust punctuation.comma.rust"
+      ],
+      "settings": {
+        "foreground": "#8d9199",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Rust attribute strings",
+      "scope": [
+        "meta.attribute.rust string",
+        "meta.attribute.rust string punctuation.definition.string"
+      ],
+      "settings": {
+        "foreground": "#be95ff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Rust Option and Result variants",
+      "scope": [
+        "entity.name.type.option.rust",
+        "entity.name.type.result.rust"
+      ],
+      "settings": {
+        "foreground": "#4589ff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Rust numeric suffixes",
+      "scope": [
+        "constant.numeric entity.name.type.numeric.rust",
+        "constant.numeric.decimal.rust entity.name.type.numeric.rust",
+        "constant.numeric.hex.rust entity.name.type.numeric.rust"
       ],
       "settings": {
         "foreground": "#82cfff",
@@ -2324,6 +2595,97 @@
       ],
       "settings": {
         "foreground": "#be95ff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "C/C++ macro calls",
+      "scope": [
+        "entity.name.function.call.upper-case entity.name.function.call",
+        "entity.name.function.call.upper-case.cpp entity.name.function.call.cpp",
+        "entity.name.function.call.upper-case.c entity.name.function.call.c"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "C++ attributes",
+      "scope": [
+        "support.other.attribute",
+        "support.other.attribute punctuation.section.attribute",
+        "entity.other.attribute"
+      ],
+      "settings": {
+        "foreground": "#42be65",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "C++ operator overloads",
+      "scope": [
+        "entity.name.operator",
+        "entity.name.operator.cpp"
+      ],
+      "settings": {
+        "foreground": "#ff7eb6",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "C++ declaration keywords",
+      "scope": [
+        "keyword.other.operator.overload",
+        "keyword.other.concept",
+        "meta.declaration.type.alias keyword.other.using.directive"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "C++ lambda captures",
+      "scope": [
+        "punctuation.definition.capture.begin.lambda",
+        "punctuation.definition.capture.end.lambda"
+      ],
+      "settings": {
+        "foreground": "#8d9199",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "C++ raw strings",
+      "scope": [
+        "string.quoted.double.raw",
+        "punctuation.definition.string.raw"
+      ],
+      "settings": {
+        "foreground": "#be95ff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "C++ string prefixes",
+      "scope": [
+        "meta.encoding",
+        "punctuation.definition.string.begin meta.encoding"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Go struct field",
+      "scope": [
+        "variable.other.field.go",
+        "variable.other.property.field.go"
+      ],
+      "settings": {
+        "foreground": "#82cfff",
         "fontStyle": ""
       }
     },
@@ -2366,14 +2728,35 @@
     "namespace": "#08bdba",
     "module": "#08bdba",
     "class": "#33b1ff",
+    "enum": "#33b1ff",
+    "struct": "#33b1ff",
+    "type": "#33b1ff",
+    "typeAlias": "#33b1ff",
+    "union": "#33b1ff",
+    "interface": {
+      "foreground": "#33b1ff",
+      "italic": true
+    },
+    "concept": {
+      "foreground": "#33b1ff",
+      "italic": true
+    },
     "class.defaultLibrary": {
       "foreground": "#33b1ff",
       "italic": true
     },
-    "enum": "#33b1ff",
-    "interface": "#33b1ff",
-    "struct": "#33b1ff",
-    "type": "#33b1ff",
+    "enum.defaultLibrary": {
+      "foreground": "#33b1ff",
+      "italic": true
+    },
+    "interface.defaultLibrary": {
+      "foreground": "#33b1ff",
+      "italic": true
+    },
+    "struct.defaultLibrary": {
+      "foreground": "#33b1ff",
+      "italic": true
+    },
     "type.defaultLibrary": {
       "foreground": "#33b1ff",
       "italic": true
@@ -2382,7 +2765,6 @@
       "foreground": "#33b1ff",
       "italic": true
     },
-    "concept": "#33b1ff",
     "parameter": {
       "foreground": "#dde1e6",
       "italic": true
@@ -2391,13 +2773,11 @@
     "variable.defaultLibrary": "#08bdba",
     "variable.readonly": "#dde1e6",
     "variable.readonly.defaultLibrary": "#08bdba",
-    "variable.readonly:python": "#4589ff",
-    "variable.readonly:go": "#4589ff",
     "variable.constant": "#4589ff",
     "variable.static.readonly": "#4589ff",
     "property.static.readonly": "#4589ff",
-    "property.readonly:python": "#4589ff",
     "property": "#82cfff",
+    "property.declaration": "#a6c8ff",
     "property.defaultLibrary": "#82cfff",
     "enumMember": "#4589ff",
     "event": "#82cfff",
@@ -2410,7 +2790,7 @@
       "foreground": "#ff7eb6",
       "bold": true
     },
-    "function.defaultLibrary": "#ff7eb6",
+    "function.defaultLibrary": "#08bdba",
     "method": "#08bdba",
     "method.declaration": {
       "foreground": "#08bdba",
@@ -2428,6 +2808,10 @@
       "foreground": "#6e747d",
       "italic": true
     },
+    "comment.documentation": {
+      "foreground": "#8d9199",
+      "italic": true
+    },
     "string": "#be95ff",
     "keyword": "#78a9ff",
     "keyword.controlFlow": {
@@ -2440,6 +2824,19 @@
     "*.deprecated": {
       "strikethrough": true
     },
+    "variable.readonly:python": "#4589ff",
+    "property.readonly:python": "#4589ff",
+    "function.builtin:python": "#08bdba",
+    "function.defaultLibrary:python": "#08bdba",
+    "class.builtin:python": {
+      "foreground": "#33b1ff",
+      "italic": true
+    },
+    "class.defaultLibrary:python": {
+      "foreground": "#33b1ff",
+      "italic": true
+    },
+    "*.decorator:python": "#42be65",
     "selfParameter": {
       "foreground": "#ee5396",
       "italic": true
@@ -2448,31 +2845,63 @@
       "foreground": "#ee5396",
       "italic": true
     },
-    "magicFunction": "#08bdba",
+    "magicFunction": {
+      "foreground": "#08bdba",
+      "italic": false,
+      "bold": false
+    },
+    "magicFunction.declaration": {
+      "foreground": "#08bdba",
+      "italic": false,
+      "bold": false
+    },
     "builtinConstant": "#08bdba",
+    "variable.readonly:go": "#4589ff",
     "keyword:rust": "#3ddbd9",
     "keyword.controlFlow:rust": {
       "foreground": "#78a9ff",
       "italic": true
     },
+    "keyword.unsafe:rust": {
+      "foreground": "#ee5396",
+      "bold": true
+    },
+    "operator.controlFlow:rust": {
+      "foreground": "#78a9ff",
+      "bold": true
+    },
     "selfKeyword:rust": {
       "foreground": "#ee5396",
       "italic": true
     },
-    "selfTypeKeyword:rust": "#33b1ff",
+    "selfTypeKeyword:rust": {
+      "foreground": "#33b1ff",
+      "italic": false,
+      "bold": false
+    },
     "selfKeyword": {
       "foreground": "#ee5396",
       "italic": true
     },
-    "selfTypeKeyword": "#33b1ff",
+    "selfTypeKeyword": {
+      "foreground": "#33b1ff",
+      "italic": false,
+      "bold": false
+    },
+    "macro:rust": "#3ddbd9",
+    "macroBang": "#3ddbd9",
+    "procMacro": "#3ddbd9",
+    "attribute": "#42be65",
+    "attributeBracket": "#42be65",
+    "builtinAttribute": "#42be65",
+    "derive": "#42be65",
+    "deriveHelper": "#42be65",
     "builtinType": {
       "foreground": "#33b1ff",
       "italic": true
     },
-    "typeAlias": "#33b1ff",
-    "union": "#33b1ff",
     "lifetime": {
-      "foreground": "#33b1ff",
+      "foreground": "#8d9199",
       "italic": true
     },
     "boolean": {
@@ -2481,12 +2910,26 @@
     },
     "character": "#be95ff",
     "escapeSequence": "#82cfff",
-    "formatSpecifier": "#82cfff",
+    "formatSpecifier": "#3ddbd9",
     "punctuation": "#8d9199",
-    "attribute": "#42be65",
-    "builtinAttribute": "#42be65",
-    "derive": "#42be65",
-    "macroBang": "#3ddbd9",
-    "operator.controlFlow": "#78a9ff"
+    "variable.static:rust": "#4589ff",
+    "static:rust": "#4589ff",
+    "const:rust": "#4589ff",
+    "constParameter": "#4589ff",
+    "crateRoot": "#08bdba",
+    "toolModule": "#08bdba",
+    "*.mutable:rust": {
+      "underline": true
+    },
+    "macro:cpp": "#3ddbd9",
+    "macro:c": "#3ddbd9",
+    "*.deduced:cpp": {
+      "foreground": "#3ddbd9",
+      "italic": false,
+      "bold": false
+    },
+    "modifier:cpp": "#3ddbd9",
+    "bracket:cpp": "#8d9199",
+    "operator.userDefined:cpp": "#a6c8ff"
   }
 }
