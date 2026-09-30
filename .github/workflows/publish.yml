@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -35,6 +39,4 @@ jobs:
           path: '*.vsix'
 
       - name: Publish to Open VSX
-        env:
-          OVSX_PAT: ${{ secrets.OVSX_PAT }}
-        run: npx --yes ovsx publish *.vsix -p "$OVSX_PAT"
+        run: npx --yes ovsx@^1.2.0 publish *.vsix --trusted-publishing
