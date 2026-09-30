@@ -2,12 +2,12 @@
   "name": "oxocarbon-grey",
   "displayName": "Oxocarbon Grey",
   "description": "A dark cool-grey take on Oxocarbon, with richer syntax colours and full semantic highlighting.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "viraj-s15",
   "license": "MIT",
   "icon": "images/icon.png",
   "galleryBanner": {
-    "color": "#161719",
+    "color": "#1b1c1f",
     "theme": "dark"
   },
   "repository": {

@@ -40,8 +40,8 @@ For later releases, bump `version` in `package.json`, add a `CHANGELOG.md` entry
 `.github/workflows/publish.yml` publishes when a `v*` tag is pushed. It needs a repository secret named `OVSX_PAT` (**Settings → Secrets and variables → Actions**). Then:
 
 ```sh
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
 The workflow checks that the tag matches the `version` in `package.json`, that the committed theme is up to date, then packages and publishes the `.vsix` and attaches it to the run as an artifact.
