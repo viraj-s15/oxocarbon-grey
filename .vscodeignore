@@ -1,0 +1,11 @@
+.github/**
+.vscode/**
+src/**
+fixtures/**
+images/preview-*.png
+**/*.vsix
+.gitignore
+.editorconfig
+PUBLISHING.md
+node_modules/**
+.claude/**
