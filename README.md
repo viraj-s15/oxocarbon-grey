@@ -34,7 +34,7 @@ codium --install-extension viraj-s15.oxocarbon-grey
 **From a `.vsix` file:**
 
 ```sh
-code --install-extension oxocarbon-grey-0.2.0.vsix
+code --install-extension oxocarbon-grey-0.2.1.vsix
 ```
 
 or use **Extensions: Install from VSIX...** from the command palette.
@@ -68,15 +68,16 @@ or use **Extensions: Install from VSIX...** from the command palette.
 | Ice | `#82cfff` | base15 | Numbers, properties, object keys, attributes, escapes |
 | Purple | `#be95ff` | base14 | Strings, inline code, warnings |
 | Rose | `#ff7eb6` | base12 | Functions, markdown bold |
-| Pink | `#ee5396` | base10 | Constants, enum members, `this` / `self`, headings, deletions, errors, badges |
+| Pink | `#ee5396` | base10 | `this` / `self`, headings, deletions, errors, badges |
 | Green | `#42be65` | base13 | Decorators, TODO, additions |
+| Cobalt | `#4589ff` | (Carbon blue 50) | Constants, enum members |
 | Steel | `#7189b3` | (muted blue) | Terminal bright blue only |
 
 ### Syntax
 
 | Token | Colour |
 | --- | --- |
-| `if` `for` `return` `import` | Blue `#78a9ff` |
+| `if` `for` `return` `await` `import` `and` `not` `in` | Blue `#78a9ff` italic |
 | `const` `let` `fn` `def` `class` `struct` | Cyan `#3ddbd9` |
 | Operators | Light blue `#a6c8ff` |
 | Function declarations / calls | Rose `#ff7eb6` bold / regular |
@@ -87,8 +88,9 @@ or use **Extensions: Install from VSIX...** from the command palette.
 | Escapes, format placeholders | Ice `#82cfff` |
 | Regular expressions | Teal `#08bdba` |
 | Numbers | Ice `#82cfff` |
-| Constants, enum members | Pink `#ee5396` |
-| `true` `false` `null` `None`, built-in constants | Teal `#08bdba` |
+| Constants, enum members | Cobalt `#4589ff` |
+| `true` `false` `null` `None` `nil` `undefined` | Teal `#08bdba` italic |
+| Other built-in constants | Teal `#08bdba` |
 | Properties, object keys | Ice `#82cfff` |
 | Variables | `#dde1e6` |
 | Parameters | `#dde1e6` italic |
