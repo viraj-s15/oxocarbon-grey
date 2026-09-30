@@ -1,0 +1,82 @@
+// Semantic token colours (TypeScript, Pylance, rust-analyzer, clangd, gopls, ...).
+import { syntax as s } from './palette.mjs';
+
+const italic = (foreground) => ({ foreground, italic: true });
+const bold = (foreground) => ({ foreground, bold: true });
+
+export default {
+  // Standard token types
+  namespace: s.namespace,
+  module: s.namespace,
+  class: s.type,
+  'class.defaultLibrary': italic(s.type),
+  enum: s.type,
+  interface: s.type,
+  struct: s.type,
+  type: s.type,
+  'type.defaultLibrary': italic(s.type),
+  typeParameter: italic(s.type),
+  concept: s.type,
+  parameter: italic(s.parameter),
+  variable: s.variable,
+  'variable.defaultLibrary': s.builtin,
+  // TS marks every `const` as readonly; keep those looking like variables.
+  'variable.readonly': s.variable,
+  'variable.readonly.defaultLibrary': s.builtin,
+  // Servers that only mark real constants as readonly.
+  'variable.readonly:python': s.constant,
+  'variable.readonly:go': s.constant,
+  'variable.constant': s.constant,
+  'variable.static.readonly': s.constant,
+  'property.static.readonly': s.constant,
+  property: s.property,
+  'property.defaultLibrary': s.property,
+  enumMember: s.constant,
+  event: s.property,
+  function: s.function,
+  'function.declaration': bold(s.function),
+  'function.definition': bold(s.function),
+  'function.defaultLibrary': s.function,
+  method: s.method,
+  'method.declaration': bold(s.method),
+  'method.definition': bold(s.method),
+  'method.defaultLibrary': s.method,
+  macro: s.macro,
+  decorator: s.decorator,
+  label: s.label,
+  comment: italic(s.comment),
+  string: s.string,
+  keyword: s.keyword,
+  number: s.number,
+  regexp: s.regex,
+  operator: s.operator,
+  '*.deprecated': { strikethrough: true },
+
+  // Pylance
+  selfParameter: italic(s.self),
+  clsParameter: italic(s.self),
+  magicFunction: s.method,
+  builtinConstant: s.builtin,
+
+  // rust-analyzer
+  'keyword:rust': s.storage,
+  'keyword.controlFlow:rust': s.keyword,
+  'selfKeyword:rust': italic(s.self),
+  'selfTypeKeyword:rust': s.type,
+  selfKeyword: italic(s.self),
+  selfTypeKeyword: s.type,
+  builtinType: italic(s.type),
+  typeAlias: s.type,
+  union: s.type,
+  lifetime: italic(s.type),
+  boolean: s.builtin,
+  character: s.string,
+  escapeSequence: s.escape,
+  formatSpecifier: s.escape,
+  punctuation: s.punctuation,
+  attribute: s.decorator,
+  builtinAttribute: s.decorator,
+  derive: s.decorator,
+  macroBang: s.macro,
+  'operator.controlFlow': s.keyword,
+};
