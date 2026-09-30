@@ -59,11 +59,7 @@ if (process.argv.includes('--check')) {
 }
 
 const rows = checkContrast();
-const failures = rows.filter((r) => !r.ok && r.strict);
-const warnings = rows.filter((r) => !r.ok && !r.strict);
-if (warnings.length) {
-  console.log('below target (not enforced): ' + warnings.map((r) => `${r.role} ${r.fg} on ${r.where} ${r.ratio.toFixed(2)}:1`).join(', '));
-}
+const failures = rows.filter((r) => !r.ok);
 const worst = [...rows].sort((a, b) => a.ratio - b.ratio).slice(0, 5);
 console.log('lowest contrast: ' + worst.map((r) => `${r.role} ${r.fg} on ${r.where} ${r.ratio.toFixed(2)}:1`).join(', '));
 if (failures.length) {
