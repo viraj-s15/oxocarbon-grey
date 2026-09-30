@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+- Constants and enum members are now cobalt `#4589ff` (IBM Carbon blue 50) instead of pink, so pink is left for functions and `self` / `this`. This covers the `constant.other.caps` scopes and the semantic `readonly` / `enumMember` tokens from Pylance, TypeScript and rust-analyzer.
+- Control-flow keywords, imports and exports, word operators (`and`, `or`, `not`, `in`, `is`) and language literals (`true`, `false`, `null`, `None`, `nil`, `undefined`) are italic. Declaration keywords (`def`, `class`, `fn`, `let`, `const`, `function`, `struct`, `impl`) stay upright. The italic also applies when semantic highlighting is on.
+
 ## 0.2.0
 
 - Removed peach. Numbers are now ice `#82cfff`, as in Oxocarbon. Constants and enum members are now pink `#ee5396`. Warnings are purple `#be95ff`, as in oxocarbon.nvim.
