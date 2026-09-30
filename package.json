@@ -1,0 +1,49 @@
+{
+  "name": "oxocarbon-grey",
+  "displayName": "Oxocarbon Grey",
+  "description": "A dark cool-grey take on Oxocarbon, with richer syntax colours and full semantic highlighting.",
+  "version": "0.1.0",
+  "publisher": "viraj-s15",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#161719",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/viraj-s15/oxocarbon-grey"
+  },
+  "bugs": {
+    "url": "https://github.com/viraj-s15/oxocarbon-grey/issues"
+  },
+  "homepage": "https://github.com/viraj-s15/oxocarbon-grey#readme",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "theme",
+    "color-theme",
+    "dark",
+    "oxocarbon",
+    "carbon",
+    "grey"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Oxocarbon Grey",
+        "uiTheme": "vs-dark",
+        "path": "./themes/oxocarbon-grey-color-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node src/build.mjs && node src/icon.mjs",
+    "check": "node src/build.mjs --check",
+    "package": "npm run build && npx --yes @vscode/vsce package"
+  }
+}
