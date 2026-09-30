@@ -8,3 +8,4 @@ images/preview-*.png
 .editorconfig
 PUBLISHING.md
 node_modules/**
+.claude/**
