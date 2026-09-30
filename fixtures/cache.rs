@@ -60,8 +60,9 @@ where
         if age > self.ttl {
             return Err(CacheError::Expired { key: key.into(), age });
         }
+        let value = entry.value.clone();
         self.touch(key);
-        Ok(entry.value.clone())
+        Ok(value)
     }
 
     fn touch(&mut self, key: &str) {
