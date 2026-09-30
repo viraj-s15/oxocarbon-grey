@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.3.1
+
+Audited against Catppuccin, One Dark Pro, Tokyo Night, GitHub, Material and Dracula, and against real semantic tokens from rust-analyzer, clangd, basedpyright and tsserver, resolved the way VS Code resolves them.
+
+- Fixed: with rust-analyzer, declaration keywords (`fn`, `let`, `impl`) could turn italic and `true`/`false` were cyan.
+- Fixed: with clangd:
+  - `auto` turned sky italic when it deduced a std type;
+  - operator overload and constructor names lost their declaration style;
+  - static member functions were rose.
+- Semantic additions:
+  - clangd: namespace-scope `constexpr` values and non-type template parameters are constants, and static data members use the field colour.
+  - Pylance: `True`/`False`/`None` are italic, its punctuation tokens are muted, `match`/`case` stay italic, and decorators stay green even for built-ins.
+  - basedpyright: `Callable` parameters stay parameters.
+  - TypeScript: globals used as values (`Array.isArray`, `new Map`) are teal.
+  - Rust: raw-pointer derefs share `unsafe`'s pink bold; methods taking `&mut self` are no longer underlined; std functions are ordinary functions.
+- TextMate:
+  - Python and TS regex internals, backreferences and named groups;
+  - number prefixes and suffixes (`0x`, `3j`, `10n`);
+  - Python base-class parentheses, and TS destructuring colons and generator `*`;
+  - bold arrow-function declarations; italic trait and interface declarations;
+  - Rust `b"…"`/`r#"…"#` prefixes;
+  - C++ constructors, enum base types, lambda return types, `->`, `...`, `alignof`/`typeid`/`noexcept`.
+- Removed selectors the built-in grammars never emit.
+- `fixtures/cache.rs` now compiles.
+
 ## 0.3.0
 
 - Per-language tuning for Python, Rust, TypeScript/TSX and C++, covering both the built-in TextMate grammars and the semantic tokens from Pylance, rust-analyzer, tsserver and clangd. Role colours are the same in all four languages.

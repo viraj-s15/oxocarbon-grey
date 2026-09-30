@@ -36,7 +36,7 @@ codium --install-extension viraj-s15.oxocarbon-grey
 **From a `.vsix` file:**
 
 ```sh
-code --install-extension oxocarbon-grey-0.3.0.vsix
+code --install-extension oxocarbon-grey-0.3.1.vsix
 ```
 
 or use **Extensions: Install from VSIX...** from the command palette.
@@ -127,12 +127,14 @@ Normal ANSI colours use the accents: pink, green, purple (for yellow, as in oxoc
 
 Python, Rust, TypeScript/TSX and C++ are tuned against VS Code's built-in grammars and each language's main language server. Every role uses the same colour in all four: types are sky, macros cyan, namespaces teal, constants cobalt. Semantic highlighting (on by default) fills in what the grammars can't know, so keep it on for the full effect.
 
+The semantic rules were checked against real output from rust-analyzer, clangd, basedpyright (standing in for Pylance, whose token types come from its published `package.json`) and TypeScript's own classifier, resolved the way VS Code resolves them. Some things the servers can't express: with rust-analyzer, `use`, `as` and `in` are upright, and `.`/`::` use the operator colour; with basedpyright, dunder declarations are bold and `typing` names are upright; with tsserver, decorator names and `as const` take the function and type colours.
+
 | Language | TextMate grammar | Only with semantic highlighting |
 | --- | --- | --- |
 | Python (Pylance) | Decorators, f-string braces and the code inside them, docstrings, `int`/`str`/`list` in annotations, dunder methods, `self`/`cls`, keyword arguments, built-in functions, `match`/`case`, walrus, `async`/`await` | Imported module names, `typing` names (`Optional`, `Callable`), user classes in annotations, `list[...]` in subscripts, readonly class constants accessed via `self` |
-| Rust (rust-analyzer) | Macros with `!`, attributes and derives, lifetimes, `?`, `&`/`&mut`/`*`, `Some`/`None`/`Ok`/`Err`, format-string braces, `///` doc comments, `macro_rules!` metavariables | `unsafe`, mutable-binding underline, enum variants, traits (italic), `Self` as a type, types before `::`, parameters, fields, method calls, `//!` inner doc comments, `in` in `for` loops (italic) |
+| Rust (rust-analyzer) | Macros with `!`, attributes and derives, lifetimes, `?`, `&`/`&mut`/`*`, `Some`/`None`/`Ok`/`Err`, format-string braces, `///` doc comments, trait declarations, `macro_rules!` metavariables | `unsafe` and raw-pointer derefs (pink bold), mutable-binding underline, enum variants, traits used as types (italic), `Self` as a type, types before `::`, parameters, fields, method calls, `//!` inner doc comments |
 | TypeScript / TSX (tsserver) | Interfaces, aliases, generics, enums and members, `readonly`, `?`, decorators, `${}` interpolation, `this`, object keys vs property access, `as`/`satisfies`, `?.`/`??`, JSX components vs HTML tags, attributes, `{}` expressions, `new X()` | Interfaces as italic when used, `console`/`Array`/`Object` as built-ins, method calls vs function calls, `Promise` in type positions |
-| C++ (clangd) | Preprocessor directives, `<header>`/`"header"`, `#define` names, `ALL_CAPS()` macro calls, namespaces, classes, templates, template parameters, `constexpr`/`consteval`/`const`/`volatile`, `*`/`&`/`&&`, operator overloads, lambda captures, `[[nodiscard]]`, raw strings, `nullptr` | Concept names, `std::` types as library types (italic), enum members after `::`, macros used without parentheses, `auto` as a keyword, fields |
+| C++ (clangd) | Preprocessor directives, `<header>`/`"header"`, `#define` names, `ALL_CAPS()` macro calls, namespaces, classes, constructors, templates, template parameters, `constexpr`/`consteval`/`const`/`volatile`, `*`/`&`/`&&`, operator overloads, lambda captures, `[[nodiscard]]`, raw strings, `nullptr` | Concept names, `std::` types as library types (italic), enum members after `::`, macros used without parentheses, `auto` as a keyword, namespace-scope `constexpr` as constants, static members, non-type template parameters (cobalt), fields |
 
 ## Customising or building
 
