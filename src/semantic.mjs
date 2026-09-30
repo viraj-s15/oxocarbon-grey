@@ -29,6 +29,8 @@ export default {
   'variable.constant': s.constant,
   'variable.static.readonly': s.constant,
   'property.static.readonly': s.constant,
+  // Pylance marks UPPER_CASE class attributes (self.CELLS) readonly.
+  'property.readonly:python': s.constant,
   property: s.property,
   'property.defaultLibrary': s.property,
   enumMember: s.constant,
@@ -46,7 +48,9 @@ export default {
   label: s.label,
   comment: italic(s.comment),
   string: s.string,
+  // Colour only: the TextMate rule decides whether a keyword is italic.
   keyword: s.keyword,
+  'keyword.controlFlow': italic(s.keyword),
   number: s.number,
   regexp: s.regex,
   operator: s.operator,
@@ -60,7 +64,7 @@ export default {
 
   // rust-analyzer
   'keyword:rust': s.storage,
-  'keyword.controlFlow:rust': s.keyword,
+  'keyword.controlFlow:rust': italic(s.keyword),
   'selfKeyword:rust': italic(s.self),
   'selfTypeKeyword:rust': s.type,
   selfKeyword: italic(s.self),
@@ -69,7 +73,7 @@ export default {
   typeAlias: s.type,
   union: s.type,
   lifetime: italic(s.type),
-  boolean: s.builtin,
+  boolean: italic(s.builtin),
   character: s.string,
   escapeSequence: s.escape,
   formatSpecifier: s.escape,

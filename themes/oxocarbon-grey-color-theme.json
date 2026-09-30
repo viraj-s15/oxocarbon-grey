@@ -641,10 +641,10 @@
     "symbolIcon.booleanForeground": "#08bdba",
     "symbolIcon.classForeground": "#33b1ff",
     "symbolIcon.colorForeground": "#82cfff",
-    "symbolIcon.constantForeground": "#ee5396",
+    "symbolIcon.constantForeground": "#4589ff",
     "symbolIcon.constructorForeground": "#33b1ff",
     "symbolIcon.enumeratorForeground": "#33b1ff",
-    "symbolIcon.enumeratorMemberForeground": "#ee5396",
+    "symbolIcon.enumeratorMemberForeground": "#4589ff",
     "symbolIcon.eventForeground": "#82cfff",
     "symbolIcon.fieldForeground": "#82cfff",
     "symbolIcon.fileForeground": "#8d9199",
@@ -760,14 +760,29 @@
       "name": "Keywords",
       "scope": [
         "keyword",
-        "keyword.control",
-        "keyword.other",
-        "keyword.other.using",
-        "keyword.other.import"
+        "keyword.other"
       ],
       "settings": {
         "foreground": "#78a9ff",
         "fontStyle": ""
+      }
+    },
+    {
+      "name": "Control-flow keywords",
+      "scope": [
+        "keyword.control",
+        "keyword.other.using",
+        "keyword.other.import",
+        "keyword.control.flow",
+        "keyword.control.conditional",
+        "keyword.control.loop",
+        "keyword.control.trycatch",
+        "keyword.control.switch",
+        "keyword.control.exception"
+      ],
+      "settings": {
+        "foreground": "#78a9ff",
+        "fontStyle": "italic"
       }
     },
     {
@@ -805,20 +820,52 @@
       }
     },
     {
-      "name": "Imports and control flow in other grammars",
+      "name": "Imports and exports",
       "scope": [
         "keyword.control.import",
         "keyword.control.from",
         "keyword.control.export",
         "keyword.control.default",
-        "keyword.package.go",
         "keyword.import.go",
+        "keyword.other.use.rust"
+      ],
+      "settings": {
+        "foreground": "#78a9ff",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Package and module declarations",
+      "scope": [
+        "keyword.package.go",
         "keyword.other.crate.rust",
-        "keyword.other.use.rust",
         "keyword.other.mod.rust"
       ],
       "settings": {
         "foreground": "#78a9ff",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Rust use",
+      "scope": [
+        "meta.use.rust keyword.other.rust"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Declarations scoped as control keywords",
+      "scope": [
+        "keyword.control.def.ruby",
+        "keyword.control.class.ruby",
+        "keyword.control.module.ruby",
+        "meta.function.lua keyword.control.lua"
+      ],
+      "settings": {
+        "foreground": "#3ddbd9",
         "fontStyle": ""
       }
     },
@@ -853,20 +900,35 @@
       "scope": [
         "keyword.operator.new",
         "keyword.operator.expression",
-        "keyword.operator.logical.python",
-        "keyword.operator.word",
         "keyword.operator.sizeof",
         "keyword.operator.cast",
         "keyword.operator.instanceof",
         "keyword.operator.typeof",
         "keyword.operator.delete",
-        "keyword.operator.in",
-        "keyword.operator.of",
         "keyword.operator.misc.rust"
       ],
       "settings": {
         "foreground": "#78a9ff",
         "fontStyle": ""
+      }
+    },
+    {
+      "name": "Logical and membership word operators",
+      "scope": [
+        "keyword.operator.logical.python",
+        "keyword.operator.word",
+        "keyword.operator.in",
+        "keyword.operator.of",
+        "keyword.operator.expression.in",
+        "keyword.operator.expression.of",
+        "keyword.operator.expression.is",
+        "keyword.operator.and",
+        "keyword.operator.or",
+        "keyword.operator.not"
+      ],
+      "settings": {
+        "foreground": "#78a9ff",
+        "fontStyle": "italic"
       }
     },
     {
@@ -1128,20 +1190,31 @@
     {
       "name": "Built-in constants",
       "scope": [
-        "constant.language",
-        "constant.language.boolean",
-        "constant.language.null",
-        "constant.language.undefined",
-        "constant.language.python",
-        "constant.language.go",
         "support.constant",
         "constant.builtin",
-        "constant.language.json",
         "variable.language.ellipsis"
       ],
       "settings": {
         "foreground": "#08bdba",
         "fontStyle": ""
+      }
+    },
+    {
+      "name": "Language literals",
+      "scope": [
+        "constant.language",
+        "constant.language.boolean",
+        "constant.language.null",
+        "constant.language.undefined",
+        "constant.language.nil",
+        "constant.language.python",
+        "constant.language.go",
+        "constant.language.json",
+        "constant.language.bool.rust"
+      ],
+      "settings": {
+        "foreground": "#08bdba",
+        "fontStyle": "italic"
       }
     },
     {
@@ -1162,7 +1235,7 @@
         "constant.other.key"
       ],
       "settings": {
-        "foreground": "#ee5396",
+        "foreground": "#4589ff",
         "fontStyle": ""
       }
     },
@@ -2318,14 +2391,15 @@
     "variable.defaultLibrary": "#08bdba",
     "variable.readonly": "#dde1e6",
     "variable.readonly.defaultLibrary": "#08bdba",
-    "variable.readonly:python": "#ee5396",
-    "variable.readonly:go": "#ee5396",
-    "variable.constant": "#ee5396",
-    "variable.static.readonly": "#ee5396",
-    "property.static.readonly": "#ee5396",
+    "variable.readonly:python": "#4589ff",
+    "variable.readonly:go": "#4589ff",
+    "variable.constant": "#4589ff",
+    "variable.static.readonly": "#4589ff",
+    "property.static.readonly": "#4589ff",
+    "property.readonly:python": "#4589ff",
     "property": "#82cfff",
     "property.defaultLibrary": "#82cfff",
-    "enumMember": "#ee5396",
+    "enumMember": "#4589ff",
     "event": "#82cfff",
     "function": "#ff7eb6",
     "function.declaration": {
@@ -2356,6 +2430,10 @@
     },
     "string": "#be95ff",
     "keyword": "#78a9ff",
+    "keyword.controlFlow": {
+      "foreground": "#78a9ff",
+      "italic": true
+    },
     "number": "#82cfff",
     "regexp": "#08bdba",
     "operator": "#a6c8ff",
@@ -2373,7 +2451,10 @@
     "magicFunction": "#08bdba",
     "builtinConstant": "#08bdba",
     "keyword:rust": "#3ddbd9",
-    "keyword.controlFlow:rust": "#78a9ff",
+    "keyword.controlFlow:rust": {
+      "foreground": "#78a9ff",
+      "italic": true
+    },
     "selfKeyword:rust": {
       "foreground": "#ee5396",
       "italic": true
@@ -2394,7 +2475,10 @@
       "foreground": "#33b1ff",
       "italic": true
     },
-    "boolean": "#08bdba",
+    "boolean": {
+      "foreground": "#08bdba",
+      "italic": true
+    },
     "character": "#be95ff",
     "escapeSequence": "#82cfff",
     "formatSpecifier": "#82cfff",
