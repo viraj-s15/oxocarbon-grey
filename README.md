@@ -2,7 +2,7 @@
 
 A dark VS Code colour theme built on the [Oxocarbon](https://github.com/nyoom-engineering/oxocarbon.nvim) palette, with two changes:
 
-- **Graphene background.** A cool dark grey (`#1b1c1f`) with slightly darker chrome instead of near-black.
+- **One graphene surface.** The whole window, from the title bar through the sidebar, editor, panel and terminal to the status bar, is a single cool dark grey (`#1b1c1f`) with hairline borders. In VS Code's modern layout the gaps around the rounded parts use the same colour, so the parts don't read as separate cards.
 - **More nuanced syntax.** Oxocarbon uses one blue for keywords, types, operators, booleans and tags. Here they are split across the palette, and there is a full semantic token map so language servers (TypeScript, Pylance, rust-analyzer, clangd, gopls) colour things consistently.
 
 ## Screenshots
@@ -34,7 +34,7 @@ codium --install-extension viraj-s15.oxocarbon-grey
 **From a `.vsix` file:**
 
 ```sh
-code --install-extension oxocarbon-grey-0.1.0.vsix
+code --install-extension oxocarbon-grey-0.2.0.vsix
 ```
 
 or use **Extensions: Install from VSIX...** from the command palette.
@@ -45,12 +45,12 @@ or use **Extensions: Install from VSIX...** from the command palette.
 
 | Role | Hex |
 | --- | --- |
-| Editor background | `#1b1c1f` |
-| Sidebar, activity bar, panel, title bar, status bar | `#161719` |
-| Widgets, menus, hovers, inputs | `#232428` |
-| Current line | `#222327` |
+| Every part of the window, and the gaps between them | `#1b1c1f` |
+| Floating widgets: menus, hovers, suggest, quick input, notifications | `#232428` |
+| Current line | `#202125` |
 | Selection | `#33353b` |
-| Borders | `#2b2d31` |
+| Borders (hairline) | `#ffffff0d` (5% white) |
+| Indent guides, rulers | `#2b2d31` |
 | Line numbers | `#4d5159` |
 | Foreground, active line number | `#dde1e6` |
 | Punctuation, secondary text | `#8d9199` |
@@ -65,12 +65,12 @@ or use **Extensions: Install from VSIX...** from the command palette.
 | Cyan | `#3ddbd9` | base08 | Storage and declaration keywords, macros |
 | Teal | `#08bdba` | base07 | Methods, namespaces, booleans, built-in constants, regex |
 | Sky | `#33b1ff` | base11 | Types, classes, interfaces, enums |
-| Ice | `#82cfff` | base15 | Properties, object keys, attributes, escapes |
-| Purple | `#be95ff` | base14 | Strings, inline code |
-| Rose | `#ff7eb6` | base12 | Functions |
-| Pink | `#ee5396` | base10 | `this` / `self`, headings, deletions, errors, badges |
-| Peach | `#ffab91` | light variant | Numbers, constants, enum members, warnings |
+| Ice | `#82cfff` | base15 | Numbers, properties, object keys, attributes, escapes |
+| Purple | `#be95ff` | base14 | Strings, inline code, warnings |
+| Rose | `#ff7eb6` | base12 | Functions, markdown bold |
+| Pink | `#ee5396` | base10 | Constants, enum members, `this` / `self`, headings, deletions, errors, badges |
 | Green | `#42be65` | base13 | Decorators, TODO, additions |
+| Steel | `#7189b3` | (muted blue) | Terminal bright blue only |
 
 ### Syntax
 
@@ -86,7 +86,8 @@ or use **Extensions: Install from VSIX...** from the command palette.
 | Strings | Purple `#be95ff` |
 | Escapes, format placeholders | Ice `#82cfff` |
 | Regular expressions | Teal `#08bdba` |
-| Numbers, constants, enum members | Peach `#ffab91` |
+| Numbers | Ice `#82cfff` |
+| Constants, enum members | Pink `#ee5396` |
 | `true` `false` `null` `None`, built-in constants | Teal `#08bdba` |
 | Properties, object keys | Ice `#82cfff` |
 | Variables | `#dde1e6` |
@@ -102,7 +103,11 @@ or use **Extensions: Install from VSIX...** from the command palette.
 | Markdown headings, links, inline code | Pink bold, blue, purple |
 | Diff inserted / deleted / changed | Green, pink, blue |
 
-Every syntax colour has at least 4.5:1 contrast on the editor background. Comments have 3.4:1. `npm run build` checks this.
+Every syntax colour has at least 4.5:1 contrast on both the editor background and the current line. Comments have at least 3.2:1. The terminal ANSI colours have at least 4.5:1 as text (bright black has 3.4:1). `npm run build` checks all of this.
+
+### Terminal
+
+Normal ANSI colours use the accents: pink, green, purple (for yellow, as in oxocarbon.nvim), blue, rose, teal. VS Code uses the same colour for ANSI text and ANSI backgrounds, so white (`#aeb4be`) and bright blue (`#7189b3`) are toned down. Inverse and highlighted text, such as the "History restored" marker, then shows as a muted grey-blue chip instead of a bright block.
 
 ## Customising or building
 
