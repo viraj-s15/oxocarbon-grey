@@ -1,6 +1,7 @@
 .github/**
 .vscode/**
 src/**
+fixtures/**
 images/preview-*.png
 **/*.vsix
 .gitignore
