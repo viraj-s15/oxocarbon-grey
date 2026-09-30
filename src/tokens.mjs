@@ -85,16 +85,17 @@ export default [
       'keyword.other.fn',
       'keyword.other.type',
       'storage.type.function.arrow',
+      'keyword.generator.asterisk',
     ],
     s.storage,
   ),
   rule(
     'Imports and exports',
-    ['keyword.control.import', 'keyword.control.from', 'keyword.control.export', 'keyword.control.default', 'keyword.import.go', 'keyword.other.use.rust'],
+    ['keyword.control.import', 'keyword.control.from', 'keyword.control.export', 'keyword.control.default', 'keyword.import.go'],
     s.keyword,
     'italic',
   ),
-  rule('Package and module declarations', ['keyword.package.go', 'keyword.other.crate.rust', 'keyword.other.mod.rust'], s.keyword),
+  rule('Package and module declarations', ['keyword.package.go'], s.keyword),
   // The Rust grammar scopes `use` like `impl`; keep rust-analyzer's colour, add the italic.
   rule('Rust use', ['meta.use.rust keyword.other.rust'], s.storage, 'italic'),
   // Grammars that scope declarations as keyword.control.
@@ -105,12 +106,12 @@ export default [
   ),
   rule(
     'Operators',
-    ['keyword.operator', 'keyword.operator.assignment', 'keyword.operator.arithmetic', 'keyword.operator.comparison', 'keyword.operator.relational', 'keyword.operator.logical', 'keyword.operator.bitwise', 'keyword.operator.ternary', 'keyword.operator.optional', 'keyword.operator.spread', 'keyword.operator.rest', 'keyword.operator.type', 'keyword.operator.borrow', 'keyword.operator.dereference', 'keyword.operator.pipe', 'keyword.operator.redirect', 'keyword.operator.heredoc'],
+    ['keyword.operator', 'keyword.operator.assignment', 'keyword.operator.arithmetic', 'keyword.operator.comparison', 'keyword.operator.relational', 'keyword.operator.logical', 'keyword.operator.bitwise', 'keyword.operator.ternary', 'keyword.operator.optional', 'keyword.operator.spread', 'keyword.operator.rest', 'keyword.operator.type', 'keyword.operator.borrow', 'keyword.operator.dereference', 'keyword.operator.pipe', 'keyword.operator.redirect', 'keyword.operator.heredoc', 'punctuation.definition.function.return-type', 'punctuation.definition.lambda.return-type', 'punctuation.vararg-ellipses'],
     s.operator,
   ),
   rule(
     'Word operators',
-    ['keyword.operator.new', 'keyword.operator.expression', 'keyword.operator.sizeof', 'keyword.operator.cast', 'keyword.operator.instanceof', 'keyword.operator.typeof', 'keyword.operator.delete', 'keyword.operator.misc.rust'],
+    ['keyword.operator.new', 'keyword.operator.expression', 'keyword.operator.sizeof', 'keyword.operator.cast', 'keyword.operator.instanceof', 'keyword.operator.typeof', 'keyword.operator.delete', 'keyword.operator.alignas', 'keyword.operator.alignof', 'keyword.operator.typeid', 'keyword.operator.noexcept'],
     s.keyword,
   ),
   rule(
@@ -150,6 +151,7 @@ export default [
       'keyword.operator.namespace',
       'keyword.operator.access',
       'keyword.operator.key-value',
+      'punctuation.destructuring',
     ],
     s.punctuation,
   ),
@@ -182,6 +184,7 @@ export default [
       'punctuation.definition.section.begin.toml',
       'punctuation.definition.section.end.toml',
       'punctuation.definition.logical-expression',
+      'punctuation.definition.inheritance',
     ],
     s.punctuation,
   ),
@@ -212,14 +215,14 @@ export default [
   rule('Regular expressions', ['string.regexp', 'source.regexp', 'punctuation.definition.string.regexp', 'string.regexp punctuation.definition.string', 'string.regexp keyword.other'], s.regex),
   rule(
     'Regex internals',
-    ['constant.other.character-class.regexp', 'constant.character.character-class.regexp', 'constant.other.character-class.set.regexp', 'constant.character.set.regexp', 'string.regexp constant.character.escape'],
+    ['constant.other.character-class.regexp', 'constant.character.character-class.regexp', 'constant.other.character-class.set.regexp', 'constant.character.set.regexp', 'string.regexp constant.character.escape', 'support.other.escape.special.regexp', 'support.other.match.any.regexp', 'entity.name.tag.backreference.regexp', 'constant.other.character-class.range.regexp', 'constant.character.numeric.regexp', 'keyword.other.back-reference.regexp'],
     s.escape,
   ),
-  rule('Regex quantifiers and anchors', ['keyword.operator.quantifier.regexp', 'keyword.control.anchor.regexp', 'keyword.operator.or.regexp', 'keyword.operator.negation.regexp'], s.operator),
-  rule('Regex groups', ['punctuation.definition.group.regexp', 'punctuation.definition.group.assertion.regexp', 'punctuation.definition.character-class.regexp', 'meta.assertion.look-ahead.regexp', 'meta.assertion.look-behind.regexp', 'constant.other.set.regexp', 'punctuation.character.set.begin.regexp', 'punctuation.character.set.end.regexp'], s.storage),
+  rule('Regex quantifiers and anchors', ['keyword.operator.quantifier.regexp', 'keyword.control.anchor.regexp', 'keyword.operator.or.regexp', 'keyword.operator.negation.regexp', 'support.other.match.begin.regexp', 'support.other.match.end.regexp'], s.operator),
+  rule('Regex groups', ['punctuation.definition.group.regexp', 'punctuation.definition.group.assertion.regexp', 'punctuation.definition.character-class.regexp', 'meta.assertion.look-ahead.regexp', 'meta.assertion.look-behind.regexp', 'constant.other.set.regexp', 'punctuation.character.set.begin.regexp', 'punctuation.character.set.end.regexp', 'string.regexp punctuation.parenthesis', 'entity.name.tag.named.group.regexp', 'keyword.operator.lookahead', 'keyword.operator.lookbehind', 'punctuation.definition.group.no-capture.regexp', 'variable.other.regexp'], s.storage),
 
   // Constants
-  rule('Numbers', ['constant.numeric', 'keyword.other.unit', 'keyword.other.suffix', 'punctuation.separator.dot.decimal', 'punctuation.separator.decimal', 'constant.other.date', 'constant.other.time', 'constant.other.datetime', 'constant.other.time.datetime', 'constant.numeric punctuation', 'constant.other.color', 'constant.other.color.rgb-value', 'constant.other.rgb-value'], s.number),
+  rule('Numbers', ['constant.numeric', 'keyword.other.unit', 'keyword.other.suffix', 'punctuation.separator.dot.decimal', 'punctuation.separator.decimal', 'constant.other.date', 'constant.other.time', 'constant.other.datetime', 'constant.other.time.datetime', 'constant.numeric punctuation', 'constant.other.color', 'constant.other.color.rgb-value', 'constant.other.rgb-value', 'storage.type.number.python', 'storage.type.imaginary.number.python', 'storage.type.numeric.bigint'], s.number),
   rule('Built-in constants', ['support.constant', 'constant.builtin', 'variable.language.ellipsis', 'constant.other.ellipsis.python'], s.builtin),
   rule('Language literals', ['constant.language', 'constant.language.boolean', 'constant.language.null', 'constant.language.undefined', 'constant.language.nil', 'constant.language.python', 'constant.language.go', 'constant.language.json', 'constant.language.bool.rust'], s.builtin, 'italic'),
   rule(
@@ -251,7 +254,7 @@ export default [
   rule('Parameters', ['variable.parameter', 'meta.parameter variable', 'meta.function.parameters variable', 'entity.name.variable.parameter', 'meta.parameters.python variable'], s.parameter, 'italic'),
   rule(
     'this / self / super',
-    ['variable.language', 'variable.language.this', 'variable.language.self', 'variable.language.super', 'variable.language.special.self', 'variable.parameter.function.language.special.self', 'variable.parameter.function.language.special.cls', 'variable.language.special.cls', 'keyword.other.self.rust', 'variable.language.self.rust', 'keyword.other.this'],
+    ['variable.language', 'variable.language.this', 'variable.language.self', 'variable.language.super', 'variable.language.special.self', 'variable.parameter.function.language.special.self', 'variable.parameter.function.language.special.cls', 'variable.language.special.cls', 'variable.language.self.rust'],
     s.self,
     'italic',
   ),
@@ -291,6 +294,7 @@ export default [
       'meta.definition.function entity.name.function',
       'meta.function.python entity.name.function',
       'meta.function.definition.rust entity.name.function.rust',
+      'meta.definition.variable entity.name.function',
       'entity.name.function.definition',
       'entity.name.function.shell',
     ],
@@ -299,7 +303,7 @@ export default [
   ),
   rule('Method calls', ['entity.name.function.member', 'entity.name.function.method', 'meta.method-call entity.name.function', 'support.function.dom', 'variable.function.member'], s.method, ''),
   rule('Method declarations', ['meta.definition.method entity.name.function', 'entity.name.function.method.definition', 'entity.name.function.member.definition'], s.method, 'bold'),
-  rule('Constructors', ['entity.name.function.constructor'], s.type),
+  rule('Constructors', ['entity.name.function.constructor', 'entity.name.function.definition.special.constructor', 'entity.name.function.definition.special.member.destructor'], s.type, 'bold'),
   rule('Macros', ['entity.name.function.macro', 'entity.name.function.preprocessor', 'meta.preprocessor.macro entity.name.function', 'support.macro', 'entity.name.macro', 'meta.macro.rust entity.name.function', 'support.function.macro'], s.macro),
   rule('Decorators and attributes', ['meta.decorator', 'punctuation.decorator', 'meta.decorator entity.name.function', 'meta.decorator meta.function-call entity.name.function', 'meta.decorator variable.other', 'meta.function.decorator', 'meta.function.decorator support.type', 'meta.function.decorator.python support.type.python', 'meta.function.decorator support.function', 'meta.function.decorator entity.name.function', 'entity.name.function.decorator', 'punctuation.definition.decorator', 'meta.attribute.rust', 'punctuation.definition.attribute.rust', 'storage.type.annotation', 'punctuation.definition.annotation', 'meta.annotation', 'entity.name.function.attribute'], s.decorator),
 
@@ -312,10 +316,8 @@ export default [
       'entity.name.struct',
       'entity.name.enum',
       'entity.name.union',
-      'entity.name.trait',
       'entity.name.interface',
       'entity.name.type.class',
-      'entity.name.type.interface',
       'entity.name.type.struct',
       'entity.name.type.enum',
       'entity.name.type.alias',
@@ -356,6 +358,7 @@ export default [
       'support.type.posix-reserved',
       'support.type.sys-types',
       'support.type.stdint',
+      'storage.type.integral',
       'support.class.builtin',
       'support.class.promise',
       'support.class.error',
@@ -372,12 +375,13 @@ export default [
     'italic',
   ),
   // C++ scopes the type of a function parameter as entity.name.type.parameter.
+  rule('Trait and interface declarations', ['entity.name.type.trait', 'entity.name.type.interface'], s.type, 'italic'),
+  rule('C++ lambda return types', ['storage.type.return-type.lambda'], s.type),
   rule('C++ parameter types', ['entity.name.type.parameter.cpp', 'entity.name.type.parameter.c'], s.type),
   rule('C++ template keywords', ['storage.type.template.argument.typename', 'storage.type.template.argument.class'], s.storage),
-  rule('Lifetimes', ['storage.modifier.lifetime.rust', 'entity.name.lifetime', 'punctuation.definition.lifetime.rust', 'entity.name.type.lifetime', 'entity.name.type.lifetime.rust'], s.lifetime, 'italic'),
+  rule('Lifetimes', ['punctuation.definition.lifetime.rust', 'entity.name.type.lifetime', 'entity.name.type.lifetime.rust'], s.lifetime, 'italic'),
   // "struct", "class", "enum" in C/C++ are storage keywords, not type names.
   rule('Declaration keywords that grammars scope as types', ['storage.type.struct', 'storage.type.class', 'storage.type.enum', 'storage.type.union', 'storage.type.interface', 'storage.type.type', 'storage.type.function', 'storage.type.namespace', 'storage.type.template', 'storage.type.typedef', 'storage.type.class.python', 'storage.type.function.python', 'storage.type.rust', 'storage.type.ts', 'storage.type.js', 'storage.type.property'], s.storage),
-  rule('C++ auto', ['storage.type.primitive.auto', 'storage.type.auto'], s.storage),
 
   // Namespaces
   rule(
@@ -478,7 +482,7 @@ export default [
   rule('Case labels', ['punctuation.definition.section.case-statement'], s.punctuation),
 
   // Python
-  rule('Python string prefixes', ['storage.type.string.python'], s.storage),
+  rule('String prefixes', ['storage.type.string.python', 'string.quoted.byte.raw.rust'], s.storage),
   rule('Python format specs', ['storage.type.format.python', 'meta.fstring.python storage.type.format.python'], s.escape),
   rule('Python docstrings', ['string.quoted.docstring', 'string.quoted.docstring punctuation.definition.string'], s.string, 'italic'),
   rule('Python magic methods', ['support.function.magic.python', 'meta.function.python support.function.magic.python'], s.method),
@@ -491,10 +495,9 @@ export default [
 
   // Rust
   rule('Rust references', ['keyword.operator.borrow.rust', 'keyword.operator.borrow.and.rust', 'keyword.operator.dereference.rust'], s.operator),
-  rule('Rust mut / ref', ['storage.modifier.mut.rust', 'storage.modifier.ref.rust'], s.storage),
+  rule('Rust mut / ref', ['storage.modifier.mut.rust'], s.storage),
   rule('Rust ? operator', ['keyword.operator.question.rust'], s.keyword, 'bold'),
-  rule('Rust unsafe', ['keyword.other.unsafe.rust', 'storage.modifier.unsafe.rust'], s.unsafe, 'bold'),
-  rule('Rust macros', ['entity.name.function.macro.rust', 'support.macro.rust', 'meta.macro.rules.rust entity.name.function.macro.rust'], s.macro),
+  rule('Rust macros', ['entity.name.function.macro.rust', 'meta.macro.rules.rust entity.name.function.macro.rust'], s.macro),
   rule('Rust macro_rules!', ['entity.name.function.macro.rules.rust'], s.storage),
   rule('Rust macro metavariables', ['variable.other.metavariable.name.rust', 'keyword.operator.macro.dollar.rust'], s.macro, 'italic'),
   rule('Rust macro fragment specifiers', ['variable.other.metavariable.specifier.rust'], s.type, 'italic'),
@@ -505,7 +508,7 @@ export default [
   rule('Rust numeric suffixes', ['constant.numeric entity.name.type.numeric.rust', 'constant.numeric.decimal.rust entity.name.type.numeric.rust', 'constant.numeric.hex.rust entity.name.type.numeric.rust'], s.number),
 
   // C / C++
-  rule('C/C++ pointers and references', ['storage.modifier.pointer', 'storage.modifier.reference', 'keyword.operator.pointer', 'keyword.operator.dereference.cpp'], s.operator),
+  rule('C/C++ pointers and references', ['storage.modifier.pointer', 'storage.modifier.reference', 'keyword.operator.pointer'], s.operator),
   rule('C/C++ include paths', ['string.quoted.other.lt-gt.include', 'meta.preprocessor.include string'], s.string),
   rule('C/C++ macro calls', ['entity.name.function.call.upper-case entity.name.function.call', 'entity.name.function.call.upper-case.cpp entity.name.function.call.cpp', 'entity.name.function.call.upper-case.c entity.name.function.call.c'], s.macro),
   rule('C++ attributes', ['support.other.attribute', 'support.other.attribute punctuation.section.attribute', 'entity.other.attribute'], s.decorator),

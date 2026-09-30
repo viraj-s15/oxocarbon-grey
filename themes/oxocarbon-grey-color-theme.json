@@ -827,7 +827,8 @@
         "keyword.other.enum",
         "keyword.other.fn",
         "keyword.other.type",
-        "storage.type.function.arrow"
+        "storage.type.function.arrow",
+        "keyword.generator.asterisk"
       ],
       "settings": {
         "foreground": "#3ddbd9",
@@ -841,8 +842,7 @@
         "keyword.control.from",
         "keyword.control.export",
         "keyword.control.default",
-        "keyword.import.go",
-        "keyword.other.use.rust"
+        "keyword.import.go"
       ],
       "settings": {
         "foreground": "#78a9ff",
@@ -852,9 +852,7 @@
     {
       "name": "Package and module declarations",
       "scope": [
-        "keyword.package.go",
-        "keyword.other.crate.rust",
-        "keyword.other.mod.rust"
+        "keyword.package.go"
       ],
       "settings": {
         "foreground": "#78a9ff",
@@ -903,7 +901,10 @@
         "keyword.operator.dereference",
         "keyword.operator.pipe",
         "keyword.operator.redirect",
-        "keyword.operator.heredoc"
+        "keyword.operator.heredoc",
+        "punctuation.definition.function.return-type",
+        "punctuation.definition.lambda.return-type",
+        "punctuation.vararg-ellipses"
       ],
       "settings": {
         "foreground": "#a6c8ff",
@@ -920,7 +921,10 @@
         "keyword.operator.instanceof",
         "keyword.operator.typeof",
         "keyword.operator.delete",
-        "keyword.operator.misc.rust"
+        "keyword.operator.alignas",
+        "keyword.operator.alignof",
+        "keyword.operator.typeid",
+        "keyword.operator.noexcept"
       ],
       "settings": {
         "foreground": "#78a9ff",
@@ -997,7 +1001,8 @@
         "punctuation.separator.annotation",
         "keyword.operator.namespace",
         "keyword.operator.access",
-        "keyword.operator.key-value"
+        "keyword.operator.key-value",
+        "punctuation.destructuring"
       ],
       "settings": {
         "foreground": "#8d9199",
@@ -1032,7 +1037,8 @@
         "punctuation.definition.mapping",
         "punctuation.definition.section.begin.toml",
         "punctuation.definition.section.end.toml",
-        "punctuation.definition.logical-expression"
+        "punctuation.definition.logical-expression",
+        "punctuation.definition.inheritance"
       ],
       "settings": {
         "foreground": "#8d9199",
@@ -1147,7 +1153,13 @@
         "constant.character.character-class.regexp",
         "constant.other.character-class.set.regexp",
         "constant.character.set.regexp",
-        "string.regexp constant.character.escape"
+        "string.regexp constant.character.escape",
+        "support.other.escape.special.regexp",
+        "support.other.match.any.regexp",
+        "entity.name.tag.backreference.regexp",
+        "constant.other.character-class.range.regexp",
+        "constant.character.numeric.regexp",
+        "keyword.other.back-reference.regexp"
       ],
       "settings": {
         "foreground": "#82cfff",
@@ -1160,7 +1172,9 @@
         "keyword.operator.quantifier.regexp",
         "keyword.control.anchor.regexp",
         "keyword.operator.or.regexp",
-        "keyword.operator.negation.regexp"
+        "keyword.operator.negation.regexp",
+        "support.other.match.begin.regexp",
+        "support.other.match.end.regexp"
       ],
       "settings": {
         "foreground": "#a6c8ff",
@@ -1177,7 +1191,13 @@
         "meta.assertion.look-behind.regexp",
         "constant.other.set.regexp",
         "punctuation.character.set.begin.regexp",
-        "punctuation.character.set.end.regexp"
+        "punctuation.character.set.end.regexp",
+        "string.regexp punctuation.parenthesis",
+        "entity.name.tag.named.group.regexp",
+        "keyword.operator.lookahead",
+        "keyword.operator.lookbehind",
+        "punctuation.definition.group.no-capture.regexp",
+        "variable.other.regexp"
       ],
       "settings": {
         "foreground": "#3ddbd9",
@@ -1199,7 +1219,10 @@
         "constant.numeric punctuation",
         "constant.other.color",
         "constant.other.color.rgb-value",
-        "constant.other.rgb-value"
+        "constant.other.rgb-value",
+        "storage.type.number.python",
+        "storage.type.imaginary.number.python",
+        "storage.type.numeric.bigint"
       ],
       "settings": {
         "foreground": "#82cfff",
@@ -1333,9 +1356,7 @@
         "variable.parameter.function.language.special.self",
         "variable.parameter.function.language.special.cls",
         "variable.language.special.cls",
-        "keyword.other.self.rust",
-        "variable.language.self.rust",
-        "keyword.other.this"
+        "variable.language.self.rust"
       ],
       "settings": {
         "foreground": "#ee5396",
@@ -1437,6 +1458,7 @@
         "meta.definition.function entity.name.function",
         "meta.function.python entity.name.function",
         "meta.function.definition.rust entity.name.function.rust",
+        "meta.definition.variable entity.name.function",
         "entity.name.function.definition",
         "entity.name.function.shell"
       ],
@@ -1474,11 +1496,13 @@
     {
       "name": "Constructors",
       "scope": [
-        "entity.name.function.constructor"
+        "entity.name.function.constructor",
+        "entity.name.function.definition.special.constructor",
+        "entity.name.function.definition.special.member.destructor"
       ],
       "settings": {
         "foreground": "#33b1ff",
-        "fontStyle": ""
+        "fontStyle": "bold"
       }
     },
     {
@@ -1532,10 +1556,8 @@
         "entity.name.struct",
         "entity.name.enum",
         "entity.name.union",
-        "entity.name.trait",
         "entity.name.interface",
         "entity.name.type.class",
-        "entity.name.type.interface",
         "entity.name.type.struct",
         "entity.name.type.enum",
         "entity.name.type.alias",
@@ -1579,6 +1601,7 @@
         "support.type.posix-reserved",
         "support.type.sys-types",
         "support.type.stdint",
+        "storage.type.integral",
         "support.class.builtin",
         "support.class.promise",
         "support.class.error",
@@ -1601,6 +1624,27 @@
       "settings": {
         "foreground": "#33b1ff",
         "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Trait and interface declarations",
+      "scope": [
+        "entity.name.type.trait",
+        "entity.name.type.interface"
+      ],
+      "settings": {
+        "foreground": "#33b1ff",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "C++ lambda return types",
+      "scope": [
+        "storage.type.return-type.lambda"
+      ],
+      "settings": {
+        "foreground": "#33b1ff",
+        "fontStyle": ""
       }
     },
     {
@@ -1628,8 +1672,6 @@
     {
       "name": "Lifetimes",
       "scope": [
-        "storage.modifier.lifetime.rust",
-        "entity.name.lifetime",
         "punctuation.definition.lifetime.rust",
         "entity.name.type.lifetime",
         "entity.name.type.lifetime.rust"
@@ -1658,17 +1700,6 @@
         "storage.type.ts",
         "storage.type.js",
         "storage.type.property"
-      ],
-      "settings": {
-        "foreground": "#3ddbd9",
-        "fontStyle": ""
-      }
-    },
-    {
-      "name": "C++ auto",
-      "scope": [
-        "storage.type.primitive.auto",
-        "storage.type.auto"
       ],
       "settings": {
         "foreground": "#3ddbd9",
@@ -2340,9 +2371,10 @@
       }
     },
     {
-      "name": "Python string prefixes",
+      "name": "String prefixes",
       "scope": [
-        "storage.type.string.python"
+        "storage.type.string.python",
+        "string.quoted.byte.raw.rust"
       ],
       "settings": {
         "foreground": "#3ddbd9",
@@ -2444,8 +2476,7 @@
     {
       "name": "Rust mut / ref",
       "scope": [
-        "storage.modifier.mut.rust",
-        "storage.modifier.ref.rust"
+        "storage.modifier.mut.rust"
       ],
       "settings": {
         "foreground": "#3ddbd9",
@@ -2463,21 +2494,9 @@
       }
     },
     {
-      "name": "Rust unsafe",
-      "scope": [
-        "keyword.other.unsafe.rust",
-        "storage.modifier.unsafe.rust"
-      ],
-      "settings": {
-        "foreground": "#ee5396",
-        "fontStyle": "bold"
-      }
-    },
-    {
       "name": "Rust macros",
       "scope": [
         "entity.name.function.macro.rust",
-        "support.macro.rust",
         "meta.macro.rules.rust entity.name.function.macro.rust"
       ],
       "settings": {
@@ -2579,8 +2598,7 @@
       "scope": [
         "storage.modifier.pointer",
         "storage.modifier.reference",
-        "keyword.operator.pointer",
-        "keyword.operator.dereference.cpp"
+        "keyword.operator.pointer"
       ],
       "settings": {
         "foreground": "#a6c8ff",
@@ -2813,7 +2831,11 @@
       "italic": true
     },
     "string": "#be95ff",
-    "keyword": "#78a9ff",
+    "keyword": {
+      "foreground": "#78a9ff",
+      "italic": false,
+      "bold": false
+    },
     "keyword.controlFlow": {
       "foreground": "#78a9ff",
       "italic": true
@@ -2826,17 +2848,40 @@
     },
     "variable.readonly:python": "#4589ff",
     "property.readonly:python": "#4589ff",
+    "property.declaration.readonly:python": {
+      "foreground": "#08bdba",
+      "bold": true
+    },
     "function.builtin:python": "#08bdba",
-    "function.defaultLibrary:python": "#08bdba",
     "class.builtin:python": {
       "foreground": "#33b1ff",
       "italic": true
     },
-    "class.defaultLibrary:python": {
-      "foreground": "#33b1ff",
+    "*.decorator:python": "#42be65",
+    "class.decorator.builtin:python": {
+      "foreground": "#42be65",
+      "italic": false,
+      "bold": false
+    },
+    "function.decorator.builtin:python": "#42be65",
+    "function.parameter:python": {
+      "foreground": "#dde1e6",
       "italic": true
     },
-    "*.decorator:python": "#42be65",
+    "function.declaration.parameter:python": {
+      "foreground": "#dde1e6",
+      "italic": true,
+      "bold": false
+    },
+    "property.parameter:python": {
+      "foreground": "#dde1e6",
+      "italic": true
+    },
+    "intrinsic": "#08bdba",
+    "keyword:python": {
+      "foreground": "#78a9ff",
+      "italic": true
+    },
     "selfParameter": {
       "foreground": "#ee5396",
       "italic": true
@@ -2855,9 +2900,22 @@
       "italic": false,
       "bold": false
     },
-    "builtinConstant": "#08bdba",
+    "builtinConstant": {
+      "foreground": "#08bdba",
+      "italic": true
+    },
+    "parenthesis": "#8d9199",
+    "bracket": "#8d9199",
+    "curlybrace": "#8d9199",
+    "colon": "#8d9199",
+    "semicolon": "#8d9199",
+    "arrow": "#8d9199",
     "variable.readonly:go": "#4589ff",
-    "keyword:rust": "#3ddbd9",
+    "keyword:rust": {
+      "foreground": "#3ddbd9",
+      "italic": false,
+      "bold": false
+    },
     "keyword.controlFlow:rust": {
       "foreground": "#78a9ff",
       "italic": true
@@ -2866,10 +2924,19 @@
       "foreground": "#ee5396",
       "bold": true
     },
+    "operator.unsafe:rust": {
+      "foreground": "#ee5396",
+      "bold": true
+    },
     "operator.controlFlow:rust": {
       "foreground": "#78a9ff",
       "bold": true
     },
+    "boolean:rust": {
+      "foreground": "#08bdba",
+      "italic": true
+    },
+    "function.defaultLibrary:rust": "#ff7eb6",
     "selfKeyword:rust": {
       "foreground": "#ee5396",
       "italic": true
@@ -2912,14 +2979,21 @@
     "escapeSequence": "#82cfff",
     "formatSpecifier": "#3ddbd9",
     "punctuation": "#8d9199",
-    "variable.static:rust": "#4589ff",
     "static:rust": "#4589ff",
     "const:rust": "#4589ff",
     "constParameter": "#4589ff",
-    "crateRoot": "#08bdba",
     "toolModule": "#08bdba",
     "*.mutable:rust": {
       "underline": true
+    },
+    "method.mutable:rust": {
+      "underline": false
+    },
+    "function.mutable:rust": {
+      "underline": false
+    },
+    "operator.mutable:rust": {
+      "underline": false
     },
     "macro:cpp": "#3ddbd9",
     "macro:c": "#3ddbd9",
@@ -2928,8 +3002,62 @@
       "italic": false,
       "bold": false
     },
+    "*.deduced.defaultLibrary:cpp": {
+      "foreground": "#3ddbd9",
+      "italic": false,
+      "bold": false
+    },
     "modifier:cpp": "#3ddbd9",
-    "bracket:cpp": "#8d9199",
-    "operator.userDefined:cpp": "#a6c8ff"
+    "operator.userDefined:cpp": "#a6c8ff",
+    "operator.declaration:cpp": {
+      "foreground": "#ff7eb6",
+      "bold": true
+    },
+    "class.declaration.constructorOrDestructor:cpp": {
+      "foreground": "#33b1ff",
+      "bold": true
+    },
+    "function.static.classScope:cpp": "#08bdba",
+    "function.defaultLibrary:cpp": "#ff7eb6",
+    "variable.readonly.fileScope:cpp": "#4589ff",
+    "variable.readonly.globalScope:cpp": "#4589ff",
+    "variable.readonly.defaultLibrary.fileScope:cpp": "#08bdba",
+    "variable.readonly.defaultLibrary.globalScope:cpp": "#08bdba",
+    "variable.static.classScope:cpp": "#82cfff",
+    "variable.declaration.static.classScope:cpp": "#a6c8ff",
+    "variable.readonly.static.classScope:cpp": "#4589ff",
+    "variable.declaration.readonly.static.classScope:cpp": "#4589ff",
+    "typeParameter.readonly:cpp": {
+      "foreground": "#4589ff",
+      "italic": false,
+      "bold": false
+    },
+    "*.usedAsMutableReference:cpp": {
+      "underline": true
+    },
+    "*.usedAsMutablePointer:cpp": {
+      "underline": true
+    },
+    "newOperator": "#78a9ff",
+    "class.defaultLibrary:typescript": {
+      "foreground": "#08bdba",
+      "italic": false,
+      "bold": false
+    },
+    "class.defaultLibrary:typescriptreact": {
+      "foreground": "#08bdba",
+      "italic": false,
+      "bold": false
+    },
+    "class.defaultLibrary:javascript": {
+      "foreground": "#08bdba",
+      "italic": false,
+      "bold": false
+    },
+    "class.defaultLibrary:javascriptreact": {
+      "foreground": "#08bdba",
+      "italic": false,
+      "bold": false
+    }
   }
 }
