@@ -5,12 +5,12 @@
 
 // Graphene greys: the backgrounds and neutral text.
 export const grey = {
-  bg: '#1b1c1f', // editor
-  bgDark: '#161719', // sidebar, activity bar, panel, title bar, status bar
-  bgFloat: '#232428', // widgets, menus, hovers, inputs
-  bgLine: '#222327', // current line
+  bg: '#1b1c1f', // the whole window: editor, sidebar, panel, title bar, status bar, gaps
+  bgFloat: '#232428', // floating widgets: menus, hovers, suggest, quick input, notifications
+  bgLine: '#202125', // current line
   bgSelection: '#33353b',
-  border: '#2b2d31',
+  hairline: '#ffffff0d', // every border, ~5% white over the background
+  guide: '#2b2d31', // indent guides, rulers
   lineNr: '#4d5159',
   lineNrActive: '#dde1e6',
   fg: '#dde1e6',
@@ -19,8 +19,8 @@ export const grey = {
   white: '#ffffff',
 };
 
-// Oxocarbon accents (nyoom-engineering/oxocarbon.nvim), plus peach from its
-// light variant and a lighter blue for operators.
+// Oxocarbon accents (nyoom-engineering/oxocarbon.nvim), plus a lighter blue
+// for operators and a muted steel blue for terminal chips.
 export const accent = {
   teal: '#08bdba', // base07
   cyan: '#3ddbd9', // base08
@@ -32,7 +32,7 @@ export const accent = {
   green: '#42be65', // base13
   purple: '#be95ff', // base14
   ice: '#82cfff', // base15
-  peach: '#ffab91',
+  steel: '#7189b3', // ANSI bright blue: readable as text, quiet as a background
 };
 
 // Syntax roles. Token rules and semantic token colours refer to these names.
@@ -46,8 +46,8 @@ export const syntax = {
   string: accent.purple,
   escape: accent.ice,
   regex: accent.teal,
-  number: accent.peach,
-  constant: accent.peach, // user constants, enum members
+  number: accent.ice,
+  constant: accent.pink, // user constants, enum members
   builtin: accent.teal, // true, false, null, built-in constants
   property: accent.ice,
   variable: grey.fg,
@@ -63,6 +63,7 @@ export const syntax = {
   tag: accent.blue,
   attribute: accent.ice,
   heading: accent.pink,
+  bold: accent.rose, // markdown bold
   link: accent.blue,
   inserted: accent.green,
   deleted: accent.pink,
@@ -70,22 +71,25 @@ export const syntax = {
   invalid: accent.pink,
 };
 
-// ANSI terminal colours.
+// ANSI terminal colours. VS Code uses the same colour for text and for
+// backgrounds, so white and bright blue are toned down: "History restored" and
+// other inverse chips use them as a background. Oxocarbon has no yellow; like
+// oxocarbon.nvim, purple stands in for warnings.
 export const ansi = {
   black: grey.bgSelection,
   red: accent.pink,
   green: accent.green,
-  yellow: accent.peach,
+  yellow: accent.purple,
   blue: accent.blue,
-  magenta: accent.purple,
+  magenta: accent.rose,
   cyan: accent.teal,
-  white: grey.fg,
+  white: '#aeb4be',
   brightBlack: grey.fgSubtle,
-  brightRed: accent.rose,
+  brightRed: accent.pink,
   brightGreen: accent.green,
-  brightYellow: accent.peach,
-  brightBlue: accent.blueLight,
-  brightMagenta: accent.purple,
+  brightYellow: accent.purple,
+  brightBlue: accent.steel,
+  brightMagenta: accent.rose,
   brightCyan: accent.cyan,
-  brightWhite: grey.white,
+  brightWhite: grey.fg,
 };

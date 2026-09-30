@@ -204,7 +204,7 @@ export default [
   rule('Regex groups', ['punctuation.definition.group.regexp', 'punctuation.definition.group.assertion.regexp', 'punctuation.definition.character-class.regexp', 'meta.assertion.look-ahead.regexp', 'meta.assertion.look-behind.regexp'], s.storage),
 
   // Constants
-  rule('Numbers', ['constant.numeric', 'keyword.other.unit', 'keyword.other.suffix', 'punctuation.separator.dot.decimal', 'punctuation.separator.decimal', 'constant.numeric punctuation', 'constant.other.color', 'constant.other.color.rgb-value', 'constant.other.rgb-value'], s.number),
+  rule('Numbers', ['constant.numeric', 'keyword.other.unit', 'keyword.other.suffix', 'punctuation.separator.dot.decimal', 'punctuation.separator.decimal', 'constant.other.date', 'constant.other.time', 'constant.other.datetime', 'constant.other.time.datetime', 'constant.numeric punctuation', 'constant.other.color', 'constant.other.color.rgb-value', 'constant.other.rgb-value'], s.number),
   rule('Built-in constants', ['constant.language', 'constant.language.boolean', 'constant.language.null', 'constant.language.undefined', 'constant.language.python', 'constant.language.go', 'support.constant', 'constant.builtin', 'constant.language.json', 'variable.language.ellipsis'], s.builtin),
   rule(
     'User constants',
@@ -222,11 +222,6 @@ export default [
       'variable.other.constant.go',
       'constant.other.symbol',
       'constant.other.key',
-      'constant.other.option',
-      'constant.other.date',
-      'constant.other.time',
-      'constant.other.datetime',
-      'constant.other.time.datetime',
     ],
     s.constant,
   ),
@@ -424,9 +419,9 @@ export default [
   // Markdown
   rule('Headings', ['markup.heading', 'entity.name.section.markdown', 'markup.heading.markdown', 'markup.heading entity.name', 'markup.heading.setext'], s.heading, 'bold'),
   rule('Heading markers', ['punctuation.definition.heading.markdown'], s.heading, 'bold'),
-  rule('Bold', ['markup.bold', 'punctuation.definition.bold.markdown'], s.number, 'bold'),
+  rule('Bold', ['markup.bold', 'punctuation.definition.bold.markdown'], s.bold, 'bold'),
   rule('Italic', ['markup.italic', 'punctuation.definition.italic.markdown'], s.variable, 'italic'),
-  rule('Bold italic', ['markup.bold markup.italic', 'markup.italic markup.bold'], s.number, 'bold italic'),
+  rule('Bold italic', ['markup.bold markup.italic', 'markup.italic markup.bold'], s.bold, 'bold italic'),
   rule('Strikethrough', ['markup.strikethrough'], grey.fgMuted, 'strikethrough'),
   rule('Inline code', ['markup.inline.raw', 'markup.inline.raw.string.markdown', 'markup.raw', 'markup.raw.inline'], s.string),
   rule('Code fences', ['markup.fenced_code.block.markdown punctuation.definition.markdown', 'punctuation.definition.raw.markdown', 'markup.raw.block.markdown'], grey.fgMuted),
@@ -461,7 +456,7 @@ export default [
   rule('Go struct field', ['variable.other.field.go', 'variable.other.property.field.go'], s.property),
   rule('C/C++ pointers and references', ['storage.modifier.pointer', 'storage.modifier.reference', 'keyword.operator.pointer', 'keyword.operator.dereference.cpp'], s.operator),
   rule('C/C++ include paths', ['string.quoted.other.lt-gt.include', 'meta.preprocessor.include string'], s.string),
-  rule('Shell options', ['string.unquoted.argument.shell constant.other.option', 'constant.other.option.dash.shell'], s.constant),
+  rule('Command-line options', ['constant.other.option', 'string.unquoted.argument.shell constant.other.option', 'constant.other.option.dash.shell'], s.attribute),
   rule('Shell heredoc delimiters', ['keyword.control.heredoc-token.shell', 'punctuation.definition.string.heredoc'], s.storage),
   rule('Shell shebang', ['comment.line.shebang', 'punctuation.definition.comment.shebang'], grey.fgMuted, 'italic'),
 ];
