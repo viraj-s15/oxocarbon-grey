@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.3.0
+
+- Per-language tuning for Python, Rust, TypeScript/TSX and C++, covering both the built-in TextMate grammars and the semantic tokens from Pylance, rust-analyzer, tsserver and clangd. Role colours are the same in all four languages.
+- Added `fixtures/` with a realistic sample file per language; the preview images are rendered from them.
+- New roles:
+  - interpolation braces are cyan, with the code inside in normal colours;
+  - doc comments are a step brighter than comments;
+  - Rust lifetimes are muted italic;
+  - object keys and field declarations are light blue;
+  - built-in functions and globals are teal;
+  - traits, interfaces and concepts are italic sky, like library types.
+- Python: docstrings are italic, dunder methods are never bold, format specs are ice, exceptions are italic like other built-in types.
+- Rust: macros and attributes are coloured as a whole, `?` is bold, `unsafe` is bold pink and mutable bindings are underlined with rust-analyzer, `Some`/`None`/`Ok`/`Err` use the constant colour, `mut` is no longer italic.
+- TypeScript/TSX: decorator names are green, `new X()` uses the type colour, `?.` is an operator.
+- C++: all preprocessor directives are cyan, `ALL_CAPS()` calls use the macro colour, attributes are green, operator overloads are bold like function declarations, and clangd's `auto` stays a keyword.
+- Fixed: C++ parameter types were italic, and regex character-set brackets and Python `...` used the constant colour.
+
 ## 0.2.1
 
 - Constants and enum members are now cobalt `#4589ff` (IBM Carbon blue 50) instead of pink, so pink is left for functions and `self` / `this`. This covers the `constant.other.caps` scopes and the semantic `readonly` / `enumMember` tokens from Pylance, TypeScript and rust-analyzer.

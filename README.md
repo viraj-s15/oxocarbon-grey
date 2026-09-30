@@ -7,13 +7,15 @@ A dark VS Code colour theme built on the [Oxocarbon](https://github.com/nyoom-en
 
 ## Screenshots
 
-These previews were rendered with [Shiki](https://shiki.style) from the TextMate rules only. In VS Code, semantic highlighting adds more detail, such as teal method calls and ice-blue properties.
-
-![TypeScript](images/preview-typescript.png)
+These previews were rendered with [Shiki](https://shiki.style) from the files in [`fixtures/`](fixtures), using the TextMate rules only. With semantic highlighting on, VS Code adds the details listed under [Language support](#language-support).
 
 ![Python](images/preview-python.png)
 
 ![Rust](images/preview-rust.png)
+
+![TypeScript](images/preview-typescript.png)
+
+![C++](images/preview-cpp.png)
 
 <!-- TODO: add full VS Code window screenshots (sidebar, terminal, diff editor). -->
 
@@ -34,7 +36,7 @@ codium --install-extension viraj-s15.oxocarbon-grey
 **From a `.vsix` file:**
 
 ```sh
-code --install-extension oxocarbon-grey-0.2.1.vsix
+code --install-extension oxocarbon-grey-0.3.0.vsix
 ```
 
 or use **Extensions: Install from VSIX...** from the command palette.
@@ -53,7 +55,7 @@ or use **Extensions: Install from VSIX...** from the command palette.
 | Indent guides, rulers | `#2b2d31` |
 | Line numbers | `#4d5159` |
 | Foreground, active line number | `#dde1e6` |
-| Punctuation, secondary text | `#8d9199` |
+| Punctuation, doc comments, lifetimes, secondary text | `#8d9199` |
 | Comments, placeholders | `#6e747d` |
 
 ### Accents
@@ -61,14 +63,14 @@ or use **Extensions: Install from VSIX...** from the command palette.
 | Name | Hex | Oxocarbon | Used for |
 | --- | --- | --- | --- |
 | Blue | `#78a9ff` | base09 | Control keywords, HTML tags, links, UI accent |
-| Light blue | `#a6c8ff` | (Carbon blue 30) | Operators |
-| Cyan | `#3ddbd9` | base08 | Storage and declaration keywords, macros |
-| Teal | `#08bdba` | base07 | Methods, namespaces, booleans, built-in constants, regex |
+| Light blue | `#a6c8ff` | (Carbon blue 30) | Operators, object keys, field declarations |
+| Cyan | `#3ddbd9` | base08 | Storage and declaration keywords, macros, interpolation braces |
+| Teal | `#08bdba` | base07 | Methods, namespaces, booleans, built-in functions and globals, regex |
 | Sky | `#33b1ff` | base11 | Types, classes, interfaces, enums |
 | Ice | `#82cfff` | base15 | Numbers, properties, object keys, attributes, escapes |
 | Purple | `#be95ff` | base14 | Strings, inline code, warnings |
 | Rose | `#ff7eb6` | base12 | Functions, markdown bold |
-| Pink | `#ee5396` | base10 | `this` / `self`, headings, deletions, errors, badges |
+| Pink | `#ee5396` | base10 | `this` / `self`, Rust `unsafe`, headings, deletions, errors, badges |
 | Green | `#42be65` | base13 | Decorators, TODO, additions |
 | Cobalt | `#4589ff` | (Carbon blue 50) | Constants, enum members |
 | Steel | `#7189b3` | (muted blue) | Terminal bright blue only |
@@ -82,24 +84,34 @@ or use **Extensions: Install from VSIX...** from the command palette.
 | Operators | Light blue `#a6c8ff` |
 | Function declarations / calls | Rose `#ff7eb6` bold / regular |
 | Methods | Teal `#08bdba` (declarations bold) |
+| Python dunder methods | Teal `#08bdba`, never bold |
+| Built-in functions and globals (`len`, `print`, `console`, `fetch`) | Teal `#08bdba` |
 | Types, classes, interfaces, enums | Sky `#33b1ff` |
-| Built-in types, type parameters, lifetimes | Sky `#33b1ff` italic |
+| Built-in and library types, traits, interfaces, concepts, type parameters | Sky `#33b1ff` italic |
+| Rust lifetimes | `#8d9199` italic |
 | Strings | Purple `#be95ff` |
-| Escapes, format placeholders | Ice `#82cfff` |
+| Escapes, format specs (`!r`, `:.2f`, `%d`) | Ice `#82cfff` |
+| Interpolation braces (`${ }`, f-string `{ }`, Rust `{ }`, JSX `{ }`) | Cyan `#3ddbd9`; the code inside uses normal colours |
+| Python docstrings | Purple `#be95ff` italic |
 | Regular expressions | Teal `#08bdba` |
 | Numbers | Ice `#82cfff` |
 | Constants, enum members | Cobalt `#4589ff` |
 | `true` `false` `null` `None` `nil` `undefined` | Teal `#08bdba` italic |
 | Other built-in constants | Teal `#08bdba` |
-| Properties, object keys | Ice `#82cfff` |
+| Property access, fields | Ice `#82cfff` |
+| Object keys, field and member declarations | Light blue `#a6c8ff` |
 | Variables | `#dde1e6` |
 | Parameters | `#dde1e6` italic |
 | `this` `self` `super` `cls` | Pink `#ee5396` italic |
 | Decorators, attributes, annotations | Green `#42be65` |
 | Namespaces, modules | Teal `#08bdba` |
-| Macros, preprocessor | Cyan `#3ddbd9` |
+| Macros (including `!`), preprocessor | Cyan `#3ddbd9` |
+| Rust `?` | Blue `#78a9ff` bold |
+| Rust `unsafe` | Pink `#ee5396` bold (semantic) |
+| Rust mutable bindings | Underlined (semantic) |
 | Commas, semicolons, brackets, dots | `#8d9199` |
 | Comments | `#6e747d` italic |
+| Doc comments (`///`, `/** */`) | `#8d9199` italic |
 | TODO / FIXME (where the grammar marks them) | Green `#42be65` bold italic |
 | HTML / JSX tags, attributes | Blue `#78a9ff`, ice `#82cfff` |
 | Markdown headings, links, inline code | Pink bold, blue, purple |
@@ -110,6 +122,17 @@ Every syntax colour has at least 4.5:1 contrast on both the editor background an
 ### Terminal
 
 Normal ANSI colours use the accents: pink, green, purple (for yellow, as in oxocarbon.nvim), blue, rose, teal. VS Code uses the same colour for ANSI text and ANSI backgrounds, so white (`#aeb4be`) and bright blue (`#7189b3`) are toned down. Inverse and highlighted text, such as the "History restored" marker, then shows as a muted grey-blue chip instead of a bright block.
+
+## Language support
+
+Python, Rust, TypeScript/TSX and C++ are tuned against VS Code's built-in grammars and each language's main language server. Every role uses the same colour in all four: types are sky, macros cyan, namespaces teal, constants cobalt. Semantic highlighting (on by default) fills in what the grammars can't know, so keep it on for the full effect.
+
+| Language | TextMate grammar | Only with semantic highlighting |
+| --- | --- | --- |
+| Python (Pylance) | Decorators, f-string braces and the code inside them, docstrings, `int`/`str`/`list` in annotations, dunder methods, `self`/`cls`, keyword arguments, built-in functions, `match`/`case`, walrus, `async`/`await` | Imported module names, `typing` names (`Optional`, `Callable`), user classes in annotations, `list[...]` in subscripts, readonly class constants accessed via `self` |
+| Rust (rust-analyzer) | Macros with `!`, attributes and derives, lifetimes, `?`, `&`/`&mut`/`*`, `Some`/`None`/`Ok`/`Err`, format-string braces, `///` doc comments, `macro_rules!` metavariables | `unsafe`, mutable-binding underline, enum variants, traits (italic), `Self` as a type, types before `::`, parameters, fields, method calls, `//!` inner doc comments, `in` in `for` loops (italic) |
+| TypeScript / TSX (tsserver) | Interfaces, aliases, generics, enums and members, `readonly`, `?`, decorators, `${}` interpolation, `this`, object keys vs property access, `as`/`satisfies`, `?.`/`??`, JSX components vs HTML tags, attributes, `{}` expressions, `new X()` | Interfaces as italic when used, `console`/`Array`/`Object` as built-ins, method calls vs function calls, `Promise` in type positions |
+| C++ (clangd) | Preprocessor directives, `<header>`/`"header"`, `#define` names, `ALL_CAPS()` macro calls, namespaces, classes, templates, template parameters, `constexpr`/`consteval`/`const`/`volatile`, `*`/`&`/`&&`, operator overloads, lambda captures, `[[nodiscard]]`, raw strings, `nullptr` | Concept names, `std::` types as library types (italic), enum members after `::`, macros used without parentheses, `auto` as a keyword, fields |
 
 ## Customising or building
 
