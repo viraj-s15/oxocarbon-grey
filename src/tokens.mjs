@@ -43,10 +43,13 @@ export default [
   rule('Deprecated', ['invalid.deprecated'], s.invalid, 'strikethrough'),
 
   // Keywords
+  rule('Keywords', ['keyword', 'keyword.other'], s.keyword),
+  // Control flow and imports are italic; declaration keywords stay upright.
   rule(
-    'Keywords',
-    ['keyword', 'keyword.control', 'keyword.other', 'keyword.other.using', 'keyword.other.import'],
+    'Control-flow keywords',
+    ['keyword.control', 'keyword.other.using', 'keyword.other.import', 'keyword.control.flow', 'keyword.control.conditional', 'keyword.control.loop', 'keyword.control.trycatch', 'keyword.control.switch', 'keyword.control.exception'],
     s.keyword,
+    'italic',
   ),
   rule(
     'Storage and declaration keywords',
@@ -80,19 +83,19 @@ export default [
     s.storage,
   ),
   rule(
-    'Imports and control flow in other grammars',
-    [
-      'keyword.control.import',
-      'keyword.control.from',
-      'keyword.control.export',
-      'keyword.control.default',
-      'keyword.package.go',
-      'keyword.import.go',
-      'keyword.other.crate.rust',
-      'keyword.other.use.rust',
-      'keyword.other.mod.rust',
-    ],
+    'Imports and exports',
+    ['keyword.control.import', 'keyword.control.from', 'keyword.control.export', 'keyword.control.default', 'keyword.import.go', 'keyword.other.use.rust'],
     s.keyword,
+    'italic',
+  ),
+  rule('Package and module declarations', ['keyword.package.go', 'keyword.other.crate.rust', 'keyword.other.mod.rust'], s.keyword),
+  // The Rust grammar scopes `use` like `impl`; keep rust-analyzer's colour, add the italic.
+  rule('Rust use', ['meta.use.rust keyword.other.rust'], s.storage, 'italic'),
+  // Grammars that scope declarations as keyword.control.
+  rule(
+    'Declarations scoped as control keywords',
+    ['keyword.control.def.ruby', 'keyword.control.class.ruby', 'keyword.control.module.ruby', 'meta.function.lua keyword.control.lua'],
+    s.storage,
   ),
   rule(
     'Operators',
@@ -101,8 +104,14 @@ export default [
   ),
   rule(
     'Word operators',
-    ['keyword.operator.new', 'keyword.operator.expression', 'keyword.operator.logical.python', 'keyword.operator.word', 'keyword.operator.sizeof', 'keyword.operator.cast', 'keyword.operator.instanceof', 'keyword.operator.typeof', 'keyword.operator.delete', 'keyword.operator.in', 'keyword.operator.of', 'keyword.operator.misc.rust'],
+    ['keyword.operator.new', 'keyword.operator.expression', 'keyword.operator.sizeof', 'keyword.operator.cast', 'keyword.operator.instanceof', 'keyword.operator.typeof', 'keyword.operator.delete', 'keyword.operator.misc.rust'],
     s.keyword,
+  ),
+  rule(
+    'Logical and membership word operators',
+    ['keyword.operator.logical.python', 'keyword.operator.word', 'keyword.operator.in', 'keyword.operator.of', 'keyword.operator.expression.in', 'keyword.operator.expression.of', 'keyword.operator.expression.is', 'keyword.operator.and', 'keyword.operator.or', 'keyword.operator.not'],
+    s.keyword,
+    'italic',
   ),
   rule('Preprocessor directives', ['keyword.control.directive', 'punctuation.definition.directive', 'meta.preprocessor keyword', 'keyword.other.preprocessor'], s.macro),
   rule('Include directives', ['keyword.control.directive.include', 'keyword.control.directive.import'], s.keyword),
@@ -205,7 +214,8 @@ export default [
 
   // Constants
   rule('Numbers', ['constant.numeric', 'keyword.other.unit', 'keyword.other.suffix', 'punctuation.separator.dot.decimal', 'punctuation.separator.decimal', 'constant.other.date', 'constant.other.time', 'constant.other.datetime', 'constant.other.time.datetime', 'constant.numeric punctuation', 'constant.other.color', 'constant.other.color.rgb-value', 'constant.other.rgb-value'], s.number),
-  rule('Built-in constants', ['constant.language', 'constant.language.boolean', 'constant.language.null', 'constant.language.undefined', 'constant.language.python', 'constant.language.go', 'support.constant', 'constant.builtin', 'constant.language.json', 'variable.language.ellipsis'], s.builtin),
+  rule('Built-in constants', ['support.constant', 'constant.builtin', 'variable.language.ellipsis'], s.builtin),
+  rule('Language literals', ['constant.language', 'constant.language.boolean', 'constant.language.null', 'constant.language.undefined', 'constant.language.nil', 'constant.language.python', 'constant.language.go', 'constant.language.json', 'constant.language.bool.rust'], s.builtin, 'italic'),
   rule(
     'User constants',
     [

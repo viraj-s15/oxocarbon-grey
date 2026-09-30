@@ -20,7 +20,8 @@ export const grey = {
 };
 
 // Oxocarbon accents (nyoom-engineering/oxocarbon.nvim), plus a lighter blue
-// for operators and a muted steel blue for terminal chips.
+// for operators, a deeper Carbon blue for constants and a muted steel blue for
+// terminal chips.
 export const accent = {
   teal: '#08bdba', // base07
   cyan: '#3ddbd9', // base08
@@ -33,6 +34,7 @@ export const accent = {
   purple: '#be95ff', // base14
   ice: '#82cfff', // base15
   steel: '#7189b3', // ANSI bright blue: readable as text, quiet as a background
+  cobalt: '#4589ff', // IBM Carbon blue 50: constants
 };
 
 // Syntax roles. Token rules and semantic token colours refer to these names.
@@ -47,7 +49,7 @@ export const syntax = {
   escape: accent.ice,
   regex: accent.teal,
   number: accent.ice,
-  constant: accent.pink, // user constants, enum members
+  constant: accent.cobalt, // user constants, enum members
   builtin: accent.teal, // true, false, null, built-in constants
   property: accent.ice,
   variable: grey.fg,
