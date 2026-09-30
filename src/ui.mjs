@@ -13,9 +13,7 @@ const alert = a.pink;
 const warning = a.purple; // oxocarbon.nvim uses purple for warnings
 const transparent = '#00000000';
 
-// The whole window is one flat surface: every part, and the gaps between the
-// rounded parts of the modern layout, use the editor background. Parts are
-// separated only by a faint hairline.
+// One flat surface; parts are separated only by a hairline.
 const surface = g.bg;
 const hairline = g.hairline;
 
@@ -43,8 +41,7 @@ export default {
   'progressBar.background': accent,
   'sash.hoverBorder': hairline,
 
-  // Modern layout (VS Code 1.139+): the shell behind the floating parts and
-  // the frames around them.
+  // Modern layout (VS Code 1.139+)
   'modernUI.shellBackground': surface,
   'modernUI.inactiveShellBackground': surface,
   'surface.background': surface,

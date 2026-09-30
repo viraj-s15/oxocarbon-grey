@@ -474,7 +474,6 @@ export default [
   rule('Git rebase commands', ['support.function.git-rebase'], s.keyword),
   rule('Git rebase hashes', ['constant.sha.git-rebase'], s.number),
 
-  // Language specific touches
   // Shared across languages
   rule('Interpolation contents', ['meta.fstring.python constant.character.format.placeholder.other.python'], s.interpolation),
   rule('Property declarations and object keys', ['meta.object-literal.key', 'meta.definition.property variable.object.property', 'meta.field.declaration variable.object.property'], s.propertyDeclaration),

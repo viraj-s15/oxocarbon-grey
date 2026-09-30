@@ -1,11 +1,6 @@
-// Semantic token colours. These override the TextMate colours when a language
-// server provides semantic tokens (TypeScript, Pylance, rust-analyzer, clangd,
-// gopls, ...). Selectors are `type.modifier:language`; each style property
-// comes from the highest-scoring rule that sets it (100 - supertype level,
-// +100 per modifier, +10 for a language). A property no rule sets is NOT taken
-// from the token's own TextMate scope: VS Code probes the token type's default
-// scope (e.g. keyword -> keyword.control) in this theme instead. So set italic
-// and bold explicitly wherever the default probe would give the wrong answer.
+// Semantic token colours. A style property no rule sets falls back to the token
+// type's default scope (keyword -> keyword.control), not the token's own
+// TextMate scope, so italic and bold are set explicitly where that differs.
 import { syntax as s } from './palette.mjs';
 
 const italic = (foreground) => ({ foreground, italic: true });
@@ -100,10 +95,6 @@ export default {
   colon: s.punctuation,
   semicolon: s.punctuation,
   arrow: s.punctuation,
-
-  // TypeScript / JavaScript (tsserver) uses the standard types above: object
-  // keys and member declarations are property.declaration, globals such as
-  // console and fetch are *.defaultLibrary.
 
   // Go (gopls) only marks real constants readonly.
   'variable.readonly:go': s.constant,
