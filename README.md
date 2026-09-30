@@ -12,10 +12,10 @@ A dark VS Code theme based on [Oxocarbon](https://github.com/nyoom-engineering/o
 
 ## Install
 
-Search for **Oxocarbon Grey** in the Extensions view, or:
+Available on the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=viraj-s15.oxocarbon-grey) and [Open VSX](https://open-vsx.org/extension/viraj-s15/oxocarbon-grey). Search for **Oxocarbon Grey** in the Extensions view, or:
 
 ```sh
-codium --install-extension viraj-s15.oxocarbon-grey
+code --install-extension viraj-s15.oxocarbon-grey
 ```
 
 Keep semantic highlighting on for the full effect.
