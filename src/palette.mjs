@@ -44,23 +44,28 @@ export const syntax = {
   operator: accent.blueLight,
   function: accent.rose,
   method: accent.teal,
-  type: accent.sky,
+  type: accent.sky, // builtin/library types, traits, interfaces, type parameters: italic
   string: accent.purple,
   escape: accent.ice,
   regex: accent.teal,
   number: accent.ice,
   constant: accent.cobalt, // user constants, enum members
-  builtin: accent.teal, // true, false, null, built-in constants
-  property: accent.ice,
+  builtin: accent.teal, // true, false, null, built-in functions and globals
+  property: accent.ice, // fields and property access
+  propertyDeclaration: accent.blueLight, // object keys, field and member declarations
   variable: grey.fg,
   parameter: grey.fg,
   self: accent.pink, // this, self, super
   decorator: accent.green,
   namespace: accent.teal,
-  macro: accent.cyan,
+  macro: accent.cyan, // Rust and C/C++ macros, preprocessor
+  interpolation: accent.cyan, // ${ }, { } in f-strings and format strings, JSX { }
+  lifetime: grey.fgMuted, // Rust lifetimes, italic
+  unsafe: accent.pink, // Rust unsafe, bold
   label: accent.ice,
   punctuation: grey.fgMuted,
   comment: grey.fgSubtle,
+  docComment: grey.fgMuted, // ///, /** */, doxygen: a step brighter than comments
   todo: accent.green,
   tag: accent.blue,
   attribute: accent.ice,

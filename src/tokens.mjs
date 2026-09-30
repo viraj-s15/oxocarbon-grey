@@ -14,6 +14,12 @@ export default [
   // Base
   rule('Comments', ['comment', 'punctuation.definition.comment', 'string.comment'], s.comment, 'italic'),
   rule(
+    'Doc comments',
+    ['comment.block.documentation', 'comment.line.documentation', 'comment.line.double-slash.documentation', 'comment.line.triple-slash', 'comment.block.documentation punctuation.definition.comment', 'comment.line.documentation punctuation.definition.comment'],
+    s.docComment,
+    'italic',
+  ),
+  rule(
     'Doc comment tags',
     [
       'comment.block.documentation storage.type',
@@ -114,7 +120,7 @@ export default [
     'italic',
   ),
   rule('Preprocessor directives', ['keyword.control.directive', 'punctuation.definition.directive', 'meta.preprocessor keyword', 'keyword.other.preprocessor'], s.macro),
-  rule('Include directives', ['keyword.control.directive.include', 'keyword.control.directive.import'], s.keyword),
+  rule('Include directives', ['keyword.control.directive.include', 'keyword.control.directive.import', 'entity.name.other.preprocessor.macro.predefined'], s.macro),
 
   // Punctuation
   rule(
@@ -210,11 +216,11 @@ export default [
     s.escape,
   ),
   rule('Regex quantifiers and anchors', ['keyword.operator.quantifier.regexp', 'keyword.control.anchor.regexp', 'keyword.operator.or.regexp', 'keyword.operator.negation.regexp'], s.operator),
-  rule('Regex groups', ['punctuation.definition.group.regexp', 'punctuation.definition.group.assertion.regexp', 'punctuation.definition.character-class.regexp', 'meta.assertion.look-ahead.regexp', 'meta.assertion.look-behind.regexp'], s.storage),
+  rule('Regex groups', ['punctuation.definition.group.regexp', 'punctuation.definition.group.assertion.regexp', 'punctuation.definition.character-class.regexp', 'meta.assertion.look-ahead.regexp', 'meta.assertion.look-behind.regexp', 'constant.other.set.regexp', 'punctuation.character.set.begin.regexp', 'punctuation.character.set.end.regexp'], s.storage),
 
   // Constants
   rule('Numbers', ['constant.numeric', 'keyword.other.unit', 'keyword.other.suffix', 'punctuation.separator.dot.decimal', 'punctuation.separator.decimal', 'constant.other.date', 'constant.other.time', 'constant.other.datetime', 'constant.other.time.datetime', 'constant.numeric punctuation', 'constant.other.color', 'constant.other.color.rgb-value', 'constant.other.rgb-value'], s.number),
-  rule('Built-in constants', ['support.constant', 'constant.builtin', 'variable.language.ellipsis'], s.builtin),
+  rule('Built-in constants', ['support.constant', 'constant.builtin', 'variable.language.ellipsis', 'constant.other.ellipsis.python'], s.builtin),
   rule('Language literals', ['constant.language', 'constant.language.boolean', 'constant.language.null', 'constant.language.undefined', 'constant.language.nil', 'constant.language.python', 'constant.language.go', 'constant.language.json', 'constant.language.bool.rust'], s.builtin, 'italic'),
   rule(
     'User constants',
@@ -277,12 +283,14 @@ export default [
   rule('Shell variables', ['variable.other.normal.shell', 'variable.other.positional.shell', 'variable.other.bracket.shell', 'variable.other.special.shell', 'punctuation.definition.variable.shell', 'variable.other.assignment.shell', 'variable.parameter.positional.shell', 'variable.parameter.positional.all.shell'], s.property),
 
   // Functions
-  rule('Function calls', ['entity.name.function', 'support.function', 'meta.function-call entity.name.function', 'meta.function-call.generic', 'variable.function', 'entity.name.function.call', 'support.function.builtin', 'entity.name.command.shell', 'support.function.builtin.shell'], s.function, ''),
+  rule('Function calls', ['entity.name.function', 'support.function', 'meta.function-call entity.name.function', 'meta.function-call.generic', 'variable.function', 'entity.name.function.call', 'entity.name.command.shell', 'support.function.builtin.shell'], s.function, ''),
+  rule('Built-in functions', ['support.function.builtin', 'support.function.builtin.python', 'support.function.console', 'support.function.std'], s.builtin),
   rule(
     'Function declarations',
     [
       'meta.definition.function entity.name.function',
       'meta.function.python entity.name.function',
+      'meta.function.definition.rust entity.name.function.rust',
       'entity.name.function.definition',
       'entity.name.function.shell',
     ],
@@ -319,7 +327,6 @@ export default [
       'meta.type.annotation entity.name.type',
       'entity.name.type.rust',
       'entity.name.type.go',
-      'support.type.exception',
       'entity.name.type.cpp',
       'entity.name.scope-resolution.template-call',
     ],
@@ -350,17 +357,24 @@ export default [
       'support.type.sys-types',
       'support.type.stdint',
       'support.class.builtin',
-      'entity.name.type.lifetime',
+      'support.class.promise',
+      'support.class.error',
+      'support.type.exception',
+      'support.type.exception.python',
     ],
     s.type,
     'italic',
   ),
   rule(
-    'Type parameters and lifetimes',
-    ['entity.name.type.parameter', 'storage.modifier.lifetime.rust', 'entity.name.lifetime', 'punctuation.definition.lifetime.rust', 'entity.name.type.lifetime.rust'],
+    'Type parameters',
+    ['entity.name.type.parameter', 'meta.type.parameters entity.name.type', 'entity.name.type.template', 'storage.type.template.argument'],
     s.type,
     'italic',
   ),
+  // C++ scopes the type of a function parameter as entity.name.type.parameter.
+  rule('C++ parameter types', ['entity.name.type.parameter.cpp', 'entity.name.type.parameter.c'], s.type),
+  rule('C++ template keywords', ['storage.type.template.argument.typename', 'storage.type.template.argument.class'], s.storage),
+  rule('Lifetimes', ['storage.modifier.lifetime.rust', 'entity.name.lifetime', 'punctuation.definition.lifetime.rust', 'entity.name.type.lifetime', 'entity.name.type.lifetime.rust'], s.lifetime, 'italic'),
   // "struct", "class", "enum" in C/C++ are storage keywords, not type names.
   rule('Declaration keywords that grammars scope as types', ['storage.type.struct', 'storage.type.class', 'storage.type.enum', 'storage.type.union', 'storage.type.interface', 'storage.type.type', 'storage.type.function', 'storage.type.namespace', 'storage.type.template', 'storage.type.typedef', 'storage.type.class.python', 'storage.type.function.python', 'storage.type.rust', 'storage.type.ts', 'storage.type.js', 'storage.type.property'], s.storage),
   rule('C++ auto', ['storage.type.primitive.auto', 'storage.type.auto'], s.storage),
@@ -457,15 +471,51 @@ export default [
   rule('Git rebase hashes', ['constant.sha.git-rebase'], s.number),
 
   // Language specific touches
-  rule('Python f-string prefixes', ['storage.type.string.python', 'storage.type.format.python'], s.storage),
-  rule('Python magic methods', ['support.function.magic.python'], s.method),
+  // Shared across languages
+  rule('Interpolation contents', ['meta.fstring.python constant.character.format.placeholder.other.python'], s.interpolation),
+  rule('Property declarations and object keys', ['meta.object-literal.key', 'meta.definition.property variable.object.property', 'meta.field.declaration variable.object.property'], s.propertyDeclaration),
+  rule('Optional chaining', ['punctuation.accessor.optional'], s.operator),
+  rule('Case labels', ['punctuation.definition.section.case-statement'], s.punctuation),
+
+  // Python
+  rule('Python string prefixes', ['storage.type.string.python'], s.storage),
+  rule('Python format specs', ['storage.type.format.python', 'meta.fstring.python storage.type.format.python'], s.escape),
+  rule('Python docstrings', ['string.quoted.docstring', 'string.quoted.docstring punctuation.definition.string'], s.string, 'italic'),
+  rule('Python magic methods', ['support.function.magic.python', 'meta.function.python support.function.magic.python'], s.method),
+  rule('Python method calls', ['meta.member.access.python meta.function-call.generic.python'], s.method),
   rule('Python keyword arguments', ['variable.parameter.function-call.python', 'meta.function-call.arguments.python variable.parameter'], s.parameter, 'italic'),
-  rule('Rust references', ['keyword.operator.borrow.rust', 'keyword.operator.borrow.and.rust'], s.operator),
-  rule('Rust mut / ref', ['storage.modifier.mut.rust', 'storage.modifier.ref.rust'], s.storage, 'italic'),
-  rule('Rust macro bang', ['entity.name.function.macro.rust', 'support.macro.rust'], s.macro),
-  rule('Go struct field', ['variable.other.field.go', 'variable.other.property.field.go'], s.property),
+
+  // TypeScript / JavaScript
+  rule('Decorator names', ['meta.decorator variable.other.readwrite', 'meta.decorator variable.other.readwrite.ts', 'meta.decorator variable.other.readwrite.tsx', 'meta.decorator entity.name.function.ts', 'meta.decorator entity.name.function.tsx'], s.decorator),
+  rule('Constructor calls', ['new.expr entity.name.function', 'new.expr meta.function-call entity.name.function', 'new.expr entity.name.type'], s.type),
+
+  // Rust
+  rule('Rust references', ['keyword.operator.borrow.rust', 'keyword.operator.borrow.and.rust', 'keyword.operator.dereference.rust'], s.operator),
+  rule('Rust mut / ref', ['storage.modifier.mut.rust', 'storage.modifier.ref.rust'], s.storage),
+  rule('Rust ? operator', ['keyword.operator.question.rust'], s.keyword, 'bold'),
+  rule('Rust unsafe', ['keyword.other.unsafe.rust', 'storage.modifier.unsafe.rust'], s.unsafe, 'bold'),
+  rule('Rust macros', ['entity.name.function.macro.rust', 'support.macro.rust', 'meta.macro.rules.rust entity.name.function.macro.rust'], s.macro),
+  rule('Rust macro_rules!', ['entity.name.function.macro.rules.rust'], s.storage),
+  rule('Rust macro metavariables', ['variable.other.metavariable.name.rust', 'keyword.operator.macro.dollar.rust'], s.macro, 'italic'),
+  rule('Rust macro fragment specifiers', ['variable.other.metavariable.specifier.rust'], s.type, 'italic'),
+  rule('Rust attribute contents', ['punctuation.brackets.attribute.rust', 'meta.attribute.rust entity.name.type.rust', 'meta.attribute.rust variable.other.rust', 'meta.attribute.rust keyword.operator'], s.decorator),
+  rule('Rust attribute arguments', ['meta.attribute.rust punctuation.brackets.round.rust', 'meta.attribute.rust punctuation.comma.rust'], s.punctuation),
+  rule('Rust attribute strings', ['meta.attribute.rust string', 'meta.attribute.rust string punctuation.definition.string'], s.string),
+  rule('Rust Option and Result variants', ['entity.name.type.option.rust', 'entity.name.type.result.rust'], s.constant),
+  rule('Rust numeric suffixes', ['constant.numeric entity.name.type.numeric.rust', 'constant.numeric.decimal.rust entity.name.type.numeric.rust', 'constant.numeric.hex.rust entity.name.type.numeric.rust'], s.number),
+
+  // C / C++
   rule('C/C++ pointers and references', ['storage.modifier.pointer', 'storage.modifier.reference', 'keyword.operator.pointer', 'keyword.operator.dereference.cpp'], s.operator),
   rule('C/C++ include paths', ['string.quoted.other.lt-gt.include', 'meta.preprocessor.include string'], s.string),
+  rule('C/C++ macro calls', ['entity.name.function.call.upper-case entity.name.function.call', 'entity.name.function.call.upper-case.cpp entity.name.function.call.cpp', 'entity.name.function.call.upper-case.c entity.name.function.call.c'], s.macro),
+  rule('C++ attributes', ['support.other.attribute', 'support.other.attribute punctuation.section.attribute', 'entity.other.attribute'], s.decorator),
+  rule('C++ operator overloads', ['entity.name.operator', 'entity.name.operator.cpp'], s.function, 'bold'),
+  rule('C++ declaration keywords', ['keyword.other.operator.overload', 'keyword.other.concept', 'meta.declaration.type.alias keyword.other.using.directive'], s.storage),
+  rule('C++ lambda captures', ['punctuation.definition.capture.begin.lambda', 'punctuation.definition.capture.end.lambda'], s.punctuation),
+  rule('C++ raw strings', ['string.quoted.double.raw', 'punctuation.definition.string.raw'], s.string),
+  rule('C++ string prefixes', ['meta.encoding', 'punctuation.definition.string.begin meta.encoding'], s.storage),
+
+  rule('Go struct field', ['variable.other.field.go', 'variable.other.property.field.go'], s.property),
   rule('Command-line options', ['constant.other.option', 'string.unquoted.argument.shell constant.other.option', 'constant.other.option.dash.shell'], s.attribute),
   rule('Shell heredoc delimiters', ['keyword.control.heredoc-token.shell', 'punctuation.definition.string.heredoc'], s.storage),
   rule('Shell shebang', ['comment.line.shebang', 'punctuation.definition.comment.shebang'], grey.fgMuted, 'italic'),
