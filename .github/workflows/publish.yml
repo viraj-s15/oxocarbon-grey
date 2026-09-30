@@ -39,4 +39,4 @@ jobs:
           path: '*.vsix'
 
       - name: Publish to Open VSX
-        run: npx --yes ovsx@^1.2.0 publish *.vsix --trusted-publishing
+        run: npx --yes ovsx@^1.2.0 publish *.vsix --trusted-publishing --skip-duplicate
