@@ -21,7 +21,7 @@ These previews were rendered with [Shiki](https://shiki.style) from the files in
 
 ## Install
 
-**From Open VSX** (VSCodium, Gitpod, Theia, Cursor and other Open VSX clients), once published:
+**From Open VSX** (VSCodium, Gitpod, Theia, Cursor and other Open VSX clients):
 
 1. Open the Extensions view (`Ctrl+Shift+X` / `Cmd+Shift+X`).
 2. Search for **Oxocarbon Grey** and install it.
@@ -36,7 +36,7 @@ codium --install-extension viraj-s15.oxocarbon-grey
 **From a `.vsix` file:**
 
 ```sh
-code --install-extension oxocarbon-grey-0.3.1.vsix
+code --install-extension oxocarbon-grey-1.0.0.vsix
 ```
 
 or use **Extensions: Install from VSIX...** from the command palette.
