@@ -10,3 +10,7 @@ PUBLISHING.md
 node_modules/**
 .claude/**
 zed/**
+colors/**
+lua/**
+tests/**
+.cache/**
