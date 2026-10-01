@@ -9,3 +9,4 @@ images/preview-*.png
 PUBLISHING.md
 node_modules/**
 .claude/**
+zed/**
