@@ -1,12 +1,7 @@
-// Checks for the generated Zed extension that need no dependencies. Full JSON
-// Schema validation runs separately (`npm run check:zed-schema`, ajv).
-//
-// theme-schema.json is Zed's theme schema (v0.2.0), generated with
-// `cargo run -p schema_generator -- theme` from zed-industries/zed at
-// 40180d9c40e2 (2026-09-30), the source of https://zed.dev/schema/themes/v0.2.0.json.
-// Regenerate it the same way when Zed adds theme properties.
 import { readFileSync } from 'node:fs';
 import { contrast } from '../contrast.mjs';
+
+// theme-schema.json: `cargo run -p schema_generator -- theme` in zed-industries/zed@40180d9c40e2.
 
 const schema = JSON.parse(readFileSync(new URL('./theme-schema.json', import.meta.url), 'utf8'));
 const defs = schema.$defs;
@@ -14,10 +9,7 @@ const styleProps = defs.ThemeStyleContent.properties;
 const structured = new Set(['accents', 'players', 'syntax', 'background.appearance']);
 const colorPattern = new RegExp(defs.Color.pattern);
 
-// Captures used by Zed's built-in Python, Rust, TypeScript, TSX and C++
-// highlight queries (crates/grammars/src/*/highlights.scm at the commit above).
-// Each must resolve to a style, directly or through a dot-prefix parent.
-// `none` and `nested` are deliberately unstyled by Zed.
+// Captures in Zed's Python, Rust, TypeScript, TSX and C++ highlights.scm at the same commit.
 const captures = `attribute attribute.builtin attribute.jsx attribute.special boolean comment
   comment.doc concept constant constant.builtin constructor embedded function function.builtin
   function.call function.decorator function.decorator.call function.definition function.kwargs
@@ -31,10 +23,6 @@ const captures = `attribute attribute.builtin attribute.jsx attribute.special bo
   type.class.inheritance type.interface type.name variable variable.builtin variable.parameter
   variable.special`.split(/\s+/);
 
-// Style lists from Zed's default semantic token rules
-// (assets/settings/default_semantic_token_rules.json and the Rust, Python and
-// C++ semantic_token_rules.json). Zed uses the first name the theme defines,
-// matched exactly, so each list needs at least one key.
 const semanticStyles = [
   ['namespace', 'module', 'type'],
   ['type.class.definition', 'type.definition'],
@@ -72,7 +60,6 @@ const semanticStyles = [
   ['operator'],
   ['keyword.modifier'],
   ['type.event', 'type'],
-  // Rust
   ['punctuation.bracket'],
   ['punctuation'],
   ['attribute', 'decorator'],
@@ -84,8 +71,6 @@ const semanticStyles = [
   ['variable.special'],
 ];
 
-// Registry rules (zed-industries/extensions src/lib/validation.js and the
-// extension CLI's manifest checks) and Zed's theme-extension prerequisites.
 const checkManifest = (m) => {
   const problems = [];
   if (!/^[a-z0-9-]+$/.test(m.id)) problems.push(`id "${m.id}" must be lowercase kebab-case`);
@@ -105,7 +90,6 @@ const checkManifest = (m) => {
   return problems;
 };
 
-// The registry's MIT check (zed-industries/extensions src/lib/license.js).
 const mitPatterns = [
   /Copyright/i,
   /Permission is hereby granted, free of charge, to any person obtaining a copy/i,
@@ -113,11 +97,12 @@ const mitPatterns = [
   /THE SOFTWARE IS PROVIDED ["“]AS IS["”], WITHOUT WARRANTY OF ANY KIND, EXPRESS OR/i,
 ];
 
-const opaque = (hex) => hex.length === 7;
+const has = (obj, key) => Object.hasOwn(obj, key);
+const opaque = (hex) => /^#[0-9a-f]{6}(ff)?$/i.test(hex ?? '');
 
 export function validate({ theme, manifest, license }) {
   const problems = [...checkManifest(manifest)];
-  const licenseText = license.replace(/\s+/g, ' '); // the registry collapses whitespace first
+  const licenseText = license.replace(/\s+/g, ' ');
   if (!mitPatterns.every((p) => p.test(licenseText))) problems.push('LICENSE is not recognised as MIT');
 
   if (theme.themes.length !== 1) problems.push('expected exactly one theme');
@@ -126,30 +111,29 @@ export function validate({ theme, manifest, license }) {
   if (t.appearance !== 'dark') problems.push('appearance must be dark');
   const style = t.style;
 
-  // Property names and colour values. The schema allows unknown keys, so a
-  // misspelt key would otherwise be silently ignored by Zed.
   for (const [key, value] of Object.entries(style)) {
-    if (!(key in styleProps)) problems.push(`unknown style property "${key}"`);
+    if (!has(styleProps, key)) problems.push(`unknown style property "${key}"`);
     else if (styleProps[key].deprecated) problems.push(`deprecated style property "${key}"`);
     else if (!structured.has(key) && !colorPattern.test(value)) problems.push(`${key}: "${value}" is not a colour`);
   }
   if (!defs.WindowBackgroundContent.enum.includes(style['background.appearance'])) problems.push('invalid background.appearance');
 
-  // Every colour Zed offers must be set, or Zed fills it from One Dark.
   for (const [key, prop] of Object.entries(styleProps)) {
-    if (!structured.has(key) && !prop.deprecated && !(key in style)) problems.push(`missing style property "${key}"`);
+    if (!structured.has(key) && !prop.deprecated && !has(style, key)) problems.push(`missing style property "${key}"`);
   }
 
-  // Players: the first is the local user; Zed has eight slots.
-  if (style.players.length !== 8) problems.push(`expected 8 players, got ${style.players.length}`);
-  style.players.forEach((p, i) => {
-    for (const k of ['cursor', 'background', 'selection']) if (!colorPattern.test(p[k] ?? '')) problems.push(`players[${i}].${k} is not a colour`);
+  const players = Array.isArray(style.players) ? style.players : [];
+  const accents = Array.isArray(style.accents) ? style.accents : [];
+  const syntax = style.syntax && typeof style.syntax === 'object' ? style.syntax : {};
+  if (players.length !== 8) problems.push(`expected 8 players, got ${players.length}`);
+  players.forEach((p, i) => {
+    for (const k of ['cursor', 'background', 'selection']) if (!colorPattern.test(p?.[k] ?? '')) problems.push(`players[${i}].${k} is not a colour`);
   });
-  style.accents.forEach((c, i) => colorPattern.test(c) || problems.push(`accents[${i}] is not a colour`));
+  if (!accents.length) problems.push('missing accents');
+  accents.forEach((c, i) => colorPattern.test(c) || problems.push(`accents[${i}] is not a colour`));
 
-  // Syntax styles
   const highlightProps = Object.keys(defs.HighlightStyleContent.properties);
-  for (const [name, s] of Object.entries(style.syntax)) {
+  for (const [name, s] of Object.entries(syntax)) {
     for (const k of Object.keys(s)) if (!highlightProps.includes(k)) problems.push(`syntax.${name}: unknown field "${k}"`);
     if (!colorPattern.test(s.color ?? '')) problems.push(`syntax.${name}: missing or invalid color`);
     if (s.background_color !== undefined && !colorPattern.test(s.background_color)) problems.push(`syntax.${name}: invalid background_color`);
@@ -157,19 +141,22 @@ export function validate({ theme, manifest, license }) {
     if (s.font_weight !== undefined && !(s.font_weight >= 100 && s.font_weight <= 900)) problems.push(`syntax.${name}: invalid font_weight`);
   }
   const resolves = (capture) => {
-    for (let name = capture; name; name = name.includes('.') ? name.slice(0, name.lastIndexOf('.')) : '') if (name in style.syntax) return true;
+    for (let name = capture; name; name = name.includes('.') ? name.slice(0, name.lastIndexOf('.')) : '') if (has(syntax, name)) return true;
     return false;
   };
   for (const c of captures) if (!resolves(c)) problems.push(`capture @${c} has no style`);
-  for (const list of semanticStyles) if (!list.some((n) => n in style.syntax)) problems.push(`no style for semantic rule [${list.join(', ')}]`);
+  for (const list of semanticStyles) if (!list.some((n) => has(syntax, n))) problems.push(`no style for semantic rule [${list.join(', ')}]`);
 
-  // Contrast: code on the editor and current line, UI text on its surfaces.
   const editorBgs = [style['editor.background'], style['editor.active_line.background']];
-  const dim = new Set(['comment', 'hint', 'predictive']); // deliberately dim: 3:1
-  for (const [name, s] of Object.entries(style.syntax)) {
+  const dim = new Set(['comment', 'hint']);
+  for (const [name, s] of Object.entries(syntax)) {
     const min = dim.has(name) ? 3 : 4.5;
     const bgs = s.background_color ? [s.background_color] : editorBgs;
     for (const bg of bgs) {
+      if (!opaque(s.color) || !opaque(bg)) {
+        problems.push(`syntax.${name} must use opaque #rrggbb colours`);
+        continue;
+      }
       const ratio = contrast(s.color, bg);
       if (ratio < min) problems.push(`syntax.${name} ${s.color} on ${bg}: ${ratio.toFixed(2)} < ${min}`);
     }

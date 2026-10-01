@@ -78,7 +78,7 @@ Open the files in [`fixtures/`](fixtures) and compare with the VS Code previews 
 
   `dev: open highlights tree view` shows which capture or token styles each piece of text.
 - **Editor:**
-  - Selection: opaque grey.
+  - Selection: grey. Search matches and symbol highlights stay visible inside it.
   - Search: every match cyan-tinted, the current match sky.
   - Matching brackets and highlights of the symbol under the cursor.
   - Current line and line numbers.

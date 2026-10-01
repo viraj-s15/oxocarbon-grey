@@ -1,5 +1,3 @@
-// Makes sure the Zed checks catch the mistakes they exist for. Run with
-// `node --test src/zed/validate.test.mjs` (part of `npm run check`).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -9,7 +7,6 @@ import { validate } from './validate.mjs';
 
 const license = readFileSync(new URL('../../LICENSE', import.meta.url), 'utf8');
 
-// Validate a copy of the generated theme after `change` breaks it.
 const problems = (change) => {
   const t = structuredClone(theme);
   const m = structuredClone(manifest);
@@ -49,4 +46,20 @@ test('registry rules for the manifest and licence are enforced', () => {
   assert.match(problems(({ manifest }) => void (manifest.description = 'Grey')), /description must be longer/);
   assert.match(problems(({ manifest }) => void (manifest.version = 'v0.1')), /major.minor.patch/);
   assert.match(problems(() => 'All rights reserved.'), /not recognised as MIT/);
+});
+
+test('keys inherited from Object.prototype do not count as styles', () => {
+  assert.match(problems(({ style }) => void delete style.syntax.constructor), /capture @constructor has no style/);
+  assert.match(problems(({ style }) => void (style.toString = '#000000')), /unknown style property "toString"/);
+});
+
+test('translucent or shorthand syntax colours are rejected', () => {
+  assert.match(problems(({ style }) => void (style.syntax.variable.color = '#dde1e620')), /syntax.variable must use opaque/);
+  assert.match(problems(({ style }) => void (style.syntax.variable.color = '#fff')), /syntax.variable must use opaque/);
+});
+
+test('missing players and accents are reported, not thrown', () => {
+  const out = problems(({ style }) => void (delete style.players, delete style.accents));
+  assert.match(out, /expected 8 players, got 0/);
+  assert.match(out, /missing accents/);
 });

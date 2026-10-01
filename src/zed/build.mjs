@@ -1,7 +1,3 @@
-// Generates the Zed extension in zed/ from src/palette.mjs.
-//
-//   node src/zed/build.mjs          write zed/ and validate it
-//   node src/zed/build.mjs --check  fail if zed/ is out of date or invalid; writes nothing
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs';
 import { dirname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,14 +7,12 @@ import { validate } from './validate.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
-// extension.toml only holds flat strings, integers and string arrays.
 const toml = (obj) =>
   Object.entries(obj)
     .map(([key, value]) => `${key} = ${Array.isArray(value) ? `[${value.map((v) => JSON.stringify(v)).join(', ')}]` : JSON.stringify(value)}`)
     .join('\n') + '\n';
 
-// Zed requires the licence inside the extension directory; a licence at the
-// repository root does not count when the extension lives in a subdirectory.
+// Zed only accepts a licence inside the extension directory, not at the repository root.
 const license = readFileSync(join(root, 'LICENSE'), 'utf8');
 
 const files = {
@@ -33,10 +27,12 @@ if (problems.length) {
   process.exit(1);
 }
 
+const lf = (text) => text.replace(/\r\n/g, '\n');
+
 if (process.argv.includes('--check')) {
   const stale = Object.entries(files).filter(([path, content]) => {
     try {
-      return readFileSync(join(root, path), 'utf8') !== content;
+      return lf(readFileSync(join(root, path), 'utf8')) !== lf(content);
     } catch {
       return true;
     }
@@ -45,12 +41,11 @@ if (process.argv.includes('--check')) {
     console.error(`Out of date: ${stale.map(([path]) => path).join(', ')}. Run \`npm run build\`.`);
     process.exit(1);
   }
-  // Zed packages everything in zed/ and loads every JSON file in zed/themes.
   const present = existsSync(join(root, 'zed')) ? readdirSync(join(root, 'zed'), { recursive: true, withFileTypes: true }) : [];
   const extra = present
-    .filter((entry) => entry.isFile())
-    .map((entry) => relative(root, join(entry.parentPath, entry.name)).split(sep).join('/'))
-    .filter((path) => !(path in files));
+    .filter((entry) => !entry.isDirectory())
+    .map((entry) => relative(root, join(entry.parentPath ?? entry.path, entry.name)).split(sep).join('/'))
+    .filter((path) => !Object.hasOwn(files, path));
   if (extra.length) {
     console.error(`Unexpected files in zed/: ${extra.join(', ')}`);
     process.exit(1);
