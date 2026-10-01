@@ -1,6 +1,6 @@
 # Oxocarbon Grey
 
-A dark VS Code theme based on [Oxocarbon](https://github.com/nyoom-engineering/oxocarbon.nvim), with a flat graphene background and richer syntax colours. Tuned for Python, Rust, TypeScript and C++. A Zed port lives in [`zed/`](zed), and a [Neovim](#neovim) colorscheme in [`colors/`](colors) and [`lua/`](lua).
+A dark VS Code theme based on [Oxocarbon](https://github.com/nyoom-engineering/oxocarbon.nvim), with a flat graphene background and richer syntax colours. Tuned for Python, Rust, TypeScript and C++. A Zed port lives in [`zed/`](zed), a [Neovim](#neovim) colorscheme in [`colors/`](colors) and [`lua/`](lua), and a [Ghostty](#ghostty) theme in [`ghostty/`](ghostty).
 
 ![Python](images/preview-python.png)
 
@@ -366,12 +366,115 @@ npm run test:neovim:fixtures  # fixture highlighting with pinned parsers; Neovim
 
 It does not run language servers.
 
+## Ghostty
+
+[`ghostty/oxocarbon-grey`](ghostty/oxocarbon-grey) is a custom theme for [Ghostty](https://ghostty.org). It is distributed by this repository and is not one of Ghostty's built-in themes. Ghostty's built-in `Oxocarbon` is a different theme. The file is generated from `src/palette.mjs` and committed, so installing it needs neither Node nor the generator.
+
+It sets only colours:
+- background and foreground;
+- cursor and selection;
+- the 16 ANSI colours, `palette = 0` to `palette = 15`.
+
+They match the VS Code theme's terminal:
+- The cursor is the text colour, with the background colour for the character under it.
+- The selection is VS Code's 20% blue selection mixed into the background (`#2e384c`, since Ghostty colours have no alpha), with white text.
+- Oxocarbon has no yellow, so ANSI yellow (3 and 11) is purple.
+
+### Install
+
+Ghostty finds a theme by name in `$XDG_CONFIG_HOME/ghostty/themes`, which is `~/.config/ghostty/themes` when `XDG_CONFIG_HOME` is unset. That is also the folder on macOS. Ghostty reads its main config from `~/Library/Application Support/com.mitchellh.ghostty/` on macOS, but it does not look for themes there.
+
+Download the file. The `[ -e … ] ||` part skips the download if a file with that name already exists:
+
+```sh
+dir="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes"
+mkdir -p "$dir"
+[ -e "$dir/oxocarbon-grey" ] || curl -fsSL -o "$dir/oxocarbon-grey" \
+  https://viraj-s15.github.io/oxocarbon-grey/ghostty/oxocarbon-grey
+```
+
+Or copy it from a clone. `cp -n` does not overwrite an existing file:
+
+```sh
+git clone https://github.com/viraj-s15/oxocarbon-grey
+cd oxocarbon-grey
+dir="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes"
+mkdir -p "$dir"
+cp -n ghostty/oxocarbon-grey "$dir/"
+```
+
+For a pull request that has not been merged yet, run `git fetch origin pull/<number>/head:ghostty-review && git switch ghostty-review` before the `cp`. To replace an older copy, move it aside first: `mv "$dir/oxocarbon-grey" "$dir/oxocarbon-grey.bak"`.
+
+### Turn it on
+
+1. Open your Ghostty config:
+   - **macOS:** choose **Settings…** in the Ghostty menu, or press <kbd>cmd-,</kbd>. Ghostty opens `~/Library/Application Support/com.mitchellh.ghostty/config.ghostty` if it exists, then `~/.config/ghostty/config.ghostty` if that exists. If neither exists, it creates the first one. Ghostty loads both files if both exist, and the Application Support one wins on conflicts. Before Ghostty 1.2.3 the file is named `config`, without an extension.
+   - **Linux:** `$XDG_CONFIG_HOME/ghostty/config.ghostty`, usually `~/.config/ghostty/config.ghostty`.
+2. Add this line. If the file already has a `theme = …` line, change only that line. To keep the old value, comment it out with `#` on its own line. Leave the rest of the file as it is.
+
+   ```ini
+   theme = oxocarbon-grey
+   ```
+
+3. Reload the config with <kbd>cmd-shift-,</kbd> on macOS, <kbd>ctrl-shift-,</kbd> on Linux, or **Reload Configuration** in the macOS Ghostty menu.
+
+Ghostty loads the theme before your config, so colour settings in your config win. If your config sets `background`, `foreground`, `palette`, `cursor-color`, `cursor-text`, `selection-background` or `selection-foreground`, comment those lines out to see the theme's colours.
+
+`ghostty +validate-config` checks your config, including the theme lookup. If the file is in the wrong folder, it prints `theme "oxocarbon-grey" not found` with the paths it tried. On macOS, run the CLI from the app bundle if `ghostty` is not on your `PATH`:
+
+```sh
+/Applications/Ghostty.app/Contents/MacOS/ghostty +validate-config
+```
+
+### Remove
+
+1. Delete the `theme = oxocarbon-grey` line, or restore your previous `theme` line.
+2. Reload the config.
+3. Delete the file:
+
+   ```sh
+   rm "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/oxocarbon-grey"
+   ```
+
+### Preview the colours
+
+```sh
+sh ghostty/preview.sh
+```
+
+The script prints:
+- the normal and bright ANSI colours, plus bold and italic;
+- the normal background colours with default text, and the bright ones with black text;
+- the basic text styles;
+- a few sample shell, test and compiler messages.
+
+It only writes to the terminal, and resets all styling when it finishes or is interrupted.
+
+The theme changes programs that use the 16 ANSI colours: shells, `ls`, `git` and compilers. Programs that set their own 24-bit colours draw those instead. That includes Neovim with `termguicolors` on and this repository's colorscheme.
+
+### Development
+
+```sh
+npm run build:ghostty   # regenerate ghostty/oxocarbon-grey
+npm run check           # includes the freshness check and the Ghostty tests
+npm run check:ghostty   # ghostty +validate-config on the file; needs ghostty on PATH
+```
+
+`npm run check` fails if `ghostty/oxocarbon-grey` is missing or does not match `src/palette.mjs`, without rewriting it. Its tests check that:
+- the file sets only the colour keys above;
+- the palette has entries 0 to 15 exactly once, in ANSI order, from the shared palette;
+- the output is deterministic;
+- the website's download is byte for byte the same file.
+
+`ghostty +validate-config --config-file=<path>` loads only that file, not your own config. The theme was validated this way with Ghostty 1.3.0 on Linux (Ubuntu's `ghostty 1.3.0~us1-0ubuntu1` package), which also resolved `theme = oxocarbon-grey` from `$XDG_CONFIG_HOME/ghostty/themes`. CI runs the structural tests only, not Ghostty itself.
+
 ## Website
 
 The theme's website is a single static page in [`site/`](site), deployed with GitHub Pages to <https://viraj-s15.github.io/oxocarbon-grey/>. The code samples on it are excerpts of the files in [`fixtures/`](fixtures), coloured the way the Neovim port draws them with Tree-sitter. Pointing at a colour in the legend fades out every token that does not use it.
 
 - `site/specimens.lua` runs in headless Neovim with the pinned parsers and writes `site/specimens.json`, which is committed. Run `npm run build:specimens` after changing the Neovim highlight groups or the fixtures. `npm run test:neovim:fixtures` fails if the file is out of date.
-- `site/build.mjs` fills `site/index.html` with the specimens, the legend and the palette from `src/palette.mjs`, and writes the page to `_site/` (git-ignored). It needs only Node.
+- `site/build.mjs` fills `site/index.html` with the specimens, the legend, the terminal colours and the palette from `src/palette.mjs`, and writes the page to `_site/` (git-ignored). It copies `ghostty/oxocarbon-grey` to `_site/ghostty/oxocarbon-grey` for the download. It needs only Node.
+- The terminal on the page is drawn by the browser from the Ghostty theme's colours. It is not a screenshot.
 
 To preview it locally:
 
@@ -382,27 +485,24 @@ python3 -m http.server -d _site 8000   # then open http://localhost:8000
 
 ### Deployment
 
-`.github/workflows/pages.yml` builds `_site/` and deploys it on every push to `main` or `feat/add-theme-website`, or when run by hand from the Actions tab. The site has a single URL, so the most recent deployment from either branch is the one that is live. Before the website is merged, pushes to `feat/add-theme-website` update the live site for review. After it is merged, `main` is the deployment source.
+`.github/workflows/pages.yml` runs only on pushes to `main`. It runs `npm run check`, builds `_site/` and deploys it once the build succeeds. The deploy job also checks that the run is a push to `main`. Only the deploy job gets the `pages: write` and `id-token: write` permissions. The live website updates only after changes reach `main`. Feature branches and pull requests never deploy. Pull requests run the checks in `check.yml`, and the website can be previewed locally as described above.
 
-The workflow cannot turn GitHub Pages on by itself. A repository admin has to change two settings first:
-
-1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**. This creates the `github-pages` environment. Until it is set, the workflow's `configure-pages` step fails.
-2. **Settings → Environments → `github-pages` → Deployment branches and tags:** GitHub allows only the default branch here at first. Keep **Selected branches and tags**, then use **Add deployment branch or tag rule** to add `feat/add-theme-website`, next to `main`. Without this rule, the `deploy` job for the feature branch fails with a message that the branch is not allowed to deploy to `github-pages`.
-
-Then re-run the failed **pages** workflow, or run it from the Actions tab on `feat/add-theme-website`. The deploy job's summary links to the live site. After the website is merged, delete the `feat/add-theme-website` rule and remove the branch from the workflow's `push` trigger, so that only `main` deploys.
+The workflow cannot turn GitHub Pages on by itself. A repository admin has to set **Settings → Pages → Build and deployment → Source** to **GitHub Actions** once. This creates the `github-pages` environment, which allows the default branch, `main`. Until it is set, the workflow's `configure-pages` step fails. The deploy job's summary links to the live site.
 
 ## Build
 
-Colours live in `src/palette.mjs`. `src/ui.mjs`, `src/tokens.mjs` and `src/semantic.mjs` map them for VS Code; `src/zed/` maps them for Zed; `src/neovim/` generates the Neovim palette, which `lua/oxocarbon_grey/groups/` maps.
+Colours live in `src/palette.mjs`. `src/ui.mjs`, `src/tokens.mjs` and `src/semantic.mjs` map them for VS Code; `src/zed/` maps them for Zed; `src/neovim/` generates the Neovim palette, which `lua/oxocarbon_grey/groups/` maps; `src/ghostty/` generates the Ghostty theme.
 
 ```sh
-npm run build             # VS Code theme, icon, zed/ and the Neovim palette
+npm run build             # VS Code theme, icon, zed/, the Neovim palette and the Ghostty theme
 npm run build:zed         # zed/ only
 npm run build:neovim      # lua/oxocarbon_grey/palette.lua only
+npm run build:ghostty     # ghostty/oxocarbon-grey only
 npm run build:site        # the website, into _site/
 npm run build:specimens   # site/specimens.json; needs Neovim 0.12 and the fixture parsers
-npm run check             # committed output is up to date; Zed, Neovim palette and website checks and tests
+npm run check             # committed output is up to date; Zed, Neovim palette, Ghostty and website checks and tests
 npm run check:zed-schema  # zed/ theme against Zed's JSON schema (ajv-cli via npx)
+npm run check:ghostty     # Ghostty's own validation of ghostty/oxocarbon-grey; needs ghostty
 npm run package           # VS Code .vsix
 ```
 

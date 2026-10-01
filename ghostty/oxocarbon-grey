@@ -1,0 +1,27 @@
+# Oxocarbon Grey for Ghostty: https://github.com/viraj-s15/oxocarbon-grey
+# Generated from src/palette.mjs by `npm run build:ghostty`. Do not edit.
+
+background = #1b1c1f
+foreground = #dde1e6
+cursor-color = #dde1e6
+cursor-text = #1b1c1f
+selection-background = #2e384c
+selection-foreground = #ffffff
+
+# Oxocarbon has no yellow, so 3 and 11 are purple.
+palette = 0=#33353b
+palette = 1=#ee5396
+palette = 2=#42be65
+palette = 3=#be95ff
+palette = 4=#78a9ff
+palette = 5=#ff7eb6
+palette = 6=#08bdba
+palette = 7=#aeb4be
+palette = 8=#6e747d
+palette = 9=#ee5396
+palette = 10=#42be65
+palette = 11=#be95ff
+palette = 12=#7189b3
+palette = 13=#ff7eb6
+palette = 14=#3ddbd9
+palette = 15=#dde1e6
