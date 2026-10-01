@@ -1,0 +1,2228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ThemeFamilyContent",
+  "description": "The content of a serialized theme family.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "themes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ThemeContent"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "author",
+    "themes"
+  ],
+  "$defs": {
+    "ThemeContent": {
+      "description": "The content of a serialized theme.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "appearance": {
+          "$ref": "#/$defs/AppearanceContent"
+        },
+        "style": {
+          "$ref": "#/$defs/ThemeStyleContent"
+        }
+      },
+      "required": [
+        "name",
+        "appearance",
+        "style"
+      ]
+    },
+    "AppearanceContent": {
+      "description": "The appearance of a theme in serialized content.",
+      "type": "string",
+      "enum": [
+        "light",
+        "dark"
+      ]
+    },
+    "ThemeStyleContent": {
+      "description": "The content of a serialized theme.",
+      "type": "object",
+      "properties": {
+        "background.appearance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WindowBackgroundContent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AccentContent"
+          },
+          "default": []
+        },
+        "border": {
+          "description": "Border color. Used for most borders, is usually a high contrast color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "border.variant": {
+          "description": "Border color. Used for deemphasized borders, like a visual divider between two sections",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "border.focused": {
+          "description": "Border color. Used for focused elements, like keyboard focused list item.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "border.selected": {
+          "description": "Border color. Used for selected elements, like an active search filter or selected checkbox.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "border.transparent": {
+          "description": "Border color. Used for transparent borders. Used for placeholder borders when an element gains a border on state change.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "border.disabled": {
+          "description": "Border color. Used for disabled elements, like a disabled input or button.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "elevated_surface.background": {
+          "description": "Background color. Used for elevated surfaces, like a context menu, popup, or dialog.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "surface.background": {
+          "description": "Background Color. Used for grounded surfaces like a panel or tab.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "background": {
+          "description": "Background Color. Used for the app background and blank panels or windows.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "element.background": {
+          "description": "Background Color. Used for the background of an element that should have a different background than the surface it's on.\n\nElements might include: Buttons, Inputs, Checkboxes, Radio Buttons...\n\nFor an element that should have the same background as the surface it's on, use `ghost_element_background`.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "element.hover": {
+          "description": "Background Color. Used for the hover state of an element that should have a different background than the surface it's on.\n\nHover states are triggered by the mouse entering an element, or a finger touching an element on a touch screen.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "element.active": {
+          "description": "Background Color. Used for the active state of an element that should have a different background than the surface it's on.\n\nActive states are triggered by the mouse button being pressed down on an element, or the Return button or other activator being pressed.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "element.selected": {
+          "description": "Background Color. Used for the selected state of an element that should have a different background than the surface it's on.\n\nSelected states are triggered by the element being selected (or \"activated\") by the user.\n\nThis could include a selected checkbox, a toggleable button that is toggled on, etc.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "element.disabled": {
+          "description": "Background Color. Used for the disabled state of an element that should have a different background than the surface it's on.\n\nDisabled states are shown when a user cannot interact with an element, like a disabled button or input.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "element.selection_background": {
+          "description": "Background Color. Used for the background of selections in a UI element.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "drop_target.background": {
+          "description": "Background Color. Used for the area that shows where a dragged element will be dropped.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "drop_target.border": {
+          "description": "Border Color. Used for the border that shows where a dragged element will be dropped.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ghost_element.background": {
+          "description": "Used for the background of a ghost element that should have the same background as the surface it's on.\n\nElements might include: Buttons, Inputs, Checkboxes, Radio Buttons...\n\nFor an element that should have a different background than the surface it's on, use `element_background`.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ghost_element.hover": {
+          "description": "Background Color. Used for the hover state of a ghost element that should have the same background as the surface it's on.\n\nHover states are triggered by the mouse entering an element, or a finger touching an element on a touch screen.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ghost_element.active": {
+          "description": "Background Color. Used for the active state of a ghost element that should have the same background as the surface it's on.\n\nActive states are triggered by the mouse button being pressed down on an element, or the Return button or other activator being pressed.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ghost_element.selected": {
+          "description": "Background Color. Used for the selected state of a ghost element that should have the same background as the surface it's on.\n\nSelected states are triggered by the element being selected (or \"activated\") by the user.\n\nThis could include a selected checkbox, a toggleable button that is toggled on, etc.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ghost_element.disabled": {
+          "description": "Background Color. Used for the disabled state of a ghost element that should have the same background as the surface it's on.\n\nDisabled states are shown when a user cannot interact with an element, like a disabled button or input.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text": {
+          "description": "Text Color. Default text color used for most text.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text.muted": {
+          "description": "Text Color. Color of muted or deemphasized text. It is a subdued version of the standard text color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text.placeholder": {
+          "description": "Text Color. Color of the placeholder text typically shown in input fields to guide the user to enter valid data.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text.disabled": {
+          "description": "Text Color. Color used for text denoting disabled elements. Typically, the color is faded or grayed out to emphasize the disabled state.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text.accent": {
+          "description": "Text Color. Color used for emphasis or highlighting certain text, like an active filter or a matched character in a search.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "description": "Fill Color. Used for the default fill color of an icon.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon.muted": {
+          "description": "Fill Color. Used for the muted or deemphasized fill color of an icon.\n\nThis might be used to show an icon in an inactive pane, or to deemphasize a series of icons to give them less visual weight.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon.disabled": {
+          "description": "Fill Color. Used for the disabled fill color of an icon.\n\nDisabled states are shown when a user cannot interact with an element, like a icon button.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon.placeholder": {
+          "description": "Fill Color. Used for the placeholder fill color of an icon.\n\nThis might be used to show an icon in an input that disappears when the user enters text.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon.accent": {
+          "description": "Fill Color. Used for the accent fill color of an icon.\n\nThis might be used to show when a toggleable icon button is selected.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "debugger.accent": {
+          "description": "Color used to accent some of the debuggers elements\nOnly accent breakpoint & breakpoint related symbols right now",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status_bar.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title_bar.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title_bar.inactive_background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "toolbar.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tab_bar.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tab.inactive_background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tab.active_background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "search.match_background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "search.active_match_background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "panel.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "panel.focused_border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "panel.indent_guide": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "panel.indent_guide_hover": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "panel.indent_guide_active": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "panel.overlay_background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "panel.overlay_hover": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pane.focused_border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pane_group.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scrollbar.thumb.background": {
+          "description": "The color of the scrollbar thumb.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scrollbar.thumb.hover_background": {
+          "description": "The color of the scrollbar thumb when hovered over.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scrollbar.thumb.active_background": {
+          "description": "The color of the scrollbar thumb whilst being actively dragged.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scrollbar.thumb.border": {
+          "description": "The border color of the scrollbar thumb.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scrollbar.track.background": {
+          "description": "The background color of the scrollbar track.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scrollbar.track.border": {
+          "description": "The border color of the scrollbar track.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimap.thumb.background": {
+          "description": "The color of the minimap thumb.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimap.thumb.hover_background": {
+          "description": "The color of the minimap thumb when hovered over.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimap.thumb.active_background": {
+          "description": "The color of the minimap thumb whilst being actively dragged.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimap.thumb.border": {
+          "description": "The border color of the minimap thumb.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.foreground": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.code_lens.foreground": {
+          "description": "Text color used for CodeLens items in the editor.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.gutter.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.subheader.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.active_line.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.highlighted_line.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.debugger_active_line.background": {
+          "description": "Background of active line of debugger",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.line_number": {
+          "description": "Text Color. Used for the text of the line number in the editor gutter.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.active_line_number": {
+          "description": "Text Color. Used for the text of the line number in the editor gutter when the line is highlighted.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.hover_line_number": {
+          "description": "Text Color. Used for the text of the line number in the editor gutter when the line is hovered over.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.invisible": {
+          "description": "Text Color. Used to mark invisible characters in the editor.\n\nExample: spaces, tabs, carriage returns, etc.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.wrap_guide": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.active_wrap_guide": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.indent_guide": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.indent_guide_active": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.document_highlight.read_background": {
+          "description": "Read-access of a symbol, like reading a variable.\n\nA document highlight is a range inside a text document which deserves\nspecial attention. Usually a document highlight is visualized by changing\nthe background color of its range.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.document_highlight.write_background": {
+          "description": "Read-access of a symbol, like reading a variable.\n\nA document highlight is a range inside a text document which deserves\nspecial attention. Usually a document highlight is visualized by changing\nthe background color of its range.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.document_highlight.bracket_background": {
+          "description": "Highlighted brackets background color.\n\nMatching brackets in the cursor scope are highlighted with this background color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.diff_hunk.added.background": {
+          "description": "Filled background color for added diff hunk row highlights in the editor.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.diff_hunk.added.hollow_background": {
+          "description": "Hollow background color for added diff hunk row highlights in the editor.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.diff_hunk.added.hollow_border": {
+          "description": "Hollow border color for added diff hunk row highlights in the editor.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.diff_hunk.deleted.background": {
+          "description": "Filled background color for deleted diff hunk row highlights in the editor.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.diff_hunk.deleted.hollow_background": {
+          "description": "Hollow background color for deleted diff hunk row highlights in the editor.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor.diff_hunk.deleted.hollow_border": {
+          "description": "Hollow border color for deleted diff hunk row highlights in the editor.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.background": {
+          "description": "Terminal background color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.foreground": {
+          "description": "Terminal foreground color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.background": {
+          "description": "Terminal ANSI background color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.bright_foreground": {
+          "description": "Bright terminal foreground color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.dim_foreground": {
+          "description": "Dim terminal foreground color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.black": {
+          "description": "Black ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.bright_black": {
+          "description": "Bright black ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.dim_black": {
+          "description": "Dim black ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.red": {
+          "description": "Red ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.bright_red": {
+          "description": "Bright red ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.dim_red": {
+          "description": "Dim red ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.green": {
+          "description": "Green ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.bright_green": {
+          "description": "Bright green ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.dim_green": {
+          "description": "Dim green ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.yellow": {
+          "description": "Yellow ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.bright_yellow": {
+          "description": "Bright yellow ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.dim_yellow": {
+          "description": "Dim yellow ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.blue": {
+          "description": "Blue ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.bright_blue": {
+          "description": "Bright blue ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.dim_blue": {
+          "description": "Dim blue ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.magenta": {
+          "description": "Magenta ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.bright_magenta": {
+          "description": "Bright magenta ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.dim_magenta": {
+          "description": "Dim magenta ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.cyan": {
+          "description": "Cyan ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.bright_cyan": {
+          "description": "Bright cyan ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.dim_cyan": {
+          "description": "Dim cyan ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.white": {
+          "description": "White ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.bright_white": {
+          "description": "Bright white ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal.ansi.dim_white": {
+          "description": "Dim white ANSI terminal color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "link_text.hover": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.added": {
+          "description": "Added version control color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.deleted": {
+          "description": "Deleted version control color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.modified": {
+          "description": "Modified version control color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.renamed": {
+          "description": "Renamed version control color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.conflict": {
+          "description": "Conflict version control color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.ignored": {
+          "description": "Ignored version control color.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.word_added": {
+          "description": "Color for added words in word diffs.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.word_deleted": {
+          "description": "Color for deleted words in word diffs.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.conflict_marker.ours": {
+          "description": "Background color for row highlights of \"ours\" regions in merge conflicts.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control.conflict_marker.theirs": {
+          "description": "Background color for row highlights of \"theirs\" regions in merge conflicts.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_control_conflict_ours_background": {
+          "description": "Deprecated in favor of `version_control_conflict_marker_ours`.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "deprecated": true
+        },
+        "version_control_conflict_theirs_background": {
+          "description": "Deprecated in favor of `version_control_conflict_marker_theirs`.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "deprecated": true
+        },
+        "vim.normal.background": {
+          "description": "Background color for Vim Normal mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.insert.background": {
+          "description": "Background color for Vim Insert mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.replace.background": {
+          "description": "Background color for Vim Replace mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.visual.background": {
+          "description": "Background color for Vim Visual mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.visual_line.background": {
+          "description": "Background color for Vim Visual Line mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.visual_block.background": {
+          "description": "Background color for Vim Visual Block mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.yank.background": {
+          "description": "Background color for Vim yank highlight.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.helix_jump_label.foreground": {
+          "description": "Foreground color for Helix jump labels.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.helix_normal.background": {
+          "description": "Background color for Vim Helix Normal mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.helix_select.background": {
+          "description": "Background color for Vim Helix Select mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.normal.foreground": {
+          "description": "Background color for Vim Normal mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.insert.foreground": {
+          "description": "Foreground color for Vim Insert mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.replace.foreground": {
+          "description": "Foreground color for Vim Replace mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.visual.foreground": {
+          "description": "Foreground color for Vim Visual mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.visual_line.foreground": {
+          "description": "Foreground color for Vim Visual Line mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.visual_block.foreground": {
+          "description": "Foreground color for Vim Visual Block mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.helix_normal.foreground": {
+          "description": "Foreground color for Vim Helix Normal mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vim.helix_select.foreground": {
+          "description": "Foreground color for Vim Helix Select mode indicator.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "conflict": {
+          "description": "Indicates some kind of conflict, like a file changed on disk while it was open, or\nmerge conflicts in a Git repository.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "conflict.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "conflict.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created": {
+          "description": "Indicates something new, like a new file added to a Git repository.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deleted": {
+          "description": "Indicates that something no longer exists, like a deleted file.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deleted.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deleted.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "description": "Indicates a system error, a failed operation or a diagnostic error.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "description": "Represents a hidden status, such as a file being hidden in a file tree.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hint": {
+          "description": "Indicates a hint or some kind of additional information.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hint.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hint.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ignored": {
+          "description": "Indicates that something is deliberately ignored, such as a file or operation ignored by Git.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ignored.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ignored.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "info": {
+          "description": "Represents informational status updates or messages.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "info.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "info.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "modified": {
+          "description": "Indicates a changed or altered status, like a file that has been edited.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "modified.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "modified.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "predictive": {
+          "description": "Indicates something that is predicted, like automatic code completion, or generated code.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "predictive.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "predictive.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "renamed": {
+          "description": "Represents a renamed status, such as a file that has been renamed.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "renamed.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "renamed.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "success": {
+          "description": "Indicates a successful operation or task completion.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "success.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "success.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unreachable": {
+          "description": "Indicates some kind of unreachable status, like a block of code that can never be reached.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unreachable.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unreachable.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "warning": {
+          "description": "Represents a warning status, like an operation that is about to fail.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "warning.background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "warning.border": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlayerColorContent"
+          },
+          "default": []
+        },
+        "syntax": {
+          "description": "The styles for syntax nodes.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/HighlightStyleContent"
+          },
+          "default": {}
+        }
+      }
+    },
+    "WindowBackgroundContent": {
+      "description": "The background appearance of the window.",
+      "type": "string",
+      "enum": [
+        "opaque",
+        "transparent",
+        "blurred",
+        "mica_backdrop",
+        "mica_alt_backdrop"
+      ]
+    },
+    "AccentContent": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Color"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Color": {
+      "type": "string",
+      "format": "color",
+      "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$"
+    },
+    "PlayerColorContent": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "HighlightStyleContent": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "background_color": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Color"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "font_style": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FontStyleContent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "font_weight": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FontWeightContent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "FontStyleContent": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "italic",
+        "oblique"
+      ]
+    },
+    "FontWeightContent": {
+      "description": "Font weight value between 100 (thin) and 900 (black)",
+      "type": "number",
+      "minimum": 100.0,
+      "maximum": 900.0,
+      "default": 400.0
+    }
+  }
+}
