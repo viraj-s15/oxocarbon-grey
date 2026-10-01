@@ -1,6 +1,6 @@
 # Oxocarbon Grey
 
-A dark VS Code theme based on [Oxocarbon](https://github.com/nyoom-engineering/oxocarbon.nvim), with a flat graphene background and richer syntax colours. Tuned for Python, Rust, TypeScript and C++. A Zed port lives in [`zed/`](zed).
+A dark VS Code theme based on [Oxocarbon](https://github.com/nyoom-engineering/oxocarbon.nvim), with a flat graphene background and richer syntax colours. Tuned for Python, Rust, TypeScript and C++. A Zed port lives in [`zed/`](zed), and a [Neovim](#neovim) colorscheme in [`colors/`](colors) and [`lua/`](lua).
 
 ![Python](images/preview-python.png)
 
@@ -163,14 +163,218 @@ Zed's registry already lists [Oxocarbon](https://zed.dev/extensions/oxocarbon) (
 
 It also carries over the per-language tuning above. Whether the registry accepts it next to the existing extension is up to Zed's maintainers.
 
-## Build
+## Neovim
 
-Colours live in `src/palette.mjs`. `src/ui.mjs`, `src/tokens.mjs` and `src/semantic.mjs` map them for VS Code; `src/zed/` maps them for Zed.
+The repository is also a Neovim plugin with one dark colorscheme, `oxocarbon-grey`. It is written in Lua and needs no other plugin. Its colours come from the same palette as the VS Code and Zed themes: `lua/oxocarbon_grey/palette.lua` is generated from `src/palette.mjs` and committed, so using the theme does not need Node or a build step.
+
+### Requirements
+
+- **Neovim 0.10 or later.** CI tests 0.10.4, 0.11.7 and 0.12.5. Neovim 0.10 renamed the Tree-sitter captures (`@variable.member`, `@keyword.conditional`, `@markup.*`, …) and the theme only styles the new names, so 0.9 and older are not supported.
+- **True colour.** The theme uses 24-bit colours and has no 256-colour fallback. Neovim 0.10+ enables `termguicolors` by itself when the terminal reports true-colour support. If colours look wrong, set `vim.o.termguicolors = true` and, in tmux, enable RGB for your terminal (`set -as terminal-features ",xterm-256color:RGB"`). The theme does not set `termguicolors` for you.
+- Loading the theme sets `background` to `dark`. It changes no other option. The theme is dark only: if you set `background=light` afterwards, Neovim resets its core highlight groups and clears `g:colors_name`, so it no longer treats the theme as loaded.
+
+### Install
+
+With [lazy.nvim](https://lazy.folke.io/spec), load it at startup before other plugins:
+
+```lua
+{
+  "viraj-s15/oxocarbon-grey",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    vim.cmd.colorscheme("oxocarbon-grey")
+  end,
+}
+```
+
+`lazy = false` and `priority = 1000` make the theme load first, so other plugins that read highlight groups at startup see its colours.
+
+With Neovim 0.12's built-in plugin manager:
+
+```lua
+vim.pack.add({ "https://github.com/viraj-s15/oxocarbon-grey" })
+vim.cmd.colorscheme("oxocarbon-grey")
+```
+
+Neovim only reads `colors/` and `lua/` from the repository. The VS Code and Zed files are ignored.
+
+### Options
+
+The theme works without calling `setup()`. To change it, call `setup()` before `:colorscheme`:
+
+```lua
+require("oxocarbon_grey").setup({
+  italic = true, -- false removes every italic
+  bold = true, -- false removes every bold
+  overrides = {}, -- highlight groups to replace, or a function(palette) returning them
+})
+vim.cmd.colorscheme("oxocarbon-grey")
+```
+
+- An override replaces the whole group, as `nvim_set_hl` does. For example, `overrides = { Comment = { fg = "#8d9199", italic = true } }`. Overrides are applied after `italic` and `bold`, so an override can bring an italic back.
+- A function receives a copy of the generated palette, with `grey`, `accent`, `syntax` and `ansi` tables: `overrides = function(c) return { CursorLine = { bg = c.grey.bgFloat } } end`. The palette is also available as `require("oxocarbon_grey.palette")`.
+- An invalid group definition is reported with `vim.notify`, and the rest of the theme still loads.
+- Each `setup()` call starts again from the defaults, so a later call does not inherit options from an earlier one.
+- `setup()` only stores the options. Run `:colorscheme oxocarbon-grey` afterwards to apply them.
+
+### Plugins
+
+The theme styles exactly three plugins. All of them are optional, and the theme loads the same way whether or not they are installed.
+
+- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): the picker floats on the same surface as other floating windows, with blue matches and a grey selection.
+- [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): green added, blue changed and pink deleted signs, inline word diffs and current-line blame.
+- [blink.cmp](https://github.com/saghen/blink.cmp): the completion menu, documentation and signature windows, matched characters and colours for each completion kind.
+
+The group names were taken from the plugins' own highlight definitions: telescope.nvim `40aedd8`, gitsigns.nvim `070a5d7` and blink.cmp `8219b58`. Other plugins, nvim-cmp included, are not styled by the theme. Most of them link their groups to core groups such as `Pmenu`, `NormalFloat`, `Special` and `DiagnosticError`, so they pick up the theme's colours that way.
+
+### Tree-sitter and semantic tokens
+
+Without Tree-sitter, the theme styles Vim's regex syntax groups (`Keyword`, `Function`, `Type`, …), so it is usable in any buffer.
+
+Neovim ships Tree-sitter parsers only for C, Lua, Markdown, Vimscript, Vim help and Tree-sitter queries. For Python, Rust, TypeScript and C++ you need the parsers and highlight queries from [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): its `main` branch for Neovim 0.12, its `master` branch for 0.10 and 0.11. The `main` branch does not start highlighting by itself. Call `vim.treesitter.start()` from a `FileType` autocommand, as its README describes.
+
+Language servers that send semantic tokens add a layer on top. Neovim enables semantic highlighting by default. The theme styles the standard token types, plus the extra types and modifiers that the VS Code theme handles for rust-analyzer, basedpyright, the TypeScript server and clangd. `@lsp.type.variable` is cleared rather than linked to `@variable`. Without that, every variable token would paint over the Tree-sitter colour underneath it, so built-ins, constants and fields would lose their colours. The theme does not change your LSP or diagnostic configuration.
+
+What you see depends on your parsers and language servers. The theme cannot recreate every distinction the VS Code theme makes:
+
+- **Without a language server:**
+  - Function and method definitions are not bold.
+  - Rust method calls are rose like other calls, because nvim-treesitter captures them as `@function.call`.
+  - Rust `#[derive(...)]` attributes are cyan like macros, rather than green.
+  - Rust `unsafe` is cyan, rather than pink bold. The apostrophe of a lifetime is cyan, because it shares a capture with `pub` and `dyn`.
+  - C++ macro calls such as `CHECK(...)` are sky like constructor calls, because nvim-treesitter captures capitalised calls as constructors.
+- **Keyword captures.** nvim-treesitter puts JavaScript and TypeScript `const`, `let`, `static` and `break` under one `@keyword` capture, so `break` is cyan rather than blue italic. C++ `default` and `goto` are cyan for the same reason. In C++, `auto` is captured as a built-in type, so it is sky italic.
+- **Built-in globals.** JavaScript and TypeScript `console`, `window` and `document` are pink italic like `this`, because they share `@variable.builtin`. With a TypeScript language server they turn teal, and stay italic.
+- **Semantic token combinations.** Neovim matches one modifier at a time (`@lsp.typemod.<type>.<modifier>`), so VS Code rules that need two modifiers cannot be expressed. Under clangd, C++ `static constexpr` members take the field colour and namespace-scope `constexpr` values stay variable-coloured, rather than turning cobalt. Python `@property` getters and upper-case class attributes are not told apart from other properties. When a token carries two modifiers that each set a colour, such as a read-only standard-library value in Python, Neovim applies them in no fixed order. Definitions only add bold, so they never compete for colour.
+- **Italic and bold underneath semantic tokens.** Neovim combines italic and bold from Tree-sitter and semantic tokens rather than replacing them. A token that is italic in Tree-sitter, such as Rust `use`, stays italic when rust-analyzer recolours it.
+
+### Approximations
+
+Neovim highlight colours have no alpha channel. Where the VS Code and Zed themes use a translucent colour, the Neovim theme uses an opaque one:
+
+- The 5% white hairline becomes `#27282a`, its colour over the editor background. The generator does this for every translucent palette colour.
+- Search matches, matching brackets, symbol references and diff lines use their accent colour blended into the background, at the strength the VS Code theme uses. Diagnostic virtual text, which VS Code lacks, uses an 8% tint.
+- The current search match is solid sky with dark text, rather than translucent sky with a border.
+- The selection (`Visual`) is opaque `#33353b`. Neovim draws it over search matches, so matches inside a selection are not visible.
+
+### Review an unmerged branch
+
+These steps leave your own Neovim configuration, plugins and data untouched.
+
+1. Check out the branch. For a pull request, fetch it by number:
+
+   ```sh
+   git clone https://github.com/viraj-s15/oxocarbon-grey
+   cd oxocarbon-grey
+   git fetch origin pull/<number>/head:neovim-review
+   git switch neovim-review
+   ```
+
+2. Optional, for Tree-sitter colours: build the pinned parsers once with `npm run test:neovim:fixtures`, or with `nvim --clean --headless -l tests/neovim/deps.lua` if you don't have npm. This needs Neovim 0.12, git and a C compiler, and writes only to `.cache/neovim/` inside the checkout. With older Neovim, or without the parsers, the review configuration shows a warning and uses Vim syntax colours.
+3. Start Neovim with the review configuration:
+
+   ```sh
+   nvim --clean -u tests/neovim/review.lua fixtures/inventory.py
+   ```
+
+   `--clean` skips your config, plugins and ShaDa file. `tests/neovim/review.lua` puts the checkout on the runtime path, uses the parsers from step 2 if they exist, turns on line numbers, the cursor line and a colour column, and loads the theme.
+
+The review configuration has no language servers, so it shows Tree-sitter colours only. To see semantic tokens, or the colours with your own plugins, point your plugin manager at the checkout:
+
+```lua
+{
+  dir = "~/path/to/oxocarbon-grey",
+  name = "oxocarbon-grey",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    vim.cmd.colorscheme("oxocarbon-grey")
+  end,
+}
+```
+
+To review the branch without a local clone, use `"viraj-s15/oxocarbon-grey"` with `branch = "<branch-name>"` in place of `dir` and `name`. Remove the entry after reviewing.
+
+### Review checklist
+
+Compare with the VS Code previews above. `:Inspect` shows which Tree-sitter captures, semantic tokens and highlight groups style the text under the cursor.
+
+- **Syntax** in `inventory.py`, `cache.rs`, `TaskBoard.tsx` and `matrix.cpp`, with parsers. Check each of these:
+  - Comments: grey italic. Rust doc comments: a step brighter.
+  - Strings: purple, with ice escapes. Python docstrings: italic.
+  - Keywords: blue, with control flow (`if`, `return`, `match`, `for`) and imports in italic.
+  - Declaration keywords: cyan. That covers `def`/`class`/`lambda`, Rust `fn`/`let`/`impl`/`pub`, TypeScript `const`/`function`/`interface`, and C++ `class`/`template`/`constexpr`.
+  - Types: sky. Built-in types are italic.
+  - Functions: rose. Methods: teal. Properties and fields: ice.
+  - Parameters: italic. `self`/`this`/`cls`: pink italic.
+  - Constants and Rust `Some`/`Ok`: cobalt. `None`/`null`/`true`: teal italic.
+  - Decorators: green. Macros and `#include`/`#define`: cyan. Lifetimes: grey italic.
+- **Semantic tokens**, in your own config with language servers: method definitions teal bold, function definitions rose bold, enum members cobalt, Python constants cobalt, Rust mutable bindings underlined.
+- **Selection and search:**
+  - `V` selects in grey.
+  - `/item` tints every match cyan, and the current match is solid sky.
+  - `%` on a bracket highlights the matching one in blue.
+- **Floating windows and completion:**
+  - In insert mode, <kbd>ctrl-n</kbd> opens the completion menu: one step lighter, with a grey selection and blue matched characters (Neovim 0.11+).
+  - Other floating windows use the same lighter surface, with a muted border.
+- **Diagnostics.** `:ReviewDiagnostics` adds one error, warning, info and hint to the first four lines. Check that:
+  - errors are pink, warnings purple, info blue and hints teal;
+  - the undercurls, virtual text and signs use those colours;
+  - `:lua vim.diagnostic.open_float()` shows a float with the same colours.
+- **Diffs:**
+  1. `cp fixtures/cache.rs /tmp/cache.rs`.
+  2. Edit the copy.
+  3. Run `nvim --clean -u tests/neovim/review.lua -d fixtures/cache.rs /tmp/cache.rs`.
+
+  Added lines are green-tinted, changed lines blue with a stronger blue on the changed text, and deleted lines pink.
+- **Editor chrome:**
+  - `:split` and `:tabnew` show the status lines, the hairline split and the tab line.
+  - `:set winbar=%f` shows the winbar.
+  - `:set list` shows whitespace.
+  - `:set spell` shows spelling undercurls.
+- **Terminal.** Run this in `:terminal` to show the 16 ANSI colours. Yellow (3 and 11) is purple on purpose.
+
+  ```sh
+  for i in $(seq 0 15); do printf '\e[38;5;%sm %2s ' "$i" "$i"; done; printf '\e[0m\n'
+  ```
+- **Plugins**, if you use them: a Telescope picker, Gitsigns signs and inline diffs, and the blink.cmp menu.
+
+### Development
 
 ```sh
-npm run build             # VS Code theme, icon and zed/
+npm run build:neovim          # regenerate lua/oxocarbon_grey/palette.lua
+npm run check                 # Node only; includes the Neovim palette freshness check
+npm run test:neovim           # headless Neovim tests; needs nvim on PATH
+npm run test:neovim:fixtures  # fixture highlighting with pinned parsers; Neovim 0.12, git, C compiler
+```
+
+`npm run check` fails if `lua/oxocarbon_grey/palette.lua` is missing or does not match `src/palette.mjs`, without rewriting it. The Lua highlight definitions in `lua/oxocarbon_grey/groups/` are written by hand.
+
+`npm run test:neovim` runs `tests/neovim/run.lua` in `nvim --clean`. It checks that:
+- the checkout alone on the runtime path provides the colorscheme;
+- editor, syntax, Tree-sitter, semantic, diagnostic and terminal colours match the palette;
+- links resolve;
+- every capture, semantic token type and diagnostic group documented by the running Neovim has a style;
+- code stays readable on selections, search matches and diff lines;
+- reapplying, switching away and back, and loading after a dark-only built-in scheme on a light background all give the same highlights;
+- the options behave as documented, including the errors for invalid options and overrides.
+
+`npm run test:neovim:fixtures` builds the parsers into `.cache/neovim/` (git-ignored) from nvim-treesitter `910fdf6` and the parser revisions it pins. It then:
+- checks the colour of about 140 tokens in the four fixtures;
+- checks that every capture in those languages' highlight queries has a style.
+
+It does not run language servers.
+
+## Build
+
+Colours live in `src/palette.mjs`. `src/ui.mjs`, `src/tokens.mjs` and `src/semantic.mjs` map them for VS Code; `src/zed/` maps them for Zed; `src/neovim/` generates the Neovim palette, which `lua/oxocarbon_grey/groups/` maps.
+
+```sh
+npm run build             # VS Code theme, icon, zed/ and the Neovim palette
 npm run build:zed         # zed/ only
-npm run check             # committed output is up to date; Zed checks and tests
+npm run build:neovim      # lua/oxocarbon_grey/palette.lua only
+npm run check             # committed output is up to date; Zed and Neovim palette checks and tests
 npm run check:zed-schema  # zed/ theme against Zed's JSON schema (ajv-cli via npx)
 npm run package           # VS Code .vsix
 ```
