@@ -485,14 +485,9 @@ python3 -m http.server -d _site 8000   # then open http://localhost:8000
 
 ### Deployment
 
-`.github/workflows/pages.yml` runs `npm run check`, builds `_site/` and deploys it on every push to `main` or `feat/add-ghostty-theme`, or when run by hand from the Actions tab. Pull requests only run the checks in `check.yml`, and never deploy. Only the deploy job gets the `pages: write` and `id-token: write` permissions. The site has a single URL, so the most recent deployment from either branch is the one that is live. Before the Ghostty theme is merged, pushes to `feat/add-ghostty-theme` update the live site for review. After it is merged, `main` is the deployment source.
+`.github/workflows/pages.yml` runs only on pushes to `main`. It runs `npm run check`, builds `_site/` and deploys it once the build succeeds. The deploy job also checks that the run is a push to `main`. Only the deploy job gets the `pages: write` and `id-token: write` permissions. The live website updates only after changes reach `main`. Feature branches and pull requests never deploy. Pull requests run the checks in `check.yml`, and the website can be previewed locally as described above.
 
-The workflow cannot turn GitHub Pages on by itself. A repository admin has to change two settings first:
-
-1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**. This creates the `github-pages` environment. Until it is set, the workflow's `configure-pages` step fails.
-2. **Settings → Environments → `github-pages` → Deployment branches and tags:** GitHub allows only the default branch here at first. Keep **Selected branches and tags**, then use **Add deployment branch or tag rule** to add the feature branch being reviewed, currently `feat/add-ghostty-theme`, next to `main`. Without this rule, the `deploy` job for the feature branch fails with a message that the branch is not allowed to deploy to `github-pages`.
-
-Then re-run the failed **pages** workflow, or run it from the Actions tab on the feature branch. The deploy job's summary links to the live site. After the branch is merged, delete its rule and remove it from the workflow's `push` trigger, so that only `main` deploys.
+The workflow cannot turn GitHub Pages on by itself. A repository admin has to set **Settings → Pages → Build and deployment → Source** to **GitHub Actions** once. This creates the `github-pages` environment, which allows the default branch, `main`. Until it is set, the workflow's `configure-pages` step fails. The deploy job's summary links to the live site.
 
 ## Build
 

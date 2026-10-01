@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dir = mkdtempSync(join(tmpdir(), 'site-'));
 const out = join(dir, '_site');
-execFileSync(process.execPath, [join(root, 'site/build.mjs'), '--out', out], { env: { ...process.env, GITHUB_REF_NAME: 'main' } });
+execFileSync(process.execPath, [join(root, 'site/build.mjs'), '--out', out]);
 const page = readFileSync(join(out, 'index.html'), 'utf8');
 process.on('exit', () => rmSync(dir, { recursive: true, force: true }));
 

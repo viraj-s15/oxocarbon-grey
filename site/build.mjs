@@ -6,8 +6,6 @@ import { colors as terminal, order } from '../src/ghostty/theme.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const site = join(root, 'site');
-// Links to the theme source follow the branch that deployed the page.
-const ref = process.env.GITHUB_REF_NAME ?? 'main';
 const at = process.argv.indexOf('--out');
 const out = at > 0 ? resolve(process.argv[at + 1]) : join(root, '_site');
 
@@ -120,7 +118,7 @@ const page = readFileSync(join(site, 'index.html'), 'utf8')
   .replace('<!-- legend -->', legendItems)
   .replace('<!-- ansi -->', ansiItems)
   .replace('<!-- source -->', escape(source.replace(/ ([0-9a-f]{7})[0-9a-f]+$/, ' $1')))
-  .replace(/\{\{([\w-]+)\}\}/g, (match, name) => ({ ...grey, ...terminal, ref })[name] ?? match);
+  .replace(/\{\{([\w-]+)\}\}/g, (match, name) => ({ ...grey, ...terminal })[name] ?? match);
 const left = page.match(/<!-- \w+ -->|\/\* palette \*\/|\{\{[\w-]+\}\}/);
 if (left) throw new Error(`site/index.html still contains ${left[0]}`);
 
