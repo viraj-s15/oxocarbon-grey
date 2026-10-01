@@ -10,3 +10,4 @@ PUBLISHING.md
 node_modules/**
 .claude/**
 zed/**
+lua/**
