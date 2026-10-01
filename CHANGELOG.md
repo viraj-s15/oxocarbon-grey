@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Website in `site/`, deployed to GitHub Pages by `.github/workflows/pages.yml`. Its code samples come from the fixtures, highlighted by the Neovim port with Tree-sitter.
 - Neovim colorscheme `oxocarbon-grey` in `colors/` and `lua/`, written in Lua for Neovim 0.10+. Its palette is generated from the same source by `src/neovim/` and committed. It styles Vim syntax, Tree-sitter, LSP semantic tokens, diagnostics and the terminal, plus Telescope, Gitsigns and blink.cmp. `npm run check` checks the palette, `npm run test:neovim` runs the headless tests, and the VS Code and Zed themes are unchanged.
 - Zed port in `zed/` (Zed extension `oxocarbon-grey-theme` 0.1.0, not yet published). It is generated from the same palette by `src/zed/`. `npm run check` validates it, and the VS Code theme is unchanged.
 
