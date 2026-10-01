@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Zed port in `zed/` (Zed extension `oxocarbon-grey-theme` 0.1.0, not yet published). It is generated from the same palette by `src/zed/`. `npm run check` validates it, and the VS Code theme is unchanged.
+
 ## 1.0.0
 
 First release.
