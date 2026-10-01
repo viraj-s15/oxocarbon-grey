@@ -1,0 +1,500 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font: 400 1rem/1.6 'IBM Plex Sans', system-ui, sans-serif;
+  font-kerning: normal;
+}
+
+::selection {
+  background: var(--bgSelection);
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--lineNr);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-color: var(--fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+code,
+pre {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+p code,
+dd code,
+.layer code {
+  font-size: 0.875em;
+  color: var(--fgMuted);
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+main,
+footer {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding-inline: clamp(16px, 4vw, 3rem);
+}
+
+/* Intro */
+
+.intro {
+  padding-block: clamp(2.5rem, 9vh, 6rem) clamp(2rem, 5vh, 3rem);
+}
+
+h1 {
+  font-size: clamp(3.25rem, 12vw, 9.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+  margin-left: -0.04em;
+}
+
+.lede {
+  max-width: 33em;
+  margin: 1.75rem 0 0;
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 1.25rem 0 0;
+  color: var(--fgMuted);
+}
+
+/* Specimen */
+
+.specimen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18rem;
+  grid-template-areas:
+    'tabs .'
+    'panel legend'
+    'note .';
+  column-gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+.tabs {
+  grid-area: tabs;
+  display: flex;
+  gap: 0.25rem;
+  margin-left: -0.75rem;
+  overflow-x: auto;
+}
+
+.tabs button {
+  font: 500 0.9375rem/1 'IBM Plex Sans', sans-serif;
+  color: var(--fgMuted);
+  background: none;
+  border: 0;
+  padding: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: inset 0 -2px 0 transparent;
+}
+
+.tabs button:hover {
+  color: var(--fg);
+}
+
+.tabs [aria-selected='true'] {
+  color: var(--fg);
+  box-shadow: inset 0 -2px 0 var(--fg);
+}
+
+.panel {
+  grid-area: panel;
+  margin: 0;
+  min-width: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.code {
+  margin: 0;
+  padding: 1rem 0 1.25rem;
+  font-size: clamp(0.8125rem, 1.05vw, 0.9375rem);
+  line-height: 1.7;
+  overflow-x: auto;
+  tab-size: 4;
+}
+
+.code code {
+  display: block;
+  min-width: max-content;
+}
+
+.l {
+  display: block;
+  padding-right: 1.5rem;
+  min-height: 1.7em;
+}
+
+.l::before {
+  content: attr(data-n);
+  display: inline-block;
+  width: 2.5rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: var(--lineNr);
+  user-select: none;
+}
+
+.l:hover {
+  background: var(--bgLine);
+}
+
+.l:hover::before {
+  color: var(--lineNrActive);
+}
+
+.t {
+  transition: opacity 0.15s;
+}
+
+.i {
+  font-style: italic;
+}
+
+.b {
+  font-weight: 600;
+}
+
+.code.dim .t {
+  color: var(--lineNr);
+}
+
+.code.sweep .t {
+  transition: color 0.5s ease-out calc(var(--i) * 24ms), opacity 0.15s;
+}
+
+.panel figcaption {
+  font-size: 0.875rem;
+  color: var(--fgMuted);
+  border-top: 1px solid var(--hairline);
+  padding-top: 0.75rem;
+}
+
+.legend {
+  grid-area: legend;
+  padding-top: 1rem;
+  margin-left: -0.5rem;
+}
+
+.legend p {
+  margin: 0 0 0.75rem 0.5rem;
+  font-size: 0.875rem;
+  color: var(--fgMuted);
+}
+
+.legend ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.legend button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.375rem 0.5rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.legend button:hover {
+  background: var(--bgLine);
+}
+
+.legend [aria-pressed='true'] {
+  background: var(--bgSelection);
+}
+
+.hex {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--fgSubtle);
+}
+
+.note {
+  grid-area: note;
+  max-width: 44rem;
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--fgMuted);
+}
+
+/* Greys */
+
+.greys {
+  display: grid;
+  grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+  grid-template-areas:
+    'title stack'
+    'copy stack'
+    'inks inks';
+  grid-template-rows: auto 1fr auto;
+  gap: 1.25rem clamp(2rem, 6vw, 5rem);
+  margin-top: clamp(6rem, 14vw, 10rem);
+}
+
+h2 {
+  grid-area: title;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.greys > p {
+  grid-area: copy;
+  margin: 0;
+  max-width: 30em;
+}
+
+.stack {
+  grid-area: stack;
+}
+
+.layer {
+  --pad: clamp(0.75rem, 2.5vw, 1.5rem);
+  --radius: 2px;
+  background: var(--surface);
+  padding: 2.75rem var(--pad) var(--pad);
+  border-radius: var(--radius);
+}
+
+.layer > span {
+  display: block;
+  margin: -2rem 0 1rem;
+  font-size: 0.875rem;
+  color: var(--fgMuted);
+}
+
+.stack > .layer {
+  --radius: 14px;
+  border: 1px solid var(--hairline);
+}
+
+.stack > .layer > .layer {
+  --radius: 11px;
+}
+
+.stack > .layer > .layer > .layer {
+  --radius: 8px;
+}
+
+.stack > .layer > .layer > .layer > .layer {
+  --radius: 5px;
+}
+
+.stack > .layer > .layer > .layer > .layer > .layer {
+  min-height: 5.5rem;
+}
+
+.inks {
+  grid-area: inks;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 2.5rem 0 0;
+}
+
+.inks dt {
+  font: 400 clamp(1.25rem, 2.6vw, 2rem)/1.2 'IBM Plex Mono', monospace;
+  white-space: nowrap;
+}
+
+.inks dd {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--fgMuted);
+}
+
+/* Install */
+
+.install {
+  margin-top: clamp(6rem, 14vw, 10rem);
+}
+
+.editors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas: 'vscode neovim' 'zed neovim';
+  align-items: start;
+  gap: 2.5rem clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 2rem;
+}
+
+.editors article:nth-child(1) {
+  grid-area: vscode;
+}
+
+.editors article:nth-child(2) {
+  grid-area: zed;
+}
+
+.editors article:nth-child(3) {
+  grid-area: neovim;
+}
+
+h3 {
+  font-size: 1.625rem;
+  line-height: 1.1;
+}
+
+.editors p {
+  margin: 0.75rem 0 1.25rem;
+  color: var(--fgMuted);
+}
+
+.editors b {
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.snippet {
+  display: flex;
+  align-items: flex-start;
+  background: var(--bgFloat);
+  border-radius: 6px;
+}
+
+.snippet pre {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 1rem 1rem 1.125rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.copy {
+  flex: none;
+  margin: 0.5rem 0.5rem 0 0;
+  font: 500 0.8125rem/1 'IBM Plex Sans', sans-serif;
+  color: var(--fgMuted);
+  background: var(--bgFloat);
+  border: 1px solid var(--bgSelection);
+  border-radius: 4px;
+  padding: 0.4375rem 0.625rem;
+  cursor: pointer;
+}
+
+.copy:hover {
+  color: var(--fg);
+  background: var(--bgSelection);
+}
+
+.more {
+  margin: 2.5rem 0 0;
+  color: var(--fgMuted);
+}
+
+footer {
+  margin-top: clamp(5rem, 10vw, 8rem);
+}
+
+footer p {
+  margin: 0;
+  padding-block: 1.5rem 2.5rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.875rem;
+  color: var(--fgMuted);
+}
+
+@media (max-width: 60rem) {
+  .specimen {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'tabs' 'panel' 'legend' 'note';
+  }
+
+  .legend ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .legend li {
+    flex: 1 1 15rem;
+  }
+
+  .greys {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'title' 'copy' 'stack' 'inks';
+    grid-template-rows: none;
+  }
+
+  .greys .stack {
+    margin-top: 1rem;
+  }
+
+  .editors {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'vscode' 'zed' 'neovim';
+  }
+}
+
+@media (max-width: 36rem) {
+  .inks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .l::before {
+    width: 1.75rem;
+    margin-right: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js:not(.ready) .t {
+    color: var(--lineNr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t,
+  .code.sweep .t {
+    transition: none;
+  }
+}

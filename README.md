@@ -366,6 +366,31 @@ npm run test:neovim:fixtures  # fixture highlighting with pinned parsers; Neovim
 
 It does not run language servers.
 
+## Website
+
+The theme's website is a single static page in [`site/`](site), deployed with GitHub Pages to <https://viraj-s15.github.io/oxocarbon-grey/>. The code samples on it are excerpts of the files in [`fixtures/`](fixtures), coloured the way the Neovim port draws them with Tree-sitter. Pointing at a colour in the legend fades out every token that does not use it.
+
+- `site/specimens.lua` runs in headless Neovim with the pinned parsers and writes `site/specimens.json`, which is committed. Run `npm run build:specimens` after changing the Neovim highlight groups or the fixtures. `npm run test:neovim:fixtures` fails if the file is out of date.
+- `site/build.mjs` fills `site/index.html` with the specimens, the legend and the palette from `src/palette.mjs`, and writes the page to `_site/` (git-ignored). It needs only Node.
+
+To preview it locally:
+
+```sh
+npm run build:site
+python3 -m http.server -d _site 8000   # then open http://localhost:8000
+```
+
+### Deployment
+
+`.github/workflows/pages.yml` builds `_site/` and deploys it on every push to `main` or `feat/add-theme-website`, or when run by hand from the Actions tab. The site has a single URL, so the most recent deployment from either branch is the one that is live. Before the website is merged, pushes to `feat/add-theme-website` update the live site for review. After it is merged, `main` is the deployment source.
+
+The workflow cannot turn GitHub Pages on by itself. A repository admin has to change two settings first:
+
+1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**. This creates the `github-pages` environment. Until it is set, the workflow's `configure-pages` step fails.
+2. **Settings → Environments → `github-pages` → Deployment branches and tags:** GitHub allows only the default branch here at first. Keep **Selected branches and tags**, then use **Add deployment branch or tag rule** to add `feat/add-theme-website`, next to `main`. Without this rule, the `deploy` job for the feature branch fails with a message that the branch is not allowed to deploy to `github-pages`.
+
+Then re-run the failed **pages** workflow, or run it from the Actions tab on `feat/add-theme-website`. The deploy job's summary links to the live site. After the website is merged, delete the `feat/add-theme-website` rule and remove the branch from the workflow's `push` trigger, so that only `main` deploys.
+
 ## Build
 
 Colours live in `src/palette.mjs`. `src/ui.mjs`, `src/tokens.mjs` and `src/semantic.mjs` map them for VS Code; `src/zed/` maps them for Zed; `src/neovim/` generates the Neovim palette, which `lua/oxocarbon_grey/groups/` maps.
@@ -374,7 +399,9 @@ Colours live in `src/palette.mjs`. `src/ui.mjs`, `src/tokens.mjs` and `src/seman
 npm run build             # VS Code theme, icon, zed/ and the Neovim palette
 npm run build:zed         # zed/ only
 npm run build:neovim      # lua/oxocarbon_grey/palette.lua only
-npm run check             # committed output is up to date; Zed and Neovim palette checks and tests
+npm run build:site        # the website, into _site/
+npm run build:specimens   # site/specimens.json; needs Neovim 0.12 and the fixture parsers
+npm run check             # committed output is up to date; Zed, Neovim palette and website checks and tests
 npm run check:zed-schema  # zed/ theme against Zed's JSON schema (ajv-cli via npx)
 npm run package           # VS Code .vsix
 ```

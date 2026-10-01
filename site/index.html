@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Oxocarbon Grey</title>
+    <meta name="description" content="A dark cool-grey theme for VS Code, Zed and Neovim, built on the Oxocarbon palette.">
+    <meta name="theme-color" content="{{bg}}">
+    <link rel="icon" href="icon.png">
+    <script>document.documentElement.classList.add('js')</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <style>
+/* palette */
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="intro">
+        <h1>Oxocarbon Grey</h1>
+        <p class="lede">A dark theme for VS Code, Zed and Neovim. Oxocarbon’s colours on a flat, cool grey, tuned for Python, Rust, TypeScript and C++.</p>
+        <p class="links"><a href="#install">Install</a> <a href="https://github.com/viraj-s15/oxocarbon-grey">Source on GitHub</a></p>
+      </header>
+
+      <section class="specimen" aria-label="Code samples">
+        <div class="tabs" role="tablist" aria-label="Language">
+          <!-- tabs -->
+        </div>
+        <!-- panels -->
+        <div class="legend">
+          <p id="legend-hint">Point at a colour to see what it marks. Select one to keep it.</p>
+          <ul>
+            <!-- legend -->
+          </ul>
+        </div>
+        <p class="note">Colours as the Neovim port draws them with Tree-sitter (<!-- source -->). VS Code and Zed use the same palette, with small differences in how each editor reads the code.</p>
+      </section>
+
+      <section class="greys" aria-labelledby="greys-title">
+        <h2 id="greys-title">Five steps of grey</h2>
+        <p>Surfaces climb a few shades at a time, so the current line, menus and selections stand apart from the editor without heavy borders. Text uses four more greys, and only code gets colour.</p>
+        <div class="stack">
+          <div class="layer" style="--surface:var(--bg)"><span>Editor <code>{{bg}}</code></span>
+            <div class="layer" style="--surface:var(--bgLine)"><span>Current line <code>{{bgLine}}</code></span>
+              <div class="layer" style="--surface:var(--bgFloat)"><span>Menus and hovers <code>{{bgFloat}}</code></span>
+                <div class="layer" style="--surface:var(--guide)"><span>Indent guides <code>{{guide}}</code></span>
+                  <div class="layer" style="--surface:var(--bgSelection)"><span>Selection <code>{{bgSelection}}</code></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <dl class="inks">
+          <div><dt style="color:var(--lineNr)">128</dt><dd>Line numbers <code>{{lineNr}}</code></dd></div>
+          <div><dt style="color:var(--fgSubtle)"><i># todo</i></dt><dd>Comments <code>{{fgSubtle}}</code></dd></div>
+          <div><dt style="color:var(--fgMuted)">( ) [ ] ;</dt><dd>Punctuation <code>{{fgMuted}}</code></dd></div>
+          <div><dt style="color:var(--fg)">inventory</dt><dd>Text <code>{{fg}}</code></dd></div>
+        </dl>
+      </section>
+
+      <section class="install" id="install" aria-labelledby="install-title">
+        <h2 id="install-title">Install</h2>
+        <div class="editors">
+          <article>
+            <h3>VS Code</h3>
+            <p>From the <a href="https://marketplace.visualstudio.com/items?itemName=viraj-s15.oxocarbon-grey">VS Code Marketplace</a> or <a href="https://open-vsx.org/extension/viraj-s15/oxocarbon-grey">Open VSX</a>. Keep semantic highlighting on.</p>
+            <div class="snippet"><pre><code>code --install-extension viraj-s15.oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
+          </article>
+          <article>
+            <h3>Zed</h3>
+            <p>Not in Zed’s extension registry yet. Clone the repository, click <b>Install Dev Extension</b> on the Extensions page and choose the <code>zed</code> folder.</p>
+            <div class="snippet"><pre><code>git clone https://github.com/viraj-s15/oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
+          </article>
+          <article>
+            <h3>Neovim</h3>
+            <p>Neovim 0.10 or later with true colour. Styles Telescope, Gitsigns and blink.cmp. With <a href="https://lazy.folke.io/spec">lazy.nvim</a>:</p>
+            <div class="snippet"><pre><code>{
+  "viraj-s15/oxocarbon-grey",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    vim.cmd.colorscheme("oxocarbon-grey")
+  end,
+}</code></pre><button type="button" class="copy">Copy</button></div>
+          </article>
+        </div>
+        <p class="more">Options, plugin support and review steps are in the <a href="https://github.com/viraj-s15/oxocarbon-grey#readme">README</a>.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built on <a href="https://github.com/nyoom-engineering/oxocarbon.nvim">oxocarbon.nvim</a> by Nyoom Engineering and IBM’s <a href="https://carbondesignsystem.com">Carbon</a> palette. <a href="https://github.com/viraj-s15/oxocarbon-grey/blob/main/LICENSE">MIT licence</a>.</p>
+    </footer>
+    <script src="main.js" defer></script>
+  </body>
+</html>
