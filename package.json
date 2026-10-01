@@ -48,7 +48,7 @@
     "build:ghostty": "node src/ghostty/build.mjs",
     "build:site": "node site/build.mjs",
     "build:specimens": "nvim --clean --headless -l site/specimens.lua",
-    "check": "node src/build.mjs --check && node src/zed/build.mjs --check && node src/neovim/build.mjs --check && node src/ghostty/build.mjs --check && node site/build.mjs --check && node --test src/zed/validate.test.mjs src/neovim/palette.test.mjs src/ghostty/theme.test.mjs",
+    "check": "node src/build.mjs --check && node src/zed/build.mjs --check && node src/neovim/build.mjs --check && node src/ghostty/build.mjs --check && node site/build.mjs --check && node --test src/zed/validate.test.mjs src/neovim/palette.test.mjs src/ghostty/theme.test.mjs site/build.test.mjs",
     "check:ghostty": "ghostty +validate-config --config-file=ghostty/oxocarbon-grey",
     "check:zed-schema": "npx --yes ajv-cli@5.0.0 validate --spec=draft2020 --strict=false -s src/zed/theme-schema.json -d zed/themes/oxocarbon-grey.json",
     "test:neovim": "nvim --clean --headless -l tests/neovim/run.lua",

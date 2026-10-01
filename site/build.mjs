@@ -1,11 +1,15 @@
 import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { accent, grey, syntax } from '../src/palette.mjs';
+import { accent, ansi, grey, syntax } from '../src/palette.mjs';
+import { colors as terminal, order } from '../src/ghostty/theme.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const site = join(root, 'site');
-const out = join(root, '_site');
+// Links to the theme source follow the branch that deployed the page.
+const ref = process.env.GITHUB_REF_NAME ?? 'main';
+const at = process.argv.indexOf('--out');
+const out = at > 0 ? resolve(process.argv[at + 1]) : join(root, '_site');
 
 const roles = {
   keyword: 'keywords',
@@ -92,13 +96,21 @@ const legendItems = [...legend]
   )
   .join('\n            ');
 
-const vars = Object.entries({ ...grey, ...accent })
+const ansiItems = order
+  .map((name, i) => {
+    const label = name.replace(/^bright([A-Z])/, (_, c) => `bright ${c.toLowerCase()}`);
+    return `<li style="--swatch:var(--ansi${i})"><span class="n">${i}</span> ${label} <code>${ansi[name]}</code></li>`;
+  })
+  .join('\n            ');
+
+const vars = Object.entries({ ...grey, ...accent, ...terminal, ...Object.fromEntries(order.map((name, i) => [`ansi${i}`, ansi[name]])) })
   .map(([name, hex]) => `--${name}:${hex};`)
   .join('');
 const css = [
   `:root{${vars}}`,
   ...[...legend.keys()].map((name) => `.c-${name}{color:var(--${name})}`),
   [...legend.keys()].map((name) => `.code[data-focus="${name}"] .t:not(.c-${name})`).join(',') + '{opacity:.16}',
+  ...order.map((name, i) => `.a${i}{color:var(--ansi${i})}`),
 ].join('\n');
 
 const page = readFileSync(join(site, 'index.html'), 'utf8')
@@ -106,9 +118,10 @@ const page = readFileSync(join(site, 'index.html'), 'utf8')
   .replace('<!-- tabs -->', tabs)
   .replace('<!-- panels -->', panels)
   .replace('<!-- legend -->', legendItems)
+  .replace('<!-- ansi -->', ansiItems)
   .replace('<!-- source -->', escape(source.replace(/ ([0-9a-f]{7})[0-9a-f]+$/, ' $1')))
-  .replace(/\{\{(\w+)\}\}/g, (match, name) => grey[name] ?? match);
-const left = page.match(/<!-- \w+ -->|\/\* palette \*\/|\{\{\w+\}\}/);
+  .replace(/\{\{([\w-]+)\}\}/g, (match, name) => ({ ...grey, ...terminal, ref })[name] ?? match);
+const left = page.match(/<!-- \w+ -->|\/\* palette \*\/|\{\{[\w-]+\}\}/);
 if (left) throw new Error(`site/index.html still contains ${left[0]}`);
 
 if (process.argv.includes('--check')) {
@@ -119,6 +132,8 @@ if (process.argv.includes('--check')) {
   writeFileSync(join(out, 'index.html'), page);
   for (const file of ['style.css', 'main.js']) copyFileSync(join(site, file), join(out, file));
   copyFileSync(join(root, 'images/icon.png'), join(out, 'icon.png'));
+  mkdirSync(join(out, 'ghostty'));
+  copyFileSync(join(root, 'ghostty/oxocarbon-grey'), join(out, 'ghostty/oxocarbon-grey'));
   writeFileSync(join(out, '.nojekyll'), '');
-  console.log(`wrote _site/ with ${specimens.length} specimens`);
+  console.log(`wrote ${out} with ${specimens.length} specimens`);
 }

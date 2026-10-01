@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Oxocarbon Grey</title>
-    <meta name="description" content="A dark cool-grey theme for VS Code, Zed and Neovim, built on the Oxocarbon palette.">
+    <meta name="description" content="A dark cool-grey theme for VS Code, Zed, Neovim and Ghostty, built on the Oxocarbon palette.">
     <meta name="theme-color" content="{{bg}}">
     <link rel="icon" href="icon.png">
     <script>document.documentElement.classList.add('js')</script>
@@ -20,8 +20,8 @@
     <main>
       <header class="intro">
         <h1>Oxocarbon Grey</h1>
-        <p class="lede">A dark theme for VS Code, Zed and Neovim. Oxocarbon’s colours on a flat, cool grey, tuned for Python, Rust, TypeScript and C++.</p>
-        <p class="links"><a href="#install">Install</a> <a href="https://github.com/viraj-s15/oxocarbon-grey">Source on GitHub</a></p>
+        <p class="lede">A dark theme for VS Code, Zed, Neovim and Ghostty. Oxocarbon’s colours on a flat, cool grey, tuned for Python, Rust, TypeScript and C++.</p>
+        <p class="links"><a href="#install">Install</a> <a href="#terminal">Terminal colours</a> <a href="https://github.com/viraj-s15/oxocarbon-grey">Source on GitHub</a></p>
       </header>
 
       <section class="specimen" aria-label="Code samples">
@@ -60,6 +60,30 @@
         </dl>
       </section>
 
+      <section class="terminal" id="terminal" aria-labelledby="terminal-title">
+        <h2 id="terminal-title">Sixteen for the terminal</h2>
+        <p>VS Code, Zed, Neovim and Ghostty share one set of terminal colours. Oxocarbon has no yellow, so yellow is purple. Red, green, yellow and magenta keep their colour when bright.</p>
+        <figure class="screen">
+          <pre tabindex="0"><code><span class="a4">~/oxocarbon-grey</span> <span class="a5">main</span>
+<span class="a2">$</span> git status --short
+ <span class="a1">M</span> ghostty/oxocarbon-grey
+<span class="a1">??</span> ghostty/preview.sh
+<span class="a2">$</span> npm test
+<span class="a2">ok</span> 139 tests passed <span class="a8">(1.2s)</span>
+<span class="a3 b">warning</span>: unused variable <span class="a6">`entry`</span>
+   <span class="a12">--></span> src/cache.rs:58:13
+<span class="a1 b">error</span>: mismatched types
+<span class="a2">$</span> ls ghostty
+<span class="selected">oxocarbon-grey</span>  <span class="a2 b">preview.sh</span>
+<span class="a2">$</span> <span class="cursor"> </span></code></pre>
+          <figcaption>Drawn by this page with the Ghostty theme’s colours. It is not a screenshot of Ghostty.</figcaption>
+        </figure>
+        <ol class="ansi" aria-label="ANSI colours 0 to 15">
+            <!-- ansi -->
+        </ol>
+        <p class="aside">The theme changes programs that print these sixteen colours. Programs that pick their own 24-bit colours, such as Neovim with this theme, draw those instead.</p>
+      </section>
+
       <section class="install" id="install" aria-labelledby="install-title">
         <h2 id="install-title">Install</h2>
         <div class="editors">
@@ -85,8 +109,19 @@
   end,
 }</code></pre><button type="button" class="copy">Copy</button></div>
           </article>
+          <article id="ghostty">
+            <h3>Ghostty</h3>
+            <p>A custom theme, not one of Ghostty’s built-in ones. It goes in Ghostty’s themes folder, <code>~/.config/ghostty/themes</code> on macOS and Linux. The download is skipped if the file is already there:</p>
+            <div class="snippet"><pre><code>dir="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes"
+mkdir -p "$dir"
+[ -e "$dir/oxocarbon-grey" ] || curl -fsSL -o "$dir/oxocarbon-grey" \
+  https://viraj-s15.github.io/oxocarbon-grey/ghostty/oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
+            <p>Then add this line to your Ghostty config, or change your existing <code>theme</code> line to it. On macOS, <b>Settings…</b> in the Ghostty menu opens the config. Reload with <kbd>Cmd+Shift+,</kbd> on macOS or <kbd>Ctrl+Shift+,</kbd> on Linux.</p>
+            <div class="snippet"><pre><code>theme = oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
+            <p>Colours set in your own config, like <code>background</code> or <code>palette</code>, override the theme. To remove it, delete the line, reload and delete the file. You can also <a href="ghostty/oxocarbon-grey" download>download the theme file</a> or <a href="https://github.com/viraj-s15/oxocarbon-grey/blob/{{ref}}/ghostty/oxocarbon-grey">read its source</a>.</p>
+          </article>
         </div>
-        <p class="more">Options, plugin support and review steps are in the <a href="https://github.com/viraj-s15/oxocarbon-grey#readme">README</a>.</p>
+        <p class="more">Options, plugin support, Ghostty’s config paths and review steps are in the <a href="https://github.com/viraj-s15/oxocarbon-grey#readme">README</a>.</p>
       </section>
     </main>
 
