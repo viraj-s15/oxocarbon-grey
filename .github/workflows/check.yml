@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check generated VS Code, Zed and Neovim output is up to date
+      - name: Check generated VS Code, Zed, Neovim and Ghostty output is up to date
         run: npm run check
       - name: Validate Zed theme against the vendored schema
         run: npm run check:zed-schema
@@ -25,14 +25,14 @@ jobs:
           npx --yes ajv-cli@5.0.0 validate --spec="$spec" --strict=false -s "$schema" -d zed/themes/oxocarbon-grey.json
       - name: Package
         run: npx --yes @vscode/vsce package
-      - name: Check the VSIX leaves out the Zed and Neovim ports, the website and build sources
+      - name: Check the VSIX leaves out the Zed, Neovim and Ghostty ports, the website and build sources
         run: |
           set -o pipefail
           vsix=(*.vsix)
           test ${#vsix[@]} -eq 1
           files=$(unzip -Z1 "${vsix[0]}")
-          if grep -E '^extension/(zed|colors|lua|tests|src|fixtures|site)/' <<< "$files"; then
-            echo "VSIX contains files that belong to the Zed or Neovim ports, the website or the build"
+          if grep -E '^extension/(zed|colors|lua|ghostty|tests|src|fixtures|site)/' <<< "$files"; then
+            echo "VSIX contains files that belong to the Zed, Neovim or Ghostty ports, the website or the build"
             exit 1
           fi
 

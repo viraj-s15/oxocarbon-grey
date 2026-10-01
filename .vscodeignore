@@ -12,6 +12,7 @@ node_modules/**
 zed/**
 colors/**
 lua/**
+ghostty/**
 tests/**
 .cache/**
 site/**
