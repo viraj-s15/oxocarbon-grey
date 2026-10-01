@@ -1,8 +1,3 @@
-// Metadata for the Zed extension in zed/.
-//
-// The Zed extension is versioned on its own: bump `version` whenever anything
-// in zed/ changes, independently of the VS Code version in package.json. The
-// version in Zed's registry (extensions.toml) must match this one.
 import { readFileSync } from 'node:fs';
 
 const pkg = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf8'));

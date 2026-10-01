@@ -1,23 +1,16 @@
-// Zed UI colours, mapped by hand from the VS Code workbench colours in
-// src/ui.mjs. Keys are Zed theme properties (schema v0.2.0), not VS Code keys.
-//
-// Every colour property the schema offers is set explicitly: Zed fills unset
-// properties from its own One Dark defaults, which would leak foreign colours
-// into the theme. `npm run check` fails if a property is missing.
 import { grey as g, accent as a, ansi } from '../palette.mjs';
 import { alpha, mix, transparent } from './color.mjs';
 
 const accent = a.blue;
-const warning = a.purple; // oxocarbon.nvim uses purple for warnings
-const surface = g.bg; // one flat surface, as in VS Code
+const warning = a.purple;
+const surface = g.bg;
 const hairline = g.hairline;
-const focus = alpha(accent, 0.6); // VS Code focusBorder
+const focus = alpha(accent, 0.6);
 
-// Zed has dim ANSI colours, VS Code does not: mix each colour 70/30 into the background.
 const dim = (hex) => mix(hex, g.bg, 0.7);
 
+// Zed fills any colour left unset from One Dark, so every schema property is set.
 export const colors = {
-  // Borders. VS Code separates every part with a 5% white hairline.
   border: hairline,
   'border.variant': hairline,
   'border.focused': focus,
@@ -25,17 +18,12 @@ export const colors = {
   'border.transparent': transparent,
   'border.disabled': hairline,
 
-  // Surfaces: the window, panels and editor share one background; menus,
-  // popovers and dialogs float one step lighter.
   background: surface,
   'surface.background': surface,
   'elevated_surface.background': g.bgFloat,
 
-  // Elements (buttons, inputs) sit on bgFloat. Ghost elements (list rows, menu
-  // items, icon buttons) are transparent and must show on both bg and bgFloat,
-  // so their states use translucent white.
   'element.background': g.bgFloat,
-  'element.hover': g.bgSelection,
+  'element.hover': alpha(g.fg, 0.06),
   'element.active': alpha(accent, 0.25),
   'element.selected': g.bgSelection,
   'element.disabled': g.bgFloat,
@@ -48,7 +36,6 @@ export const colors = {
   'drop_target.background': alpha(accent, 0.15),
   'drop_target.border': accent,
 
-  // Text and icons
   text: g.fg,
   'text.muted': g.fgMuted,
   'text.placeholder': g.fgSubtle,
@@ -60,10 +47,8 @@ export const colors = {
   'icon.placeholder': g.fgSubtle,
   'icon.accent': accent,
   'link_text.hover': a.ice,
-  'debugger.accent': a.pink, // VS Code debugIcon.breakpointForeground
+  'debugger.accent': a.pink,
 
-  // Bars, tabs, panels. Zed has no accent line on the active tab; the active
-  // tab is told apart by brighter text and the missing bottom hairline.
   'title_bar.background': surface,
   'title_bar.inactive_background': surface,
   'status_bar.background': surface,
@@ -81,7 +66,6 @@ export const colors = {
   'pane.focused_border': focus,
   'pane_group.border': hairline,
 
-  // Scrollbars and minimap (VS Code scrollbarSlider.* and minimapSlider.*)
   'scrollbar.thumb.background': alpha(g.fgSubtle, 0.25),
   'scrollbar.thumb.hover_background': alpha(g.fgSubtle, 0.4),
   'scrollbar.thumb.active_background': alpha(g.fgSubtle, 0.55),
@@ -93,33 +77,29 @@ export const colors = {
   'minimap.thumb.active_background': alpha(g.fgSubtle, 0.35),
   'minimap.thumb.border': transparent,
 
-  // Search: every match vs the current match (VS Code findMatchHighlight / findMatch)
   'search.match_background': alpha(a.cyan, 0.2),
   'search.active_match_background': alpha(a.sky, 0.4),
 
-  // Editor
   'editor.background': surface,
   'editor.foreground': g.fg,
   'editor.gutter.background': surface,
-  'editor.subheader.background': g.bgFloat, // multibuffer excerpt headers
+  'editor.subheader.background': g.bgFloat,
   'editor.active_line.background': g.bgLine,
-  'editor.highlighted_line.background': alpha(accent, 0.08), // VS Code rangeHighlight
+  'editor.highlighted_line.background': alpha(accent, 0.08),
   'editor.debugger_active_line.background': alpha(warning, 0.15),
   'editor.line_number': g.lineNr,
   'editor.active_line_number': g.lineNrActive,
   'editor.hover_line_number': g.fgMuted,
-  'editor.invisible': alpha(g.lineNr, 0.6), // VS Code editorWhitespace
-  'editor.wrap_guide': g.guide, // VS Code editorRuler
+  'editor.invisible': alpha(g.lineNr, 0.6),
+  'editor.wrap_guide': g.guide,
   'editor.active_wrap_guide': g.lineNr,
   'editor.indent_guide': g.guide,
   'editor.indent_guide_active': g.lineNr,
-  'editor.document_highlight.read_background': alpha(accent, 0.15), // wordHighlight
-  'editor.document_highlight.write_background': alpha(a.rose, 0.18), // wordHighlightStrong
-  'editor.document_highlight.bracket_background': alpha(accent, 0.18), // bracketMatch
+  'editor.document_highlight.read_background': alpha(accent, 0.15),
+  'editor.document_highlight.write_background': alpha(a.rose, 0.18),
+  'editor.document_highlight.bracket_background': alpha(accent, 0.18),
   'editor.code_lens.foreground': g.fgSubtle,
 
-  // Diff hunks in the editor. Zed draws staged hunks hollow and unstaged ones
-  // filled; these are the opacities Zed itself derives for dark themes.
   'editor.diff_hunk.added.background': alpha(a.green, 0.12),
   'editor.diff_hunk.added.hollow_background': alpha(a.green, 0.06),
   'editor.diff_hunk.added.hollow_border': alpha(a.green, 0.36),
@@ -127,7 +107,6 @@ export const colors = {
   'editor.diff_hunk.deleted.hollow_background': alpha(a.pink, 0.06),
   'editor.diff_hunk.deleted.hollow_border': alpha(a.pink, 0.36),
 
-  // Version control (VS Code gitDecoration.*, diffEditor.*, merge.*)
   'version_control.added': a.green,
   'version_control.deleted': a.pink,
   'version_control.modified': accent,
@@ -139,7 +118,6 @@ export const colors = {
   'version_control.conflict_marker.ours': alpha(a.green, 0.12),
   'version_control.conflict_marker.theirs': alpha(accent, 0.12),
 
-  // Terminal
   'terminal.background': surface,
   'terminal.foreground': g.fg,
   'terminal.bright_foreground': g.fg,
@@ -170,7 +148,6 @@ export const colors = {
   'terminal.ansi.dim_cyan': dim(ansi.cyan),
   'terminal.ansi.dim_white': dim(ansi.white),
 
-  // Vim and Helix mode indicators: dark text on an accent chip.
   'vim.normal.background': accent,
   'vim.normal.foreground': g.bg,
   'vim.insert.background': a.green,
@@ -191,8 +168,6 @@ export const colors = {
   'vim.helix_jump_label.foreground': a.rose,
 };
 
-// Status colours: diagnostics, git status, file states. Each has a translucent
-// background (inline diagnostics, banners) and a border.
 const statusColor = (name, color) => ({
   [name]: color,
   [`${name}.background`]: alpha(color, 0.12),
@@ -203,7 +178,7 @@ export const status = {
   ...statusColor('error', a.pink),
   ...statusColor('warning', warning),
   ...statusColor('info', accent),
-  ...statusColor('hint', a.teal), // VS Code editorHint
+  ...statusColor('hint', a.teal),
   ...statusColor('success', a.green),
   ...statusColor('created', a.green),
   ...statusColor('modified', accent),
@@ -213,14 +188,13 @@ export const status = {
   ...statusColor('ignored', g.fgSubtle),
   ...statusColor('hidden', g.fgSubtle),
   ...statusColor('unreachable', g.fgSubtle),
-  ...statusColor('predictive', g.fgSubtle), // edit predictions, like VS Code ghost text
+  ...statusColor('predictive', g.fgSubtle),
 };
 
-// Players: the first entry is you. Its cursor and selection match VS Code
-// (light grey cursor, opaque grey selection); collaborators get accent colours.
 const collaborator = (color) => ({ cursor: color, background: color, selection: alpha(color, 0.25) });
 export const players = [
-  { cursor: g.fg, background: accent, selection: g.bgSelection },
+  // Translucent (≈ bgSelection over bg): Zed paints selections above search and symbol highlights.
+  { cursor: g.fg, background: accent, selection: alpha(g.fg, 0.13) },
   collaborator(a.pink),
   collaborator(a.green),
   collaborator(a.purple),
@@ -230,6 +204,4 @@ export const players = [
   collaborator(a.teal),
 ];
 
-// Accents colour nested brackets and indent guides when colorization is on;
-// same order as VS Code editorBracketHighlight.foreground1-6.
 export const accents = [a.blue, a.purple, a.cyan, a.rose, a.ice, a.green];

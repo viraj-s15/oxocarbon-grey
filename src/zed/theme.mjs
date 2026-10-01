@@ -1,4 +1,3 @@
-// The Zed theme family, assembled from the UI and syntax mappings.
 import { colors, status, players, accents } from './ui.mjs';
 import syntax from './syntax.mjs';
 import manifest, { author } from './manifest.mjs';
