@@ -19,8 +19,11 @@ jobs:
         run: npm run check:zed-schema
       - name: Validate Zed theme against the published schema
         run: |
-          curl -sSfL https://zed.dev/schema/themes/v0.2.0.json -o "$RUNNER_TEMP/zed-theme-schema.json"
-          npx --yes ajv-cli@5.0.0 validate --spec=draft2020 --strict=false -s "$RUNNER_TEMP/zed-theme-schema.json" -d zed/themes/oxocarbon-grey.json
+          schema="$RUNNER_TEMP/zed-theme-schema.json"
+          curl -sSfL https://zed.dev/schema/themes/v0.2.0.json -o "$schema"
+          # The published schema may lag Zed's source in JSON Schema draft; validate with the draft it declares.
+          spec=$(node -p "require('$schema').\$schema.includes('2020-12') ? 'draft2020' : 'draft7'")
+          npx --yes ajv-cli@5.0.0 validate --spec="$spec" --strict=false -s "$schema" -d zed/themes/oxocarbon-grey.json
       - name: Package
         run: npx --yes @vscode/vsce package
       - name: Check the VSIX leaves out the Zed extension and build sources
