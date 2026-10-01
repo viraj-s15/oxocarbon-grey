@@ -1,0 +1,4 @@
+return {
+  nvim_treesitter = "910fdf6f49e9dee7e7257c7d11a76b040fdfb9de",
+  languages = { "c", "cpp", "python", "rust", "typescript", "tsx" },
+}

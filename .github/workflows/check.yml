@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check generated VS Code and Zed themes are up to date
+      - name: Check generated VS Code, Zed and Neovim output is up to date
         run: npm run check
       - name: Validate Zed theme against the vendored schema
         run: npm run check:zed-schema
@@ -25,13 +25,32 @@ jobs:
           npx --yes ajv-cli@5.0.0 validate --spec="$spec" --strict=false -s "$schema" -d zed/themes/oxocarbon-grey.json
       - name: Package
         run: npx --yes @vscode/vsce package
-      - name: Check the VSIX leaves out the Zed extension and build sources
+      - name: Check the VSIX leaves out the Zed and Neovim ports and build sources
         run: |
           set -o pipefail
           vsix=(*.vsix)
           test ${#vsix[@]} -eq 1
           files=$(unzip -Z1 "${vsix[0]}")
-          if grep -E '^extension/(zed|src|fixtures)/' <<< "$files"; then
-            echo "VSIX contains files that belong to the Zed extension or the build"
+          if grep -E '^extension/(zed|colors|lua|tests|src|fixtures)/' <<< "$files"; then
+            echo "VSIX contains files that belong to the Zed or Neovim ports or the build"
             exit 1
           fi
+
+  neovim:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [v0.10.4, v0.11.7, v0.12.5]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Neovim ${{ matrix.version }}
+        run: |
+          curl -sSfL https://github.com/neovim/neovim/releases/download/${{ matrix.version }}/nvim-linux-x86_64.tar.gz | tar xz -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/nvim-linux-x86_64/bin" >> "$GITHUB_PATH"
+      - run: nvim --version
+      - name: Run headless Neovim tests
+        run: npm run test:neovim
+      - name: Check fixture highlighting with pinned parsers
+        if: matrix.version == 'v0.12.5'
+        run: npm run test:neovim:fixtures
