@@ -51,6 +51,6 @@ jobs:
       - run: nvim --version
       - name: Run headless Neovim tests
         run: npm run test:neovim
-      - name: Check fixture highlighting with pinned parsers
+      - name: Check fixture highlighting and website specimens with pinned parsers
         if: matrix.version == 'v0.12.5'
         run: npm run test:neovim:fixtures

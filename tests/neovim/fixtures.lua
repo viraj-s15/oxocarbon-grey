@@ -1,25 +1,6 @@
-local root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":p:h:h:h")
-local deps = root .. "/.cache/neovim"
-
-local pins = dofile(root .. "/tests/neovim/pins.lua")
-local versions = io.open(deps .. "/versions.txt")
-local installed = versions and versions:read("*a") or ""
-if versions then
-  versions:close()
-end
-local expected = {}
-for _, lang in ipairs(pins.languages) do
-  table.insert(expected, "\n" .. lang .. " ")
-end
-if not vim.startswith(installed, "nvim-treesitter " .. pins.nvim_treesitter .. "\n")
-  or not vim.iter(expected):all(function(lang) return installed:find(lang, 1, true) end) then
-  io.stderr:write("Parsers are missing or out of date. Run `nvim --clean --headless -l tests/neovim/deps.lua` first.\n")
-  os.exit(1)
-end
-io.stdout:write(installed)
-
-vim.opt.runtimepath = { root, deps, deps .. "/nvim-treesitter/runtime", vim.env.VIMRUNTIME }
-vim.cmd.colorscheme("oxocarbon-grey")
+local highlight = dofile(vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":p:h") .. "/highlight.lua")
+local root = highlight.root
+io.stdout:write(highlight.setup())
 
 local theme = require("oxocarbon_grey")
 local p = require("oxocarbon_grey.palette")
@@ -32,17 +13,6 @@ local function fail(message)
   table.insert(failures, message)
 end
 
-local function resolve(name)
-  while name do
-    local def = vim.api.nvim_get_hl(0, { name = name, link = false })
-    if next(def) then
-      return def
-    end
-    name = name:match("^(.*)%.[^.]+$")
-  end
-  return {}
-end
-
 local function covered(capture, lang)
   local name = "@" .. capture .. "." .. lang
   while name do
@@ -52,33 +22,6 @@ local function covered(capture, lang)
     name = name:match("^(.*)%.[^.]+$")
   end
   return false
-end
-
-local function style_at(buf, row, col)
-  local captures = vim.inspect_pos(buf, row, col, { syntax = false, extmarks = false, semantic_tokens = false }).treesitter
-  for i, capture in ipairs(captures) do
-    capture.order = i
-  end
-  table.sort(captures, function(x, y)
-    local px = tonumber(x.metadata and x.metadata.priority) or 100
-    local py = tonumber(y.metadata and y.metadata.priority) or 100
-    if px ~= py then
-      return px < py
-    end
-    return x.order < y.order
-  end)
-  local merged, names = {}, {}
-  for _, capture in ipairs(captures) do
-    table.insert(names, capture.hl_group)
-    for key, value in pairs(resolve(capture.hl_group)) do
-      merged[key] = value
-    end
-  end
-  return {
-    fg = merged.fg and ("#%06x"):format(merged.fg),
-    italic = merged.italic or nil,
-    bold = merged.bold or nil,
-  }, table.concat(names, " ")
 end
 
 local function find(buf, text, nth)
@@ -270,11 +213,7 @@ local fixtures = {
 }
 
 for _, fixture in ipairs(fixtures) do
-  vim.cmd.edit(root .. "/fixtures/" .. fixture.file)
-  local buf = vim.api.nvim_get_current_buf()
-  vim.treesitter.start(buf, fixture.lang)
-  local parser = vim.treesitter.get_parser(buf, fixture.lang)
-  parser:parse(true)
+  local buf, parser = highlight.open(root .. "/fixtures/" .. fixture.file, fixture.lang)
 
   local langs = {}
   parser:for_each_tree(function(_, tree)
@@ -298,7 +237,7 @@ for _, fixture in ipairs(fixtures) do
     if not row then
       fail(("%s: %q not found"):format(fixture.file, text))
     else
-      local got, captures = style_at(buf, row, col + offset)
+      local got, captures = highlight.style_at(buf, row, col + offset)
       checked = checked + 1
       if not vim.deep_equal(got, want) then
         fail(("%s:%d:%d %q: expected %s, got %s from %s"):format(
