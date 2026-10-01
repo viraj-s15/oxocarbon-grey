@@ -42,9 +42,10 @@
     ]
   },
   "scripts": {
-    "build": "node src/build.mjs && node src/icon.mjs && node src/zed/build.mjs",
+    "build": "node src/build.mjs && node src/icon.mjs && node src/zed/build.mjs && node src/neovim/build.mjs",
     "build:zed": "node src/zed/build.mjs",
-    "check": "node src/build.mjs --check && node src/zed/build.mjs --check && node --test src/zed/validate.test.mjs",
+    "build:neovim": "node src/neovim/build.mjs",
+    "check": "node src/build.mjs --check && node src/zed/build.mjs --check && node src/neovim/build.mjs --check && node --test src/zed/validate.test.mjs src/neovim/palette.test.mjs",
     "check:zed-schema": "npx --yes ajv-cli@5.0.0 validate --spec=draft2020 --strict=false -s src/zed/theme-schema.json -d zed/themes/oxocarbon-grey.json",
     "package": "npm run build && npx --yes @vscode/vsce package"
   }
