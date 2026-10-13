@@ -3,7 +3,7 @@ local deps = root .. "/.cache/neovim"
 
 vim.opt.runtimepath:prepend(root)
 if not vim.uv.fs_stat(deps .. "/versions.txt") then
-  vim.notify("No review parsers in .cache/neovim, so Tree-sitter is off. See the README.", vim.log.levels.WARN)
+  vim.notify("No review parsers in .cache/neovim, so Tree-sitter is off. Build them with npm run test:neovim:fixtures (requires Neovim 0.12, git and a C compiler).", vim.log.levels.WARN)
 elseif vim.fn.has("nvim-0.12") == 0 then
   vim.notify("The review parsers need Neovim 0.12, so Tree-sitter is off.", vim.log.levels.WARN)
 else
