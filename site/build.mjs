@@ -128,7 +128,7 @@ if (process.argv.includes('--check')) {
   rmSync(out, { recursive: true, force: true });
   mkdirSync(out);
   writeFileSync(join(out, 'index.html'), page);
-  for (const file of ['style.css', 'main.js']) copyFileSync(join(site, file), join(out, file));
+  for (const file of ['style.css', 'main.js', 'downloads.js', 'downloads.mjs']) copyFileSync(join(site, file), join(out, file));
   copyFileSync(join(root, 'images/icon.png'), join(out, 'icon.png'));
   mkdirSync(join(out, 'ghostty'));
   copyFileSync(join(root, 'ghostty/oxocarbon-grey'), join(out, 'ghostty/oxocarbon-grey'));

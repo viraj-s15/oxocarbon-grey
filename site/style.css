@@ -95,6 +95,15 @@ h1 {
   color: var(--fgMuted);
 }
 
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: var(--fgMuted);
+}
+
 /* Specimen */
 
 .specimen {

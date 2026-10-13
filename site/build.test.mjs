@@ -22,7 +22,7 @@ test('the Ghostty download is the committed theme, byte for byte', () => {
 test('local links and assets are relative and exist, so they work under /oxocarbon-grey/', () => {
   const refs = [...page.matchAll(/(?:href|src)="([^"]+)"/g)].map((m) => m[1]);
   const local = refs.filter((ref) => !/^(https?:|#)/.test(ref));
-  assert.ok(local.length >= 4, local.join(' '));
+  assert.ok(local.length >= 5, local.join(' '));
   for (const ref of local) {
     assert.doesNotMatch(ref, /^\/|\.\./, ref);
     assert.ok(existsSync(join(out, ref)), `${ref} is not in the build`);
@@ -30,6 +30,16 @@ test('local links and assets are relative and exist, so they work under /oxocarb
   for (const ref of refs.filter((ref) => ref.startsWith('#'))) {
     assert.match(page, new RegExp(`id="${ref.slice(1)}"`), ref);
   }
+});
+
+test('download counts have separate registry links, hidden spans, and emitted relative assets', () => {
+  assert.ok(page.includes('data-downloads="openvsx"') && page.includes('data-downloads="marketplace"'));
+  assert.ok(page.includes('href="https://open-vsx.org/extension/viraj-s15/oxocarbon-grey"'));
+  assert.ok(page.includes('href="https://marketplace.visualstudio.com/items?itemName=viraj-s15.oxocarbon-grey"'));
+  assert.ok(page.includes('<script src="main.js" defer></script>'));
+  assert.ok(page.includes('<script type="module" src="downloads.js"></script>'));
+  assert.ok(existsSync(join(out, 'downloads.js')));
+  assert.ok(existsSync(join(out, 'downloads.mjs')));
 });
 
 test('the page shows all 16 terminal colours', () => {
