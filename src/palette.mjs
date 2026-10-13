@@ -1,17 +1,15 @@
-// Every colour in the theme comes from here. Run `npm run build` after changing it.
-
 export const grey = {
   bg: '#1b1c1f',
-  bgFloat: '#232428', // floating widgets: menus, hovers, suggest, quick input, notifications
+  bgFloat: '#232428',
   bgLine: '#202125',
   bgSelection: '#33353b',
   hairline: '#ffffff0d',
-  guide: '#2b2d31', // indent guides, rulers
+  guide: '#2b2d31',
   lineNr: '#4d5159',
   lineNrActive: '#dde1e6',
   fg: '#dde1e6',
-  fgMuted: '#8d9199', // punctuation, secondary UI text
-  fgSubtle: '#6e747d', // comments, placeholders
+  fgMuted: '#8d9199',
+  fgSubtle: '#6e747d',
   white: '#ffffff',
 };
 
@@ -27,32 +25,32 @@ export const accent = {
   green: '#42be65', // base13
   purple: '#be95ff', // base14
   ice: '#82cfff', // base15
-  steel: '#7189b3', // ANSI bright blue
+  steel: '#7189b3',
   cobalt: '#4589ff', // IBM Carbon blue 50
 };
 
 export const syntax = {
-  keyword: accent.blue, // if, for, return, import
-  storage: accent.cyan, // const, let, fn, def, class
+  keyword: accent.blue,
+  storage: accent.cyan,
   operator: accent.blueLight,
   function: accent.rose,
   method: accent.teal,
-  type: accent.sky, // builtin/library types, traits, interfaces, type parameters: italic
+  type: accent.sky,
   string: accent.purple,
   escape: accent.ice,
   regex: accent.teal,
   number: accent.ice,
-  constant: accent.cobalt, // user constants, enum members
-  builtin: accent.teal, // true, false, null, built-in functions and globals
-  property: accent.ice, // fields and property access
-  propertyDeclaration: accent.blueLight, // object keys, field and member declarations
+  constant: accent.cobalt,
+  builtin: accent.teal,
+  property: accent.ice,
+  propertyDeclaration: accent.blueLight,
   variable: grey.fg,
   parameter: grey.fg,
   self: accent.pink,
   decorator: accent.green,
   namespace: accent.teal,
   macro: accent.cyan,
-  interpolation: accent.cyan, // ${ }, { } in f-strings and format strings, JSX { }
+  interpolation: accent.cyan,
   lifetime: grey.fgMuted,
   unsafe: accent.pink,
   label: accent.ice,

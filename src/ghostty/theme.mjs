@@ -1,7 +1,6 @@
 import { grey, accent, ansi } from '../palette.mjs';
 import { mix } from '../zed/color.mjs';
 
-// Ghostty palette indices 0 to 15, in ANSI order.
 export const order = [
   'black',
   'red',

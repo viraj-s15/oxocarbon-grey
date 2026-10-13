@@ -1,5 +1,3 @@
-// Draws images/icon.png (256x256) from the palette: a graphene tile with a few
-// lines of "code" in the syntax colours. Node stdlib only.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';

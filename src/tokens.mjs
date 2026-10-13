@@ -1,4 +1,3 @@
-// TextMate token rules.
 import { grey, accent, syntax as s } from './palette.mjs';
 
 const rule = (name, scope, foreground, fontStyle) => {
@@ -50,7 +49,6 @@ export default [
 
   // Keywords
   rule('Keywords', ['keyword', 'keyword.other'], s.keyword),
-  // Control flow and imports are italic; declaration keywords stay upright.
   rule(
     'Control-flow keywords',
     ['keyword.control', 'keyword.other.using', 'keyword.other.import', 'keyword.control.flow', 'keyword.control.conditional', 'keyword.control.loop', 'keyword.control.trycatch', 'keyword.control.switch', 'keyword.control.exception'],
@@ -98,7 +96,6 @@ export default [
   rule('Package and module declarations', ['keyword.package.go'], s.keyword),
   // The Rust grammar scopes `use` like `impl`; keep rust-analyzer's colour, add the italic.
   rule('Rust use', ['meta.use.rust keyword.other.rust'], s.storage, 'italic'),
-  // Grammars that scope declarations as keyword.control.
   rule(
     'Declarations scoped as control keywords',
     ['keyword.control.def.ruby', 'keyword.control.class.ruby', 'keyword.control.module.ruby', 'meta.function.lua keyword.control.lua'],

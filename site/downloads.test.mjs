@@ -203,7 +203,6 @@ test('actual browser entry hides expired values while refreshing and after failu
   const elements = await runEntry({ cached: { 'oxocarbon-grey:downloads:v1:openvsx': expired }, elementValues: { openvsx: { hidden: true } }, fetchImpl: (url) => url.includes('open-vsx') ? new Promise((resolve) => { resolveFetch = resolve; }) : Promise.reject(new Error('offline')) });
   assert.equal(elements.openvsx.hidden, true);
   assert.equal(elements.openvsx.textContent, 'original');
-  // Resolve as a failed response; failed refresh keeps the expired value hidden.
   resolveFetch({ ok: false, status: 503 });
   await new Promise((resolve) => setTimeout(resolve, 0));
   assert.equal(elements.openvsx.hidden, true);

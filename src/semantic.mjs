@@ -8,7 +8,7 @@ const bold = (foreground) => ({ foreground, bold: true });
 const upright = (foreground) => ({ foreground, italic: false, bold: false });
 
 export default {
-  // Standard token types, shared by every language
+  // Standard token types
   namespace: s.namespace,
   module: s.namespace,
   class: s.type,
@@ -17,7 +17,6 @@ export default {
   type: s.type,
   typeAlias: s.type,
   union: s.type,
-  // Traits, interfaces and concepts are italic; so are built-in/library types.
   interface: italic(s.type),
   concept: italic(s.type),
   'class.defaultLibrary': italic(s.type),
@@ -70,7 +69,6 @@ export default {
   'property.declaration.readonly:python': bold(s.method),
   'function.builtin:python': s.builtin,
   'class.builtin:python': italic(s.type),
-  // Decorators stay green even when they are builtins (@property, @classmethod).
   '*.decorator:python': s.decorator,
   'class.decorator.builtin:python': upright(s.decorator),
   'function.decorator.builtin:python': s.decorator,
@@ -83,7 +81,6 @@ export default {
   'keyword:python': italic(s.keyword),
   selfParameter: italic(s.self),
   clsParameter: italic(s.self),
-  // Dunder methods: method colour, never bold.
   magicFunction: upright(s.method),
   'magicFunction.declaration': upright(s.method),
   // Pylance: True, False, None, __debug__.
@@ -108,7 +105,6 @@ export default {
   'operator.controlFlow:rust': bold(s.keyword),
   // boolean's supertype is keyword, so keyword:rust would otherwise win.
   'boolean:rust': italic(s.builtin),
-  // Std functions (Instant::now, HashMap::new) are ordinary functions.
   'function.defaultLibrary:rust': s.function,
   'selfKeyword:rust': italic(s.self),
   'selfTypeKeyword:rust': upright(s.type),

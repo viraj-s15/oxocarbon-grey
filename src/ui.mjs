@@ -1,7 +1,5 @@
-// Workbench (UI) colours.
 import { grey as g, accent as a, ansi } from './palette.mjs';
 
-// Append a two-digit hex alpha to a #rrggbb colour.
 const alpha = (hex, opacity) =>
   hex +
   Math.round(opacity * 255)
@@ -13,7 +11,6 @@ const alert = a.pink;
 const warning = a.purple; // oxocarbon.nvim uses purple for warnings
 const transparent = '#00000000';
 
-// One flat surface; parts are separated only by a hairline.
 const surface = g.bg;
 const hairline = g.hairline;
 

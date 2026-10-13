@@ -1,6 +1,4 @@
 #!/bin/sh
-# Prints the 16 ANSI colours, a few styles and some sample messages. It only writes
-# to the terminal, and resets all styling when it finishes or is interrupted.
 
 reset() { printf '\033[0m'; }
 trap reset EXIT

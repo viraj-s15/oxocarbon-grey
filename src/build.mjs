@@ -1,7 +1,3 @@
-// Generates themes/oxocarbon-grey-color-theme.json from src/palette.mjs.
-//
-//   node src/build.mjs          write the theme and report contrast
-//   node src/build.mjs --check  fail if the committed theme is out of date
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,7 +19,6 @@ const theme = {
   semanticTokenColors,
 };
 
-// Every colour must be #rrggbb or #rrggbbaa.
 const hex = /^#[0-9a-f]{6}([0-9a-f]{2})?$/i;
 const bad = [];
 const walk = (value, path) => {
