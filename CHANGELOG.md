@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- herdr themes in `herdr/`, generated from the same palette by `src/herdr/` and committed. `oxocarbon-grey.json` is for the herdr-app desktop app, with the Ghostty terminal colours and VS Code panel colours. `oxocarbon-grey.toml` is a `[theme.custom]` table for the terminal app, tested against herdr's own contrast rules. The other themes are unchanged.
 - Ghostty theme `ghostty/oxocarbon-grey`, generated from the same palette by `src/ghostty/` and committed, with `ghostty/preview.sh` to print the terminal colours. The website shows the 16 terminal colours, and offers the theme as a download. The editor themes are unchanged.
 - Website in `site/`, deployed to GitHub Pages by `.github/workflows/pages.yml`. Its code samples come from the fixtures, highlighted by the Neovim port with Tree-sitter.
 - Neovim colorscheme `oxocarbon-grey` in `colors/` and `lua/`, written in Lua for Neovim 0.10+. Its palette is generated from the same source by `src/neovim/` and committed. It styles Vim syntax, Tree-sitter, LSP semantic tokens, diagnostics and the terminal, plus Telescope, Gitsigns and blink.cmp. `npm run check` checks the palette, `npm run test:neovim` runs the headless tests, and the VS Code and Zed themes are unchanged.

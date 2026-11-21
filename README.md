@@ -1,6 +1,6 @@
 # Oxocarbon Grey
 
-A dark theme based on [Oxocarbon](https://github.com/nyoom-engineering/oxocarbon.nvim), with a flat graphene background and richer syntax colours. Supports Python, Rust, TypeScript and C++. Available for VS Code, Zed, Neovim and Ghostty.
+A dark theme based on [Oxocarbon](https://github.com/nyoom-engineering/oxocarbon.nvim), with a flat graphene background and richer syntax colours. Supports Python, Rust, TypeScript and C++. Available for VS Code, Zed, Neovim, Ghostty and herdr.
 
 [Preview the theme on the website](https://viraj-s15.github.io/oxocarbon-grey/).
 
@@ -93,6 +93,39 @@ theme = oxocarbon-grey
 On macOS, **Settings…** opens the config. On Linux, use `$XDG_CONFIG_HOME/ghostty/config.ghostty` (usually `~/.config/ghostty/config.ghostty`). Reload with <kbd>cmd-shift-,</kbd> on macOS or <kbd>ctrl-shift-,</kbd> on Linux.
 
 Colour settings in your own config override the theme. This is separate from Ghostty's built-in **Oxocarbon** theme.
+
+## herdr
+
+### Desktop app
+
+1. Download the theme into the herdr-app themes folder:
+
+   ```sh
+   dir="${HERDR_APP_HOME:-$HOME/.config/herdr-app}/themes"
+   mkdir -p "$dir"
+   curl -fsSL -o "$dir/oxocarbon-grey.json" \
+     https://raw.githubusercontent.com/viraj-s15/oxocarbon-grey/main/herdr/oxocarbon-grey.json
+   ```
+
+2. Open **Settings → Look** and pick **oxocarbon-grey**, or run `herdr-app do app.theme --name oxocarbon-grey`.
+
+herdr-app finds the file live, so no restart is needed. The theme sets the terminals and the panels, and each layout keeps its own theme.
+
+### Terminal app
+
+The theme colours herdr's own UI: the sidebar, tab bar, popups and agent status markers. Panes keep your terminal's colours, so use the Ghostty theme there too.
+
+1. Remove any `[theme.custom]` table from `~/.config/herdr/config.toml`.
+2. Add the theme to the end of the config:
+
+   ```sh
+   { printf '\n'; curl -fsSL https://raw.githubusercontent.com/viraj-s15/oxocarbon-grey/main/herdr/oxocarbon-grey.toml; } \
+     >> "${HERDR_CONFIG_PATH:-$HOME/.config/herdr/config.toml}"
+   ```
+
+3. Reload the running server with `herdr server reload-config`.
+
+The theme sets every colour token, so your `theme.name` has no effect while it is there. To remove it, delete the `[theme.custom]` table and reload.
 
 ## Development
 
