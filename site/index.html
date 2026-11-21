@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Oxocarbon Grey</title>
-    <meta name="description" content="A dark cool-grey theme for VS Code, Zed, Neovim and Ghostty, built on the Oxocarbon palette.">
+    <meta name="description" content="A dark cool-grey theme for VS Code, Zed, Neovim, Ghostty and herdr, built on the Oxocarbon palette.">
     <meta name="theme-color" content="{{bg}}">
     <link rel="icon" href="icon.png">
     <script>document.documentElement.classList.add('js')</script>
@@ -20,7 +20,7 @@
     <main>
       <header class="intro">
         <h1>Oxocarbon Grey</h1>
-        <p class="lede">A dark theme for VS Code, Zed, Neovim and Ghostty. Oxocarbon’s colours on a flat, cool grey, tuned for Python, Rust, TypeScript and C++.</p>
+        <p class="lede">A dark theme for VS Code, Zed, Neovim, Ghostty and herdr. Oxocarbon’s colours on a flat, cool grey, tuned for Python, Rust, TypeScript and C++.</p>
         <p class="links"><a href="#install">Install</a> <a href="#terminal">Terminal colours</a> <a href="https://github.com/viraj-s15/oxocarbon-grey">Source on GitHub</a></p>
         <p class="downloads"><span><a href="https://open-vsx.org/extension/viraj-s15/oxocarbon-grey">Open VSX</a><span data-downloads="openvsx" hidden></span></span><span><a href="https://marketplace.visualstudio.com/items?itemName=viraj-s15.oxocarbon-grey">VS Code Marketplace</a><span data-downloads="marketplace" hidden></span></span></p>
       </header>
@@ -63,7 +63,7 @@
 
       <section class="terminal" id="terminal" aria-labelledby="terminal-title">
         <h2 id="terminal-title">Sixteen for the terminal</h2>
-        <p>VS Code, Zed, Neovim and Ghostty share one set of terminal colours. Oxocarbon has no yellow, so yellow is purple. Red, green, yellow and magenta keep their colour when bright.</p>
+        <p>VS Code, Zed, Neovim, Ghostty and the herdr desktop app share one set of terminal colours. Oxocarbon has no yellow, so yellow is purple. Red, green, yellow and magenta keep their colour when bright.</p>
         <figure class="screen">
           <pre tabindex="0"><code><span class="a4">~/oxocarbon-grey</span> <span class="a5">main</span>
 <span class="a2">$</span> git status --short
@@ -120,6 +120,21 @@ mkdir -p "$dir"
             <p>Then add this line to your Ghostty config, or change your existing <code>theme</code> line to it. On macOS, <b>Settings…</b> in the Ghostty menu opens the config. Reload with <kbd>Cmd+Shift+,</kbd> on macOS or <kbd>Ctrl+Shift+,</kbd> on Linux.</p>
             <div class="snippet"><pre><code>theme = oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
             <p>Colours set in your own config, like <code>background</code> or <code>palette</code>, override the theme. To remove it, delete the line, reload and delete the file. You can also <a href="ghostty/oxocarbon-grey" download>download the theme file</a> or <a href="https://github.com/viraj-s15/oxocarbon-grey/blob/main/ghostty/oxocarbon-grey">read its source</a>.</p>
+          </article>
+          <article id="herdr">
+            <h3>herdr</h3>
+            <p>For the desktop app, download the theme into its themes folder. herdr-app finds it live, so no restart is needed:</p>
+            <div class="snippet"><pre><code>dir="${HERDR_APP_HOME:-$HOME/.config/herdr-app}/themes"
+mkdir -p "$dir"
+curl -fsSL -o "$dir/oxocarbon-grey.json" \
+  https://viraj-s15.github.io/oxocarbon-grey/herdr/oxocarbon-grey.json</code></pre><button type="button" class="copy">Copy</button></div>
+            <p>Then pick <b>oxocarbon-grey</b> in <b>Settings → Look</b>, or run this. Each layout keeps its own theme.</p>
+            <div class="snippet"><pre><code>herdr-app do app.theme --name oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
+            <p>The terminal app takes a <code>[theme.custom]</code> table that colours its sidebar, tabs and popups. Panes keep your terminal’s colours. Remove any <code>[theme.custom]</code> table from your config first, then add the theme and reload:</p>
+            <div class="snippet"><pre><code>{ printf '\n'; curl -fsSL https://viraj-s15.github.io/oxocarbon-grey/herdr/oxocarbon-grey.toml; } \
+  >> "${HERDR_CONFIG_PATH:-$HOME/.config/herdr/config.toml}"
+herdr server reload-config</code></pre><button type="button" class="copy">Copy</button></div>
+            <p>You can also download the <a href="herdr/oxocarbon-grey.json" download>desktop theme</a> or the <a href="herdr/oxocarbon-grey.toml" download>terminal theme</a>, or <a href="https://github.com/viraj-s15/oxocarbon-grey/tree/main/herdr">read their source</a>.</p>
           </article>
         </div>
         <p class="more">Neovim options and build commands are in the <a href="https://github.com/viraj-s15/oxocarbon-grey#readme">README</a>.</p>

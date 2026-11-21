@@ -19,6 +19,14 @@ test('the Ghostty download is the committed theme, byte for byte', () => {
   assert.match(page, /https:\/\/viraj-s15\.github\.io\/oxocarbon-grey\/ghostty\/oxocarbon-grey/);
 });
 
+test('the herdr downloads are the committed themes, byte for byte', () => {
+  for (const file of ['herdr/oxocarbon-grey.json', 'herdr/oxocarbon-grey.toml']) {
+    assert.deepEqual(readFileSync(join(out, file)), readFileSync(join(root, file)));
+    assert.ok(page.includes(`<a href="${file}" download>`), file);
+    assert.ok(page.includes(`https://viraj-s15.github.io/oxocarbon-grey/${file}`), file);
+  }
+});
+
 test('local links and assets are relative and exist, so they work under /oxocarbon-grey/', () => {
   const refs = [...page.matchAll(/(?:href|src)="([^"]+)"/g)].map((m) => m[1]);
   const local = refs.filter((ref) => !/^(https?:|#)/.test(ref));

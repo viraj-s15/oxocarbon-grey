@@ -132,6 +132,8 @@ if (process.argv.includes('--check')) {
   copyFileSync(join(root, 'images/icon.png'), join(out, 'icon.png'));
   mkdirSync(join(out, 'ghostty'));
   copyFileSync(join(root, 'ghostty/oxocarbon-grey'), join(out, 'ghostty/oxocarbon-grey'));
+  mkdirSync(join(out, 'herdr'));
+  for (const file of ['herdr/oxocarbon-grey.json', 'herdr/oxocarbon-grey.toml']) copyFileSync(join(root, file), join(out, file));
   writeFileSync(join(out, '.nojekyll'), '');
   console.log(`wrote ${out} with ${specimens.length} specimens`);
 }

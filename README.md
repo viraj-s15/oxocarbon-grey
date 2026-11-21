@@ -104,7 +104,7 @@ Colour settings in your own config override the theme. This is separate from Gho
    dir="${HERDR_APP_HOME:-$HOME/.config/herdr-app}/themes"
    mkdir -p "$dir"
    curl -fsSL -o "$dir/oxocarbon-grey.json" \
-     https://raw.githubusercontent.com/viraj-s15/oxocarbon-grey/main/herdr/oxocarbon-grey.json
+     https://viraj-s15.github.io/oxocarbon-grey/herdr/oxocarbon-grey.json
    ```
 
 2. Open **Settings → Look** and pick **oxocarbon-grey**, or run `herdr-app do app.theme --name oxocarbon-grey`.
@@ -119,7 +119,7 @@ The theme colours herdr's own UI: the sidebar, tab bar, popups and agent status 
 2. Add the theme to the end of the config:
 
    ```sh
-   { printf '\n'; curl -fsSL https://raw.githubusercontent.com/viraj-s15/oxocarbon-grey/main/herdr/oxocarbon-grey.toml; } \
+   { printf '\n'; curl -fsSL https://viraj-s15.github.io/oxocarbon-grey/herdr/oxocarbon-grey.toml; } \
      >> "${HERDR_CONFIG_PATH:-$HOME/.config/herdr/config.toml}"
    ```
 
