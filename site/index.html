@@ -87,56 +87,121 @@
 
       <section class="install" id="install" aria-labelledby="install-title">
         <h2 id="install-title">Install</h2>
-        <div class="editors">
-          <article>
-            <h3>VS Code</h3>
-            <p>From the <a href="https://marketplace.visualstudio.com/items?itemName=viraj-s15.oxocarbon-grey">VS Code Marketplace</a> or <a href="https://open-vsx.org/extension/viraj-s15/oxocarbon-grey">Open VSX</a>. Keep semantic highlighting on.</p>
-            <div class="snippet"><pre><code>code --install-extension viraj-s15.oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
-          </article>
-          <article>
-            <h3>Zed</h3>
-            <p>Not in Zed’s extension registry yet. Clone the repository, click <b>Install Dev Extension</b> on the Extensions page and choose the <code>zed</code> folder.</p>
-            <div class="snippet"><pre><code>git clone https://github.com/viraj-s15/oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
-          </article>
-          <article>
-            <h3>Neovim</h3>
-            <p>Neovim 0.10 or later with true colour. Styles Telescope, Gitsigns and blink.cmp. With <a href="https://lazy.folke.io/spec">lazy.nvim</a>:</p>
-            <div class="snippet"><pre><code>{
-  "viraj-s15/oxocarbon-grey",
-  lazy = false,
-  priority = 1000,
-  config = function()
-    vim.cmd.colorscheme("oxocarbon-grey")
-  end,
-}</code></pre><button type="button" class="copy">Copy</button></div>
-          </article>
-          <article id="ghostty">
-            <h3>Ghostty</h3>
-            <p>A custom theme, not one of Ghostty’s built-in ones. It goes in Ghostty’s themes folder, <code>~/.config/ghostty/themes</code> on macOS and Linux. The download is skipped if the file is already there:</p>
-            <div class="snippet"><pre><code>dir="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes"
-mkdir -p "$dir"
-[ -e "$dir/oxocarbon-grey" ] || curl -fsSL -o "$dir/oxocarbon-grey" \
-  https://viraj-s15.github.io/oxocarbon-grey/ghostty/oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
-            <p>Then add this line to your Ghostty config, or change your existing <code>theme</code> line to it. On macOS, <b>Settings…</b> in the Ghostty menu opens the config. Reload with <kbd>Cmd+Shift+,</kbd> on macOS or <kbd>Ctrl+Shift+,</kbd> on Linux.</p>
-            <div class="snippet"><pre><code>theme = oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
-            <p>Colours set in your own config, like <code>background</code> or <code>palette</code>, override the theme. To remove it, delete the line, reload and delete the file. You can also <a href="ghostty/oxocarbon-grey" download>download the theme file</a> or <a href="https://github.com/viraj-s15/oxocarbon-grey/blob/main/ghostty/oxocarbon-grey">read its source</a>.</p>
-          </article>
-          <article id="herdr">
-            <h3>herdr</h3>
-            <p>For the desktop app, download the theme into its themes folder. herdr-app finds it live, so no restart is needed:</p>
-            <div class="snippet"><pre><code>dir="${HERDR_APP_HOME:-$HOME/.config/herdr-app}/themes"
-mkdir -p "$dir"
-curl -fsSL -o "$dir/oxocarbon-grey.json" \
-  https://viraj-s15.github.io/oxocarbon-grey/herdr/oxocarbon-grey.json</code></pre><button type="button" class="copy">Copy</button></div>
-            <p>Then pick <b>oxocarbon-grey</b> in <b>Settings → Look</b>, or run this. Each layout keeps its own theme.</p>
-            <div class="snippet"><pre><code>herdr-app do app.theme --name oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
-            <p>The terminal app takes a <code>[theme.custom]</code> table that colours its sidebar, tabs and popups. Panes keep your terminal’s colours. Remove any <code>[theme.custom]</code> table from your config first, then add the theme and reload:</p>
-            <div class="snippet"><pre><code>{ printf '\n'; curl -fsSL https://viraj-s15.github.io/oxocarbon-grey/herdr/oxocarbon-grey.toml; } \
-  >> "${HERDR_CONFIG_PATH:-$HOME/.config/herdr/config.toml}"
-herdr server reload-config</code></pre><button type="button" class="copy">Copy</button></div>
-            <p>You can also download the <a href="herdr/oxocarbon-grey.json" download>desktop theme</a> or the <a href="herdr/oxocarbon-grey.toml" download>terminal theme</a>, or <a href="https://github.com/viraj-s15/oxocarbon-grey/tree/main/herdr">read their source</a>.</p>
-          </article>
+        <div class="apps" role="tablist" aria-label="App">
+          <button type="button" role="tab" id="tab-vscode" aria-controls="vscode" aria-selected="true" style="--hue:var(--blue)">VS Code</button>
+          <button type="button" role="tab" id="tab-zed" aria-controls="zed" aria-selected="false" tabindex="-1" style="--hue:var(--teal)">Zed</button>
+          <button type="button" role="tab" id="tab-neovim" aria-controls="neovim" aria-selected="false" tabindex="-1" style="--hue:var(--green)">Neovim</button>
+          <button type="button" role="tab" id="tab-ghostty" aria-controls="ghostty" aria-selected="false" tabindex="-1" style="--hue:var(--purple)">Ghostty</button>
+          <button type="button" role="tab" id="tab-herdr" aria-controls="herdr" aria-selected="false" tabindex="-1" style="--hue:var(--rose)">herdr</button>
         </div>
+
+        <article class="app" id="vscode" role="tabpanel" aria-labelledby="tab-vscode" style="--hue:var(--blue)">
+          <div class="about">
+            <h3>VS Code</h3>
+            <p>From the <a href="https://marketplace.visualstudio.com/items?itemName=viraj-s15.oxocarbon-grey">VS Code Marketplace</a> or <a href="https://open-vsx.org/extension/viraj-s15/oxocarbon-grey">Open VSX</a>. Keep semantic highlighting on for the full effect.</p>
+          </div>
+          <ol class="steps">
+            <li>
+              <p>Install the extension:</p>
+              <div class="snippet"><pre><code><span class="a4">code</span> <span class="a8">--install-extension</span> viraj-s15.oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
+            </li>
+            <li><p>Pick <b>Oxocarbon Grey</b> in the Color Theme picker.</p></li>
+          </ol>
+        </article>
+
+        <article class="app" id="zed" role="tabpanel" aria-labelledby="tab-zed" style="--hue:var(--teal)">
+          <div class="about">
+            <h3>Zed</h3>
+            <p>Not in Zed’s extension registry yet, so it installs as a dev extension. Keep the clone, because Zed loads the theme from it.</p>
+          </div>
+          <ol class="steps">
+            <li>
+              <p>Clone the repository:</p>
+              <div class="snippet"><pre><code><span class="a4">git</span> clone <span class="a6">https://github.com/viraj-s15/oxocarbon-grey</span></code></pre><button type="button" class="copy">Copy</button></div>
+            </li>
+            <li><p>Click <b>Install Dev Extension</b> on the Extensions page and choose the <code>zed</code> folder, not the repository root.</p></li>
+            <li><p>Pick <b>Oxocarbon Grey</b> in the theme selector.</p></li>
+          </ol>
+        </article>
+
+        <article class="app" id="neovim" role="tabpanel" aria-labelledby="tab-neovim" style="--hue:var(--green)">
+          <div class="about">
+            <h3>Neovim</h3>
+            <p>Neovim 0.10 or later with true colour. Styles Tree-sitter, LSP semantic tokens, Telescope, Gitsigns and blink.cmp.</p>
+          </div>
+          <ol class="steps">
+            <li>
+              <p>Add the plugin with <a href="https://lazy.folke.io/spec">lazy.nvim</a>:</p>
+              <div class="snippet"><pre><code>{
+  <span class="a3">"viraj-s15/oxocarbon-grey"</span>,
+  lazy = <span class="a4">false</span>,
+  priority = <span class="a14">1000</span>,
+  config = <span class="a4">function</span>()
+    vim.cmd.<span class="a5">colorscheme</span>(<span class="a3">"oxocarbon-grey"</span>)
+  <span class="a4">end</span>,
+}</code></pre><button type="button" class="copy">Copy</button></div>
+            </li>
+          </ol>
+        </article>
+
+        <article class="app" id="ghostty" role="tabpanel" aria-labelledby="tab-ghostty" style="--hue:var(--purple)">
+          <div class="about">
+            <h3>Ghostty</h3>
+            <p>A custom theme, separate from Ghostty’s built-in Oxocarbon. Colours in your own config, like <code>background</code> or <code>palette</code>, override it.</p>
+            <p class="files"><a href="ghostty/oxocarbon-grey" download>Download the theme file</a> or <a href="https://github.com/viraj-s15/oxocarbon-grey/blob/main/ghostty/oxocarbon-grey">read its source</a>.</p>
+          </div>
+          <ol class="steps">
+            <li>
+              <p>Download the theme into Ghostty’s themes folder. The download is skipped if the file is already there:</p>
+              <div class="snippet"><pre><code><span class="a14">dir</span>=<span class="a3">"${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes"</span>
+<span class="a4">mkdir</span> <span class="a8">-p</span> <span class="a3">"$dir"</span>
+[ <span class="a8">-e</span> <span class="a3">"$dir/oxocarbon-grey"</span> ] || <span class="a4">curl</span> <span class="a8">-fsSL -o</span> <span class="a3">"$dir/oxocarbon-grey"</span> \
+  <span class="a6">https://viraj-s15.github.io/oxocarbon-grey/ghostty/oxocarbon-grey</span></code></pre><button type="button" class="copy">Copy</button></div>
+            </li>
+            <li>
+              <p>Add this line to your Ghostty config, or change your <code>theme</code> line to it. On macOS, <b>Settings…</b> in the Ghostty menu opens the config.</p>
+              <div class="snippet"><pre><code><span class="a14">theme</span> = oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
+            </li>
+            <li><p>Reload with <kbd>Cmd+Shift+,</kbd> on macOS or <kbd>Ctrl+Shift+,</kbd> on Linux.</p></li>
+          </ol>
+        </article>
+
+        <article class="app" id="herdr" role="tabpanel" aria-labelledby="tab-herdr" style="--hue:var(--rose)">
+          <div class="about">
+            <h3>herdr</h3>
+            <p>One theme for the desktop app, which colours the terminals and panels. A second one for the terminal app colours its sidebar, tabs and popups, and its panes keep your terminal’s colours.</p>
+            <p class="files">Download the <a href="herdr/oxocarbon-grey.json" download>desktop theme</a> or the <a href="herdr/oxocarbon-grey.toml" download>terminal theme</a>, or <a href="https://github.com/viraj-s15/oxocarbon-grey/tree/main/herdr">read their source</a>.</p>
+          </div>
+          <div class="variants">
+            <h4>Desktop app</h4>
+            <ol class="steps">
+              <li>
+                <p>Download the theme into the themes folder. herdr-app finds it live, so no restart is needed:</p>
+                <div class="snippet"><pre><code><span class="a14">dir</span>=<span class="a3">"${HERDR_APP_HOME:-$HOME/.config/herdr-app}/themes"</span>
+<span class="a4">mkdir</span> <span class="a8">-p</span> <span class="a3">"$dir"</span>
+<span class="a4">curl</span> <span class="a8">-fsSL -o</span> <span class="a3">"$dir/oxocarbon-grey.json"</span> \
+  <span class="a6">https://viraj-s15.github.io/oxocarbon-grey/herdr/oxocarbon-grey.json</span></code></pre><button type="button" class="copy">Copy</button></div>
+              </li>
+              <li>
+                <p>Pick <b>oxocarbon-grey</b> in <b>Settings → Look</b>, or run this. Each layout keeps its own theme.</p>
+                <div class="snippet"><pre><code><span class="a4">herdr-app</span> do app.theme <span class="a8">--name</span> oxocarbon-grey</code></pre><button type="button" class="copy">Copy</button></div>
+              </li>
+            </ol>
+            <h4>Terminal app</h4>
+            <ol class="steps">
+              <li><p>Remove any <code>[theme.custom]</code> table from your herdr config.</p></li>
+              <li>
+                <p>Add the theme to the end of the config, then reload the server:</p>
+                <div class="snippet"><pre><code>{
+  <span class="a4">printf</span> <span class="a3">'\n'</span>
+  <span class="a4">curl</span> <span class="a8">-fsSL</span> <span class="a6">https://viraj-s15.github.io/oxocarbon-grey/herdr/oxocarbon-grey.toml</span>
+} &gt;&gt; <span class="a3">"${HERDR_CONFIG_PATH:-$HOME/.config/herdr/config.toml}"</span>
+<span class="a4">herdr</span> server reload-config</code></pre><button type="button" class="copy">Copy</button></div>
+              </li>
+            </ol>
+          </div>
+        </article>
+
         <p class="more">Neovim options and build commands are in the <a href="https://github.com/viraj-s15/oxocarbon-grey#readme">README</a>.</p>
       </section>
     </main>

@@ -1,4 +1,3 @@
-const tabs = [...document.querySelectorAll('[role="tab"]')];
 const codes = [...document.querySelectorAll('.code')];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -14,7 +13,7 @@ function sweep(code) {
   code.sweepTimer = setTimeout(() => code.classList.remove('sweep'), lines * 24 + 600);
 }
 
-function select(tab, focus) {
+function select(tabs, tab, focus) {
   for (const other of tabs) {
     const selected = other === tab;
     other.setAttribute('aria-selected', selected);
@@ -22,18 +21,32 @@ function select(tab, focus) {
     document.getElementById(other.getAttribute('aria-controls')).hidden = !selected;
   }
   if (focus) tab.focus();
-  sweep(document.getElementById(tab.getAttribute('aria-controls')).querySelector('.code'));
+  const code = document.getElementById(tab.getAttribute('aria-controls')).querySelector('.code');
+  if (code) sweep(code);
 }
 
-for (const tab of tabs) {
-  tab.addEventListener('click', () => select(tab, false));
-  tab.addEventListener('keydown', (event) => {
-    const i = tabs.indexOf(tab);
-    const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[event.key];
-    if (next === undefined) return;
-    event.preventDefault();
-    select(tabs[(next + tabs.length) % tabs.length], true);
-  });
+for (const list of document.querySelectorAll('[role="tablist"]')) {
+  const tabs = [...list.querySelectorAll('[role="tab"]')];
+  for (const tab of tabs) {
+    tab.addEventListener('click', () => select(tabs, tab, false));
+    tab.addEventListener('keydown', (event) => {
+      const i = tabs.indexOf(tab);
+      const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[event.key];
+      if (next === undefined) return;
+      event.preventDefault();
+      select(tabs, tabs[(next + tabs.length) % tabs.length], true);
+    });
+  }
+}
+
+// The install panels are all visible without JavaScript, so hide them here, and open the one a link names.
+const apps = [...document.querySelectorAll('.apps [role="tab"]')];
+const linked = apps.find((tab) => `#${tab.getAttribute('aria-controls')}` === location.hash);
+for (const tab of apps) {
+  const selected = tab === (linked ?? apps[0]);
+  tab.setAttribute('aria-selected', selected);
+  tab.tabIndex = selected ? 0 : -1;
+  document.getElementById(tab.getAttribute('aria-controls')).hidden = !selected;
 }
 
 const swatches = [...document.querySelectorAll('[data-colour]')];

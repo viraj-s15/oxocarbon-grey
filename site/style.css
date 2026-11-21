@@ -461,30 +461,129 @@ h2 {
   margin-top: clamp(6rem, 14vw, 10rem);
 }
 
-.editors {
+.apps {
+  display: flex;
+  gap: 0.25rem;
+  margin: 2rem 0 0 -0.75rem;
+  border-bottom: 1px solid var(--hairline);
+  overflow-x: auto;
+}
+
+.apps button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font: 500 0.9375rem/1 'IBM Plex Sans', sans-serif;
+  color: var(--fgMuted);
+  background: none;
+  border: 0;
+  padding: 0.875rem 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: inset 0 -2px 0 transparent;
+}
+
+.apps button::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 2px;
+  background: var(--hue);
+}
+
+.apps button:hover {
+  color: var(--fg);
+}
+
+.apps [aria-selected='true'] {
+  color: var(--hue);
+  box-shadow: inset 0 -2px 0 var(--hue);
+}
+
+.app {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
   align-items: start;
-  gap: 2.5rem clamp(1.5rem, 3vw, 2.5rem);
-  margin-top: 2rem;
+  gap: 1.5rem clamp(2rem, 5vw, 4.5rem);
+  padding-top: 2.5rem;
+}
+
+.app[hidden] {
+  display: none;
 }
 
 h3 {
   font-size: 1.625rem;
   line-height: 1.1;
+  color: var(--hue, var(--fg));
 }
 
-.editors p {
-  margin: 0.75rem 0 1.25rem;
+h4 {
+  margin: 0 0 1rem;
+  font: 600 1.0625rem/1.2 'IBM Plex Sans Condensed', sans-serif;
+}
+
+.steps + h4 {
+  margin-top: 3.25rem;
+}
+
+.app p {
+  margin: 0;
   color: var(--fgMuted);
 }
 
-.editors kbd {
+.about p {
+  margin-top: 0.75rem;
+}
+
+.about .files {
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: step;
+}
+
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  row-gap: 0.75rem;
+}
+
+.steps li + li {
+  margin-top: 1.5rem;
+}
+
+.steps li::before {
+  content: counter(step);
+  grid-row: 1;
+  font: 600 0.9375rem/1.6 'IBM Plex Mono', monospace;
+  color: var(--hue);
+}
+
+.steps li > * {
+  grid-column: 2;
+}
+
+.steps li:only-child::before {
+  content: none;
+}
+
+.steps li:only-child > * {
+  grid-column: 1 / -1;
+}
+
+.app kbd {
   font: inherit;
 }
 
-.editors b,
-.editors kbd {
+.app b,
+.app kbd {
   font-weight: 500;
   color: var(--fg);
 }
@@ -524,7 +623,7 @@ h3 {
 }
 
 .more {
-  margin: 2.5rem 0 0;
+  margin: 3.5rem 0 0;
   color: var(--fgMuted);
 }
 
@@ -576,7 +675,7 @@ footer p {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .editors {
+  .app {
     grid-template-columns: minmax(0, 1fr);
   }
 }
