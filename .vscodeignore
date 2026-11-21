@@ -13,6 +13,7 @@ zed/**
 colors/**
 lua/**
 ghostty/**
+herdr/**
 tests/**
 .cache/**
 site/**

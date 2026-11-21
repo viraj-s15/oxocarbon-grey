@@ -1,0 +1,24 @@
+# Oxocarbon Grey for herdr: https://github.com/viraj-s15/oxocarbon-grey
+# Generated from src/palette.mjs by `npm run build:herdr`. Do not edit.
+# Paste this table into ~/.config/herdr/config.toml, replacing any [theme.custom] table.
+
+[theme.custom]
+accent = "#78a9ff"
+panel_bg = "#1b1c1f"
+sidebar_bg = "reset"
+active_row_bg = "#33353b"
+selection_bg = "#2e384c"
+surface0 = "#33353b"
+surface1 = "#4d5159"
+surface_dim = "#2b2d31"
+overlay0 = "#6e747d"
+overlay1 = "#8d9199"
+text = "#dde1e6"
+subtext0 = "#aeb4be"
+mauve = "#be95ff"
+green = "#42be65"
+yellow = "#be95ff"
+red = "#ee5396"
+blue = "#78a9ff"
+teal = "#08bdba"
+peach = "#be95ff"
