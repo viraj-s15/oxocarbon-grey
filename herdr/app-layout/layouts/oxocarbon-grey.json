@@ -78,7 +78,7 @@
           "id": "tabs",
           "type": "block",
           "content": {
-            "mod": "tabs"
+            "mod": "oxocarbon-tabs"
           },
           "size": {
             "px": 42

@@ -26,3 +26,5 @@ link() {
 link layouts/oxocarbon-grey.json
 link mods/claude-usage
 link mods/oxocarbon-spaces
+link mods/oxocarbon-tabs
+link mods/oxocarbon-open-with
