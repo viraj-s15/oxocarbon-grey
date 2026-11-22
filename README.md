@@ -111,6 +111,23 @@ Colour settings in your own config override the theme. This is separate from Gho
 
 herdr-app finds the file live, so no restart is needed. The theme sets the terminals and the panels, and each layout keeps its own theme.
 
+#### Layout (optional)
+
+`herdr/app-layout` has an `oxocarbon-grey` layout that uses the theme. It is the main layout with two changes to the collapsed sidebar:
+
+- A space's number gets a red tint when an agent in it is blocked, and a green tint when an agent is done, in place of the status dot.
+- The agents list is replaced by Claude plan usage: one ring for the 5-hour window and one for the week. The `claude-usage` mod runs `claude -p --no-session-persistence /usage` every 5 minutes, which makes no model call.
+
+1. Copy the layout and the mods into herdr-app:
+
+   ```sh
+   app="${HERDR_APP_HOME:-$HOME/.config/herdr-app}"
+   cp herdr/app-layout/layouts/oxocarbon-grey.json "$app/layouts/"
+   cp -R herdr/app-layout/mods/oxocarbon-spaces herdr/app-layout/mods/claude-usage "$app/mods/"
+   ```
+
+2. Run `herdr-app do layout.switch '{"name":"oxocarbon-grey"}'`.
+
 ### Terminal app
 
 The theme colours herdr's own UI: the sidebar, tab bar, popups and agent status markers. Panes keep your terminal's colours, so use the Ghostty theme there too.
