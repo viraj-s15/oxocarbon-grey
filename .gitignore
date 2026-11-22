@@ -3,3 +3,7 @@ node_modules/
 PUBLISHING.md
 .cache/
 _site/
+
+# herdr-app writes these editor type files into each mod folder
+herdr/app-layout/mods/*/gpui-kit.d.ts
+herdr/app-layout/mods/*/jsconfig.json
