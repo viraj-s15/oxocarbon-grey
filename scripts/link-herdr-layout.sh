@@ -1,5 +1,5 @@
 #!/bin/sh
-# Links the herdr-app layout and mods to this repo, so the repo stays the one source.
+# Links the herdr-app layout and mods to this repo, so the repo stays the one source, and adds the Claude Code TPS hook.
 set -eu
 
 repo="$(cd "$(dirname "$0")/.." && pwd)/herdr/app-layout"
@@ -25,6 +25,9 @@ link() {
 
 link layouts/oxocarbon-grey.json
 link mods/claude-usage
+link mods/claude-tps
 link mods/oxocarbon-spaces
 link mods/oxocarbon-tabs
 link mods/oxocarbon-open-with
+
+python3 "$repo/mods/claude-tps/install-tps-hook.py"

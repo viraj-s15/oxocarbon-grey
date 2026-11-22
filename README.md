@@ -117,6 +117,7 @@ herdr-app finds the file live, so no restart is needed. The theme sets the termi
 
 - A space's number gets a red tint when an agent in it is blocked, and a green tint when an agent is done, in place of the status dot.
 - The agents list is replaced by Claude plan usage: one ring for the 5-hour window and one for the week. The `claude-usage` mod runs `claude -p --no-session-persistence /usage` every 5 minutes, which makes no model call.
+- A third ring, from the `claude-tps` mod, shows the output tokens per second of the Claude agent in the focused pane, as an average over its current turn. A full ring is 150 TPS.
 - An "Open with" menu next to Files and Changes opens the focused pane's folder in Zed, in VS Code or in a Neovim pane on the right.
 
 1. Copy the layout and the mods into herdr-app:
@@ -125,10 +126,21 @@ herdr-app finds the file live, so no restart is needed. The theme sets the termi
    app="${HERDR_APP_HOME:-$HOME/.config/herdr-app}"
    cp herdr/app-layout/layouts/oxocarbon-grey.json "$app/layouts/"
    cp -R herdr/app-layout/mods/oxocarbon-spaces herdr/app-layout/mods/oxocarbon-tabs \
-     herdr/app-layout/mods/oxocarbon-open-with herdr/app-layout/mods/claude-usage "$app/mods/"
+     herdr/app-layout/mods/oxocarbon-open-with herdr/app-layout/mods/claude-usage \
+     herdr/app-layout/mods/claude-tps "$app/mods/"
    ```
 
-2. Run `herdr-app do layout.switch '{"name":"oxocarbon-grey"}'`.
+2. Add the Claude Code hook for the TPS ring:
+
+   ```sh
+   python3 herdr/app-layout/mods/claude-tps/install-tps-hook.py
+   ```
+
+   The script adds async `PostToolUse` and `Stop` hooks to `~/.claude/settings.json` and saves a backup next to it. Run it again with `--remove` to take the hooks out. Claude sessions that started before this step do not run the hook.
+
+3. Run `herdr-app do layout.switch '{"name":"oxocarbon-grey"}'`.
+
+To keep the layout in git, run `scripts/link-herdr-layout.sh` in place of steps 1 and 2. It links the layout and the mods to this repo, so a change in the app is a change in the repo, and it adds the hook.
 
 ### Terminal app
 

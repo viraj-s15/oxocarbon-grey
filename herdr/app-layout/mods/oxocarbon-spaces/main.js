@@ -514,7 +514,9 @@ export default class Spaces extends View {
       .when(alert(w.status), (el) => el.bg(t[w.status] + (w.active ? "4d" : "33")))
       .when(!w.active, (el) => el.hover((s) => s.bg(t.hover)))
       .on_click(() => run("space.select", { id: w.id }))
-      .child(div().text_color(w.active || alert(w.status) ? t.foreground : t.muted).child(String(i + 1))));
+      .child(div().text_color(w.active || alert(w.status) ? t.foreground : t.muted).child(String(i + 1))))
+      // A gap between cells, so two filled cells (selected and tinted) do not touch.
+      .py(3);
   }
 
   render() {

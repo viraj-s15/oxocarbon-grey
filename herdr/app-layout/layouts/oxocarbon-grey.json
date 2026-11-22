@@ -40,10 +40,20 @@
               "id": "claude-usage",
               "type": "block",
               "size": {
-                "px": 200
+                "px": 160
               },
               "content": {
                 "mod": "claude-usage"
+              }
+            },
+            {
+              "id": "claude-tps",
+              "type": "block",
+              "size": {
+                "px": 96
+              },
+              "content": {
+                "mod": "claude-tps"
               }
             }
           ]
