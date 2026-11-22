@@ -1,0 +1,61 @@
+# Oxocarbon Grey
+
+Herdr's main layout in the Oxocarbon Grey theme, made for a sidebar that stays collapsed to a narrow rail. The rail shows each space as a number that turns red when an agent there needs you and green when an agent finished. Under the spaces, two rings show how much of your Claude plan you used: one for the 5-hour window and one for the week.
+
+![Oxocarbon Grey](preview.png)
+
+## What you see
+
+Left to right, top to bottom:
+
+- The sidebar is 268px wide when open and a 76px rail when collapsed (44px off macOS). Its background is `chrome` (`#1b1c1f`).
+  - The top is a 46px brand bar from the shipped `workspace-chrome` mod. It holds the traffic lights at (12, 16) and a "+" for a new space.
+  - Under it, the spaces list fills the free height. Open, it is the shipped spaces list. On the rail, each space is a 32 by 26px cell with its number in it, and the cells have no status dot.
+  - Under the spaces, a 200px usage block shows the Claude icon (16px, full colour), then two rings. Each ring is 32px wide, with a 2.5px stroke. The ring has a `border` track (`#26272a`) and an `accent` arc (`#78a9ff`) that starts at 12 o'clock and runs clockwise. The arc length is the percentage used. The percentage is in the middle, in 10px semibold `foreground` (`#dde1e6`). Under each ring is a 9px `dim` (`#6e747d`) label: "5h" for the first ring and "wk" for the second. The icon and the rings have 12px gaps between them.
+  - On the rail, a "»" (13px, `dim`) sits under the rings in a 28px row.
+  - The bottom is a 69px footer from `workspace-chrome` with the settings and "+" buttons.
+- The work area is the shipped main layout: a 42px tab bar, the terminals with 8px padding and 8px gaps on a `canvas` background, a hidden 368px Files and Changes panel on the right, and a 28px status bar.
+- The whole layout uses the `oxocarbon-grey` theme: background `#1b1c1f`, foreground `#dde1e6`, selection `#2e384c`.
+
+## How it behaves
+
+- On the rail, a space shows its agents' state as a tint on its cell. A space with a blocked agent gets `blocked` (`#ee5396`) at 20% opacity, and a space with a done agent gets `done` (`#42be65`) at 20%. Working and idle spaces have no tint. The selected space has the `selected` fill (`#33353b`) when it has no alert. If it has an alert, the tint rises to 30% in place of the fill. A tinted number is `foreground`, and other numbers are `muted`.
+- "done" turns into "idle" once you look at the agent, so the green tint shows only for an agent that finished while you looked elsewhere.
+- A click on a space selects it, as in the shipped list. The open sidebar keeps the shipped behaviour.
+- The usage numbers load when the block first shows, and then every 5 minutes. A click anywhere on the Claude group refreshes them at once. A hover shows a tooltip such as "Claude / 5-hour: 20%, resets Nov 22 at 3:30am / Week: 8%, resets Nov 28 at 12pm / Click to refresh."
+- If a load fails, the rings keep the last numbers. If no load has worked yet, each ring is empty with a "–" in the middle, and the tooltip gives the error.
+- A click on "»" opens the sidebar to its last width. The open sidebar has no "»". To collapse it, use the sidebar button in the brand bar.
+
+## Built from
+
+- `layouts/oxocarbon-grey.json` is a clone of the shipped `main` layout (`cloned_from` main 0.1.16). It adds `"theme": "oxocarbon-grey"` on the root. In `sidebar-lists`, the `spaces` block (weight 1, min 90) uses the `oxocarbon-spaces` mod, and the shipped `agents` block is replaced by a `claude-usage` block (`px` 200).
+- `mods/oxocarbon-spaces` is a clone of the shipped `spaces` mod. Only `compact()`, the rail cell, changes: an `alert(status)` helper is true for `blocked` and `done`, and the cell's background is `t[status] + "33"`, or `+ "4d"` when the space is active. The cell no longer draws the `glyph()` dot. The open list is unchanged.
+- `mods/claude-usage` is a new mod:
+  - `providers.js` lists usage providers. Each provider has an `id`, a `name`, an `icon` path under `~/.config/herdr-app`, and an async `load()` that returns windows (`{ short, name, percent, resets }`). Claude's `load()` runs `claude -p --no-session-persistence /usage` with `exec` and reads the "Current session" and "Current week" lines (`NN% used · resets …`).
+  - `main.js` draws each provider: `image(icon)`, then for each window a 32px cell with two absolute 32px layers, `svg("mods/claude-usage/rings/ring-track.svg")` tinted `border` and `svg("…/ring-<percent>.svg")` tinted `accent`, then the number on top. It refreshes with `cx.timer.every(300000)` and `cx.spawn`, and keeps the shipped agents mod's `narrow()` rule (sidebar under 160px) and its `toggleSidebar()` for "»".
+  - `rings/` holds `ring-track.svg` and `ring-0.svg` to `ring-100.svg`: one circle each, r 14.25 in a 32 by 32 view box, with a round line cap and a `stroke-dasharray` for the percentage, rotated -90°. `make-rings.mjs` writes them with `node make-rings.mjs`.
+- The shipped mods it uses are `workspace-chrome` (brand bar and footer), `tabs`, `pane`, `files`, `changes` and `workspace-status`.
+- `herdr` functions: `theme`, `layout`, `run` (`space.select`, `layout.resize`), `shared` and `setShared` (`sidebar.width`, `sidebar.collapsed`), `window`, `exec`, `home`.
+- Programs: `claude` (Claude Code, logged in with a Claude plan), and `hc` from the shipped spaces code.
+
+## Watch out
+
+- herdr replaces its shipped layouts and mods on every start. Clone `main` and `spaces` with `layout.clone` and `mod.clone`, and do not edit them in place.
+- The "»" that expands the rail belongs to the shipped agents mod. If you remove the agents block, you must draw the "»" somewhere else, or the rail cannot open except through the brand bar on platforms that show its button.
+- herdr draws SVGs only from files, so the ring needs one file per percentage. herdr tints the shapes with the text colour, so the stroke colour in the files does not matter.
+- Give each absolute ring layer its own 32px size. Without it, the layers do not line up with the number on top.
+- `line_height` takes a string such as `"12px"`. A bare number counts as a multiplier.
+- A GUI app's PATH often lacks `~/.local/bin`, where the Claude Code installer puts `claude`. The mod tries `claude` first and then `~/.local/bin/claude`.
+- Without `--no-session-persistence`, each refresh leaves a session file in `~/.claude/projects`.
+- `/usage` runs locally and makes no model call, but its text can change in a later Claude Code release. If it does, the windows show "–", and `windowFrom()` in `providers.js` needs a new pattern.
+- The 200px block fits one provider with two windows. Each extra provider needs about 100px more.
+- The numbers are the percentage used, not the percentage left.
+
+## Done when
+
+- `herdr-app check` passes for `mods/oxocarbon-spaces` and `mods/claude-usage`.
+- After `layout.switch {"name":"oxocarbon-grey"}`, the window uses the Oxocarbon Grey colours.
+- On the rail, no space shows a dot. A space whose agent asks a question gets a red tint, and a space whose agent finishes while you look at another space gets a green tint.
+- The usage block shows the Claude icon and two rings with the same numbers as `/usage` in Claude Code.
+- A click on the Claude group refreshes the numbers, and the hover tooltip shows both reset times.
+- A click on "»" opens the sidebar to its last width.
