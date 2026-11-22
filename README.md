@@ -129,10 +129,10 @@ The theme sets every colour token, so your `theme.name` has no effect while it i
 
 ## Development
 
-The shared palette lives in `src/palette.mjs`. Generated theme files are committed.
+The shared palette lives in `src/palette.mjs`. Generated theme files are committed. `terminalthemes/Oxocarbon Grey.yml` is the file to upload to [terminalthemes.com](https://terminalthemes.com).
 
 ```sh
-npm run build       # regenerate all four themes
+npm run build       # regenerate all the themes
 npm run check       # check generated files and run tests
 npm run build:site  # build the website into _site/
 npm run package     # package the VS Code extension
